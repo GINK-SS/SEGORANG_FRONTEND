@@ -1,5 +1,7 @@
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { fetchSJAuth } from '../../api';
 
 const SignUpForm = styled.form`
   display: flex;
@@ -7,7 +9,7 @@ const SignUpForm = styled.form`
 `;
 const SignUpInput = styled.input``;
 
-interface IInputData {
+interface ISJAuthFormData {
   studentId: string;
   studentPw: string;
 }
@@ -20,18 +22,52 @@ interface IInDB {
   status_msg: string;
 }
 
+interface ISJAuthResponse {
+  result?: {
+    AuthResponse: [
+      boolean,
+      boolean,
+      number,
+      string,
+      { major: string; name: string },
+      string
+    ];
+  };
+  msg: string;
+  process_time: number;
+  description?: string;
+}
+
 function SJAuth() {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
     watch,
-    reset,
-  } = useForm<IInputData>();
+    getValues,
+  } = useForm<ISJAuthFormData>();
+  const history = useHistory();
 
-  const submitSJAuthInput = () => {
-    console.log('세고랑 DB 안에 있는지 확인 후 세종대학교 구성원인지 확인!');
-    reset({ studentId: '', studentPw: '' });
+  const submitSJAuthInput = async () => {
+    const studentId = getValues('studentId');
+    const studentPw = getValues('studentPw');
+    const SJAuthResponse: ISJAuthResponse = await (
+      await fetchSJAuth({ studentId, studentPw })
+    ).json();
+
+    if (SJAuthResponse.msg !== 'success') {
+      setError('studentId', { message: '학번이나 비밀번호를 잘못 입력하였습니다.' });
+      return;
+    }
+    history.push({
+      pathname: '/signUpForm',
+      state: {
+        studentId,
+        userName: SJAuthResponse.result?.AuthResponse[4].name,
+        userMajor: SJAuthResponse.result?.AuthResponse[4].major,
+      },
+    });
   };
 
   return (
