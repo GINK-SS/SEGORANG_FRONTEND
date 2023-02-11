@@ -42,6 +42,7 @@ function SignUp() {
     NICK_REG3: /^[_]*$/,
   };
   const { ID_REG, PW_REG1, PW_REG2, NICK_REG1, NICK_REG2, NICK_REG3 } = CHECK_REG;
+  const history = useHistory();
   const location = useLocation<ISJAuthState>();
   const [sjAuthState] = useState<ISJAuthState>(
     location.state ?? {
@@ -51,6 +52,10 @@ function SignUp() {
     }
   );
   const { studentId, userName, userMajor } = sjAuthState;
+
+  useEffect(() => {
+    location.state ? history.replace({ state: undefined }) : history.replace('/signUp');
+  }, []);
 
   const onValid = (inputData: IInputData) => {};
 
