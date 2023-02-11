@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { fetchDuplicateId, fetchDuplicateNickname } from '../../api';
 
 const SignUpForm = styled.form`
   display: flex;
   flex-direction: column;
 `;
 const SignUpInput = styled.input``;
+
+const DuplicateBtn = styled.button``;
 
 interface IInputData {
   studentId: string;
@@ -23,6 +26,14 @@ interface ISJAuthState {
   studentId: string;
   userName: string;
   userMajor: string;
+}
+
+interface ICheckDuplicate {
+  in_db: boolean;
+  msg: string;
+  result: null;
+  status_code: number;
+  status_msg: string;
 }
 
 function SignUp() {
@@ -52,10 +63,36 @@ function SignUp() {
     }
   );
   const { studentId, userName, userMajor } = sjAuthState;
+  const [isDuplicateId, setIsDuplicateId] = useState(true);
+  const [isDuplicateNickname, setIsDuplicateNickname] = useState(true);
 
   useEffect(() => {
     location.state ? history.replace({ state: undefined }) : history.replace('/signUp');
   }, []);
+
+  const checkDuplicateId = async () => {
+    const { in_db }: ICheckDuplicate = await fetchDuplicateId(getValues('userId'));
+
+    if (in_db) {
+      setIsDuplicateId(true);
+      return;
+    }
+
+    setIsDuplicateId(false);
+  };
+
+  const checkDuplicateNickname = async () => {
+    const { in_db }: ICheckDuplicate = await fetchDuplicateNickname(
+      getValues('userNickname')
+    );
+
+    if (in_db) {
+      setIsDuplicateNickname(true);
+      return;
+    }
+
+    setIsDuplicateNickname(false);
+  };
 
   const onValid = (inputData: IInputData) => {};
 
@@ -136,10 +173,10 @@ function SignUp() {
       />
       <button
         disabled={
-          !watch('userId') ||
+          isDuplicateId ||
           !watch('userPw') ||
           !watch('userPw2') ||
-          !watch('userNickname') ||
+          isDuplicateNickname ||
           !(Object.keys(errors).length === 0) ||
           watch('userPw') !== watch('userPw2')
         }
@@ -155,6 +192,12 @@ function SignUp() {
             : watch('userPw') === watch('userPw2') || '비밀번호가 일치하지 않습니다')}
       </span>
       <span>{errors?.userNickname?.message}</span>
+      <DuplicateBtn type="button" onClick={checkDuplicateId}>
+        아이디 중복확인
+      </DuplicateBtn>
+      <DuplicateBtn type="button" onClick={checkDuplicateNickname}>
+        닉네임 중복확인
+      </DuplicateBtn>
     </SignUpForm>
   );
 }
