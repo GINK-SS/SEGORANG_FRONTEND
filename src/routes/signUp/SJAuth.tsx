@@ -40,13 +40,25 @@ const SignUpWrapper = styled.div`
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.25);
   padding: 50px 60px;
   border-radius: 20px 100px / 120px;
+
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+    min-height: 100vh;
+    border-radius: 0px;
+    margin: 0;
+    padding: 30px;
+  }
+`;
+
+const SignUpTop = styled.div`
+  text-align: center;
+  margin: 0 -60px;
 `;
 
 const SignUpTitle = styled.h1`
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 20px;
-  text-align: center;
 `;
 
 const SignUpDesc = styled.p`
@@ -54,16 +66,16 @@ const SignUpDesc = styled.p`
   text-align: left;
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.5);
-  &:nth-child(3) {
+  &:nth-child(2) {
     margin-top: 50px;
   }
-  &:nth-child(4) {
+  &:nth-child(3) {
     margin-bottom: 20px;
     font-size: 1.3rem;
     font-weight: 500;
     color: rgba(0, 0, 0, 1);
   }
-  &:nth-child(5) {
+  &:nth-child(4) {
     margin-bottom: 50px;
     font-size: 0.75rem;
   }
@@ -80,7 +92,6 @@ const SignUpForm = styled.form`
 `;
 
 const SignUpInput = styled.input`
-  min-width: 400px;
   height: 40px;
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 10px;
@@ -107,6 +118,10 @@ const SignUpErrorMsg = styled.span<{ isError: boolean }>`
   font-weight: 500;
   color: #e01919;
   height: 20px;
+
+  @media screen and (max-width: 768px) {
+    margin-bottom: 100px;
+  }
 `;
 
 const SignUpBtn = styled.button<{ isActive: boolean }>`
@@ -120,7 +135,16 @@ const SignUpBtn = styled.button<{ isActive: boolean }>`
     props.isActive ? props.theme.sejongCrimsonRed : 'rgba(0,0,0,0.03)'};
   border: 1px solid rgba(0, 0, 0, 0.05);
   cursor: ${(props) => (props.isActive ? 'pointer' : 'default')};
-  transition: 0.3s;
+  transition-property: color, background-color;
+  transition-duration: 0.3s;
+
+  @media screen and (max-width: 768px) {
+    position: absolute;
+    min-width: 0px;
+    bottom: 50px;
+    right: 50px;
+    left: 50px;
+  }
 `;
 
 const SignUpBackPoint = styled.span<{ egg?: boolean }>`
@@ -153,7 +177,7 @@ const SignUpBackPoint = styled.span<{ egg?: boolean }>`
   &:nth-child(5) {
     display: ${(props) => (props.egg ? 'block' : 'none')};
     font-size: 60px;
-    left: -75px;
+    left: -70px;
     bottom: 250px;
     transform: rotate(270deg);
     opacity: 50%;
@@ -173,6 +197,10 @@ const SignUpBackPoint = styled.span<{ egg?: boolean }>`
     font-size: 400px;
     top: -50px;
     right: -250px;
+  }
+
+  @media screen and (max-width: 768px) {
+    display: none;
   }
 `;
 
@@ -243,16 +271,16 @@ function SJAuth() {
     <SignUpBackground>
       <SignUpContainer>
         <SignUpWrapper>
-          <SignUpTitle>회원가입</SignUpTitle>
-          <ProgressBar
-            completed={50}
-            customLabel=" "
-            height="5px"
-            bgColor="rgba(195, 0, 47)"
-            margin="0 -60px"
-            width="120%"
-            borderRadius="10px"
-          />
+          <SignUpTop>
+            <SignUpTitle>회원가입</SignUpTitle>
+            <ProgressBar
+              completed={50}
+              customLabel=" "
+              height="5px"
+              bgColor="rgba(195, 0, 47)"
+              borderRadius="10px"
+            />
+          </SignUpTop>
           <SignUpDesc>세종대 구성원 인증을 위해</SignUpDesc>
           <SignUpDesc>
             <SignUpDescAccent>세종대학교 포털 아이디와 비밀번호</SignUpDescAccent>를
