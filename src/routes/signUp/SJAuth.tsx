@@ -25,6 +25,43 @@ const SignUpBackground = styled.div`
   position: relative;
 `;
 
+const LoadingBG = styled.div<{ isLoading: boolean }>`
+  position: absolute;
+  display: ${(props) => (props.isLoading ? 'block' : 'none')};
+  z-index: 4;
+  min-width: 100%;
+  min-height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+const Spinner = styled.span<{ isLoading: boolean }>`
+  position: absolute;
+  display: ${(props) => (props.isLoading ? 'block' : 'none')};
+  z-index: 5;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+  &::after,
+  &::before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    border-radius: 50%;
+    background: ${(props) => props.theme.sejongCrimsonRed};
+    animation: spin 1s linear infinite;
+    transform-origin: 0px 100%;
+  }
+  &::before {
+    transform-origin: 0 50%;
+    background: ${(props) => props.theme.sejongGray};
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
 const SignUpContainer = styled.div`
   position: relative;
 `;
@@ -32,7 +69,7 @@ const SignUpContainer = styled.div`
 const SignUpWrapper = styled.div`
   display: flex;
   position: relative;
-  z-index: 5;
+  z-index: 3;
   width: 700px;
   margin: 30px;
   background-color: #fff;
@@ -245,6 +282,7 @@ function SJAuth() {
   const history = useHistory();
   const [eggGINKSS, setEggGINKSS] = useState(0);
   const [eggSCOF, setEggSCOF] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const submitSJAuthInput = async () => {
     const studentId = getValues('studentId');
@@ -269,6 +307,8 @@ function SJAuth() {
 
   return (
     <SignUpBackground>
+      <LoadingBG isLoading={isLoading} />
+      <Spinner isLoading={isLoading} />
       <SignUpContainer>
         <SignUpWrapper>
           <SignUpTop>
