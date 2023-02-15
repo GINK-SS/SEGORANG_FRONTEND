@@ -276,6 +276,7 @@ function SJAuth() {
     handleSubmit,
     formState: { errors },
     setError,
+    clearErrors,
     watch,
     getValues,
   } = useForm<ISJAuthFormData>({ mode: 'onChange' });
@@ -349,6 +350,11 @@ function SJAuth() {
               {...register('studentPw', { required: '비밀번호를 입력하세요' })}
               type="password"
               placeholder="비밀번호"
+              onFocus={() => {
+                if (!!getValues('studentId') && !!errors.studentId) {
+                  clearErrors('studentId');
+                }
+              }}
             />
             <SignUpErrorMsg isError={!(Object.keys(errors).length === 0)}>
               {errors?.studentId?.message || errors?.studentPw?.message}
@@ -359,7 +365,11 @@ function SJAuth() {
                 !!watch('studentId') &&
                 !!watch('studentPw')
               }
-              disabled={!watch('studentId') || !watch('studentPw')}
+              disabled={
+                !watch('studentId') ||
+                !watch('studentPw') ||
+                !(Object.keys(errors).length === 0)
+              }
             >
               인증하기
             </SignUpBtn>
