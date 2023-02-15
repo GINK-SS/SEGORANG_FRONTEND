@@ -285,24 +285,34 @@ function SJAuth() {
   const [isLoading, setIsLoading] = useState(false);
 
   const submitSJAuthInput = async () => {
-    const studentId = getValues('studentId');
-    const studentPw = getValues('studentPw');
-    const SJAuthResponse: ISJAuthResponse = await (
-      await fetchSJAuth({ studentId, studentPw })
-    ).json();
+    try {
+      setIsLoading(true);
+      const studentId = getValues('studentId');
+      const studentPw = getValues('studentPw');
+      const sjAuthResJson: ISJAuthResponse = await (
+        await fetchSJAuth({ studentId, studentPw })
+      ).json();
 
-    if (SJAuthResponse.msg !== 'success') {
-      setError('studentId', { message: '학번이나 비밀번호를 잘못 입력하였습니다' });
-      return;
+      if (sjAuthResJson.msg !== 'success') {
+        setError('studentId', { message: '학번이나 비밀번호를 잘못 입력하였습니다' });
+        setIsLoading(false);
+        return;
+      }
+
+      history.push({
+        pathname: '/signUpForm',
+        state: {
+          studentId,
+          userName: sjAuthResJson.result?.AuthResponse[4].name,
+          userMajor: sjAuthResJson.result?.AuthResponse[4].major,
+        },
+      });
+
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      setError('studentId', { message: '서버 오류입니다. 나중에 다시 시도해주세요.' });
     }
-    history.push({
-      pathname: '/signUpForm',
-      state: {
-        studentId,
-        userName: SJAuthResponse.result?.AuthResponse[4].name,
-        userMajor: SJAuthResponse.result?.AuthResponse[4].major,
-      },
-    });
   };
 
   return (
