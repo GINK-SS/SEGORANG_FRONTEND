@@ -29,11 +29,9 @@ interface ISJAuthState {
 }
 
 interface ICheckDuplicate {
-  in_db: boolean;
+  process_time: number;
   msg: string;
-  result: null;
-  status_code: number;
-  status_msg: string;
+  result: { in_db: boolean };
 }
 
 function SignUp() {
@@ -71,7 +69,9 @@ function SignUp() {
   }, []);
 
   const checkDuplicateId = async () => {
-    const { in_db }: ICheckDuplicate = await fetchDuplicateId(getValues('userId'));
+    const {
+      result: { in_db },
+    }: ICheckDuplicate = await fetchDuplicateId(getValues('userId'));
 
     if (in_db) {
       setIsDuplicateId(true);
@@ -82,9 +82,9 @@ function SignUp() {
   };
 
   const checkDuplicateNickname = async () => {
-    const { in_db }: ICheckDuplicate = await fetchDuplicateNickname(
-      getValues('userNickname')
-    );
+    const {
+      result: { in_db },
+    }: ICheckDuplicate = await fetchDuplicateNickname(getValues('userNickname'));
 
     if (in_db) {
       setIsDuplicateNickname(true);
