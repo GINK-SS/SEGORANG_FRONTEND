@@ -246,14 +246,6 @@ interface ISJAuthFormData {
   studentPw: string;
 }
 
-interface IInDB {
-  in_db: boolean;
-  msg: string;
-  result: null;
-  status_code: number;
-  status_msg: string;
-}
-
 interface ISJAuthResponse {
   result?: {
     AuthResponse: [
@@ -264,6 +256,7 @@ interface ISJAuthResponse {
       { major: string; name: string },
       string
     ];
+    in_db: boolean;
   };
   msg: string;
   process_time: number;
@@ -290,22 +283,27 @@ function SJAuth() {
       setIsLoading(true);
       const studentId = getValues('studentId');
       const studentPw = getValues('studentPw');
-      const sjAuthResJson: ISJAuthResponse = await (
+      const { result, msg }: ISJAuthResponse = await (
         await fetchSJAuth({ studentId, studentPw })
       ).json();
 
-      if (sjAuthResJson.msg !== 'success') {
+      if (msg !== 'success') {
         setError('studentId', { message: '학번이나 비밀번호를 잘못 입력하였습니다' });
         setIsLoading(false);
         return;
+      }
+
+      if (result?.in_db) {
+        setError('studentId', { message: '세고랑 회원입니다 로그인 해주세요' });
+        setIsLoading(false);
       }
 
       history.push({
         pathname: '/signUpForm',
         state: {
           studentId,
-          userName: sjAuthResJson.result?.AuthResponse[4].name,
-          userMajor: sjAuthResJson.result?.AuthResponse[4].major,
+          userName: result?.AuthResponse[4].name,
+          userMajor: result?.AuthResponse[4].major,
         },
       });
 
