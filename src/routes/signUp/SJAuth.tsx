@@ -137,11 +137,11 @@ const SignUpInput = styled.input`
   padding: 3px 20px;
   background-color: rgba(0, 0, 0, 0.03);
   &:hover {
-    border: 1px solid ${(props) => props.theme.sejongCrimsonRed};
+    border: 1px solid rgba(0, 0, 0, 0.1);
   }
   &:focus {
     outline: 0px;
-    border: 1px solid ${(props) => props.theme.sejongCrimsonRed};
+    border: 1px solid rgba(0, 0, 0, 0.1);
   }
   &::placeholder {
     color: rgba(0, 0, 0, 0.25);

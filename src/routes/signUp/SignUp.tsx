@@ -153,8 +153,10 @@ const DuplicateBtn = styled.button<{ isActive: boolean }>`
   padding: 0 10px;
   margin-left: 10px;
   background-color: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid
+    ${(props) => (props.isActive ? 'rgba(0,0,0,0.2)' : 'rgba(0, 0, 0, 0.05)')};
   border-radius: 10px;
+  transition: 0.3s;
   cursor: ${(props) => (props.isActive ? 'pointer' : 'default')};
 `;
 
@@ -427,8 +429,12 @@ function SignUp() {
               <DuplicateBtn
                 type="button"
                 onClick={checkDuplicateId}
-                disabled={!getValues('userId')}
-                isActive={!!getValues('userId')}
+                disabled={
+                  !!errors.userId ||
+                  !isDuplicateId ||
+                  (!errors.userId && !getValues('userId'))
+                }
+                isActive={!errors.userId && !!getValues('userId')}
               >
                 아이디 중복확인
               </DuplicateBtn>
@@ -524,8 +530,12 @@ function SignUp() {
               <DuplicateBtn
                 type="button"
                 onClick={checkDuplicateNickname}
-                disabled={!getValues('userNickname')}
-                isActive={!!getValues('userNickname')}
+                disabled={
+                  !!errors.userNickname ||
+                  !isDuplicateNickname ||
+                  (!errors.userNickname && !getValues('userNickname'))
+                }
+                isActive={!errors.userNickname && !!getValues('userNickname')}
               >
                 닉네임 중복확인
               </DuplicateBtn>
@@ -540,16 +550,14 @@ function SignUp() {
                 !!watch('userPw') &&
                 !!watch('userPw2') &&
                 !isDuplicateNickname &&
-                Object.keys(errors).length === 0 &&
-                watch('userPw') === watch('userPw2')
+                Object.keys(errors).length === 0
               }
               disabled={
                 isDuplicateId ||
                 !watch('userPw') ||
                 !watch('userPw2') ||
                 isDuplicateNickname ||
-                !(Object.keys(errors).length === 0) ||
-                watch('userPw') !== watch('userPw2')
+                !(Object.keys(errors).length === 0)
               }
             >
               완료
