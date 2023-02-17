@@ -59,6 +59,10 @@ const SignUpTitle = styled.h1`
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 20px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const SignUpForm = styled.form`
@@ -92,11 +96,21 @@ const SignUpInputWrapper = styled.div`
   &:nth-child(3) {
     margin-bottom: 20px;
   }
+
+  @media screen and (max-width: 768px) {
+    margin-top: 5px;
+  }
 `;
 
 const SignUpInputName = styled.span`
   width: 90px;
   margin-right: 20px;
+
+  @media screen and (max-width: 768px) {
+    width: 60px;
+    font-size: 11px;
+    margin-right: 10px;
+  }
 `;
 
 const SignUpInput = styled.input<{
@@ -145,6 +159,16 @@ const SignUpInput = styled.input<{
   &::placeholder {
     color: rgba(0, 0, 0, 0.25);
   }
+
+  @media screen and (max-width: 768px) {
+    min-width: 50px;
+    height: 30px;
+    font-size: 14px;
+    padding: 2px 15px;
+    &::placeholder {
+      font-size: 10px;
+    }
+  }
 `;
 
 const DuplicateBtn = styled.button<{ isActive: boolean }>`
@@ -156,8 +180,17 @@ const DuplicateBtn = styled.button<{ isActive: boolean }>`
   border: 1px solid
     ${(props) => (props.isActive ? 'rgba(0,0,0,0.2)' : 'rgba(0, 0, 0, 0.05)')};
   border-radius: 10px;
-  transition: 0.3s;
   cursor: ${(props) => (props.isActive ? 'pointer' : 'default')};
+  transition-property: border;
+  transition-duration: 0.3s;
+
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+    min-width: 40px;
+    height: 30px;
+    padding: 0 5px;
+    word-break: keep-all;
+  }
 `;
 
 const SignUpErrorMsg = styled.span<{ isDuplicate?: boolean }>`
@@ -170,7 +203,9 @@ const SignUpErrorMsg = styled.span<{ isDuplicate?: boolean }>`
   height: 20px;
 
   @media screen and (max-width: 768px) {
+    margin-left: 80px;
     margin-bottom: 10px;
+    font-size: 10px;
     :nth-last-child(2) {
       margin-bottom: 100px;
     }
@@ -195,8 +230,8 @@ const SignUpBtn = styled.button<{ isActive?: boolean }>`
     position: absolute;
     min-width: 0px;
     bottom: 50px;
-    right: 50px;
-    left: 50px;
+    right: 100px;
+    left: 100px;
   }
 `;
 
