@@ -96,6 +96,10 @@ const SignUpTitle = styled.h1`
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 20px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const SignUpDesc = styled.p`
