@@ -2,8 +2,8 @@ import ProgressBar from '@ramonak/react-progress-bar';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
-import { fetchDuplicateId, fetchDuplicateNickname } from '../../api';
 import styled, { keyframes } from 'styled-components';
+import { fetchDuplicateId, fetchDuplicateNickname, fetchSignUp } from '../../api';
 
 const animation = keyframes`
   0% {
@@ -23,6 +23,43 @@ const SignUpBackground = styled.div`
   justify-content: center;
   overflow: hidden;
   position: relative;
+`;
+
+const LoadingBG = styled.div<{ isLoading: boolean }>`
+  position: absolute;
+  display: ${(props) => (props.isLoading ? 'block' : 'none')};
+  z-index: 4;
+  min-width: 100%;
+  min-height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+const Spinner = styled.span<{ isLoading: boolean }>`
+  position: absolute;
+  display: ${(props) => (props.isLoading ? 'block' : 'none')};
+  z-index: 5;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+  &::after,
+  &::before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    border-radius: 50%;
+    background: ${(props) => props.theme.sejongCrimsonRed};
+    animation: spin 1s linear infinite;
+    transform-origin: 0px 100%;
+  }
+  &::before {
+    transform-origin: 0 50%;
+    background: ${(props) => props.theme.sejongGray};
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 const SignUpContainer = styled.div`
@@ -293,9 +330,6 @@ const SignUpBackPoint = styled.span<{ egg?: boolean }>`
 `;
 
 interface IInputData {
-  studentId: string;
-  userName: string;
-  userMajor: string;
   userId: string;
   userPw: string;
   userPw2: string;
@@ -312,6 +346,11 @@ interface ICheckDuplicate {
   process_time: number;
   msg: string;
   result: { in_db: boolean };
+}
+
+interface ISignUpResponse {
+  msg: string;
+  description?: string;
 }
 
 function SignUp() {
@@ -347,6 +386,7 @@ function SignUp() {
   const [isDuplicateNickname, setIsDuplicateNickname] = useState(true);
   const [eggGINKSS, setEggGINKSS] = useState(0);
   const [eggSCOF, setEggSCOF] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     location.state ? history.replace({ state: undefined }) : history.replace('/signUp');
@@ -396,10 +436,55 @@ function SignUp() {
     }
   };
 
-  const onValid = (inputData: IInputData) => {};
+  const onValid = async () => {
+    try {
+      setIsLoading(true);
+      const userId = getValues('userId');
+      const userPw = getValues('userPw');
+      const userNickname = getValues('userNickname');
+      const isSejongAuth = !!studentId && !!userName && !!userMajor;
+
+      if (!isSejongAuth) {
+        setIsDuplicateId(true);
+        setError('userId', {
+          message: '잘못 접속하였습니다 다시 세종대 구성원 인증을 받으세요',
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      const { msg, description }: ISignUpResponse = await fetchSignUp({
+        studentId,
+        userId,
+        userPw,
+        userName,
+        userMajor,
+        userNickname,
+        isSejongAuth,
+      });
+
+      if (description?.includes('Duplicate')) {
+        setIsDuplicateId(true);
+        setError('userId', { message: '아이디나 닉네임이 중복되었습니다.' });
+        setIsLoading(false);
+        return;
+      }
+
+      if (msg === 'success') {
+        setIsLoading(false);
+        history.push('/login');
+      }
+    } catch (err) {
+      setIsDuplicateId(true);
+      setError('userId', { message: '서버 오류입니다. 나중에 다시 시도해주세요.' });
+      setIsLoading(false);
+    }
+  };
 
   return (
     <SignUpBackground>
+      <LoadingBG isLoading={isLoading} />
+      <Spinner isLoading={isLoading} />
       <SignUpContainer>
         <SignUpWrapper>
           <SignUpTop>
@@ -415,30 +500,15 @@ function SignUp() {
           <SignUpForm onSubmit={handleSubmit(onValid)}>
             <SignUpInputWrapper>
               <SignUpInputName>학번</SignUpInputName>
-              <SignUpInput
-                {...register('studentId')}
-                type="text"
-                value={studentId}
-                disabled
-              />
+              <SignUpInput type="text" value={studentId} disabled />
             </SignUpInputWrapper>
             <SignUpInputWrapper>
               <SignUpInputName>이름</SignUpInputName>
-              <SignUpInput
-                {...register('userName')}
-                type="text"
-                value={userName}
-                disabled
-              />
+              <SignUpInput type="text" value={userName} disabled />
             </SignUpInputWrapper>
             <SignUpInputWrapper>
               <SignUpInputName>학과</SignUpInputName>
-              <SignUpInput
-                {...register('userMajor')}
-                type="text"
-                value={userMajor}
-                disabled
-              />
+              <SignUpInput type="text" value={userMajor} disabled />
             </SignUpInputWrapper>
             <SignUpInputWrapper>
               <SignUpInputName>아이디</SignUpInputName>

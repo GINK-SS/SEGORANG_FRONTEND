@@ -25,7 +25,7 @@ export const fetchSJAuth = ({ studentId, studentPw }: ISJAuthFormData) => {
       sj_id: studentId,
       sj_pw: studentPw,
     }),
-  }).then((res) => res.json());
+  });
 };
 
 export const fetchSignUp = ({
