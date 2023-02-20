@@ -300,6 +300,7 @@ function SJAuth() {
       if (result?.in_db) {
         setError('studentId', { message: '세고랑 회원입니다 로그인 해주세요' });
         setIsLoading(false);
+        return;
       }
 
       history.push({
