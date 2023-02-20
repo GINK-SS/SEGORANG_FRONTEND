@@ -329,6 +329,53 @@ const SignUpBackPoint = styled.span<{ egg?: boolean }>`
   }
 `;
 
+const SignUpComplete = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+`;
+
+const SignUpCompleteDesc = styled.span`
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+
+  &:nth-child(2) {
+    font-size: 1rem;
+    margin-bottom: 100px;
+  }
+`;
+
+const SignUpCompleteBtn = styled.button`
+  min-width: 400px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  outline: 0px;
+  padding: 10px;
+  font-size: 1.5rem;
+  letter-spacing: 5px;
+  color: #fff;
+  background-color: ${(props) => props.theme.sejongCrimsonRed};
+  opacity: 85%;
+  transition-property: opacity;
+  transition-duration: 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 100%;
+  }
+
+  @media screen and (max-width: 768px) {
+    position: absolute;
+    min-width: 0px;
+    bottom: 50px;
+    right: 100px;
+    left: 100px;
+    word-break: keep-all;
+  }
+`;
+
 interface IInputData {
   userId: string;
   userPw: string;
@@ -387,6 +434,7 @@ function SignUp() {
   const [eggGINKSS, setEggGINKSS] = useState(0);
   const [eggSCOF, setEggSCOF] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   useEffect(() => {
     location.state ? history.replace({ state: undefined }) : history.replace('/signUp');
@@ -472,7 +520,7 @@ function SignUp() {
 
       if (msg === 'success') {
         setIsLoading(false);
-        history.push('/login');
+        setIsSignUp(true);
       }
     } catch (err) {
       setIsDuplicateId(true);
@@ -486,199 +534,227 @@ function SignUp() {
       <LoadingBG isLoading={isLoading} />
       <Spinner isLoading={isLoading} />
       <SignUpContainer>
-        <SignUpWrapper>
-          <SignUpTop>
-            <SignUpTitle>회원가입</SignUpTitle>
-            <ProgressBar
-              completed={100}
-              customLabel=" "
-              height="5px"
-              bgColor="rgba(195, 0, 47)"
-              borderRadius="10px"
-            />
-          </SignUpTop>
-          <SignUpForm onSubmit={handleSubmit(onValid)}>
-            <SignUpInputWrapper>
-              <SignUpInputName>학번</SignUpInputName>
-              <SignUpInput type="text" value={studentId} disabled />
-            </SignUpInputWrapper>
-            <SignUpInputWrapper>
-              <SignUpInputName>이름</SignUpInputName>
-              <SignUpInput type="text" value={userName} disabled />
-            </SignUpInputWrapper>
-            <SignUpInputWrapper>
-              <SignUpInputName>학과</SignUpInputName>
-              <SignUpInput type="text" value={userMajor} disabled />
-            </SignUpInputWrapper>
-            <SignUpInputWrapper>
-              <SignUpInputName>아이디</SignUpInputName>
-              <SignUpInput
-                {...register('userId', {
-                  required: '아이디를 입력하세요',
-                  pattern: { value: ID_REG, message: '아이디 형식에 맞지 않습니다' },
-                  minLength: {
-                    value: 5,
-                    message: '아이디 길이는 5자 이상이여야 합니다',
-                  },
-                  maxLength: {
-                    value: 20,
-                    message: '아이디 길이는 20자 이하여야 합니다',
-                  },
-                })}
-                type="text"
-                placeholder="5~20자 영문, 숫자, _만 사용 가능"
-                isValid={!errors.userId}
-                isDuplicate={isDuplicateId}
-                isEmpty={!getValues('userId')}
-              />
-              <DuplicateBtn
-                type="button"
-                onClick={checkDuplicateId}
-                disabled={
-                  !!errors.userId ||
-                  !isDuplicateId ||
-                  (!errors.userId && !getValues('userId'))
-                }
-                isActive={!errors.userId && !!getValues('userId')}
-              >
-                아이디 중복확인
-              </DuplicateBtn>
-            </SignUpInputWrapper>
-            <SignUpErrorMsg isDuplicate={isDuplicateId}>
-              {errors?.userId?.message ||
-                (isDuplicateId ? null : '사용 가능한 아이디입니다')}
-            </SignUpErrorMsg>
-            <SignUpInputWrapper>
-              <SignUpInputName>비밀번호</SignUpInputName>
-              <SignUpInput
-                {...register('userPw', {
-                  required: '비밀번호를 입력하세요',
-                  validate: {
-                    pattern: (value) =>
-                      PW_REG1.test(value) ||
-                      '영문, 숫자, 특수문자가 반드시 포함되어야 합니다',
-                    pattern2: (value) =>
-                      PW_REG2.test(value) ||
-                      '사용할 수 없는 특수문자가 포함되어 있습니다',
-                  },
-                  minLength: {
-                    value: 8,
-                    message: '비밀번호 길이는 8자 이상이여야 합니다',
-                  },
-                  maxLength: {
-                    value: 16,
-                    message: '비밀번호 길이가 16자 이하여야 합니다',
-                  },
-                })}
-                type="password"
-                placeholder="8~16자 영문,숫자,특수기호 반드시 포함"
-                onInput={({ currentTarget: { value } }) => {
-                  if (!value || !getValues('userPw2') || value === getValues('userPw2')) {
-                    clearErrors('userPw2');
-                    return;
-                  }
-                  setError('userPw2', { message: '비밀번호가 일치하지 않습니다' });
+        {isSignUp ? (
+          <SignUpWrapper>
+            <SignUpComplete>
+              <SignUpCompleteDesc>
+                세고랑 회원이 되신 것에 진심으로 감사드립니다.
+              </SignUpCompleteDesc>
+              <SignUpCompleteDesc>
+                이제 세고랑과 함께 다양한 정보를 얻으세요!
+              </SignUpCompleteDesc>
+              <SignUpCompleteBtn
+                onClick={() => {
+                  history.push('/login');
                 }}
-                isValid={!errors.userPw}
-                isDuplicate={false}
-                isEmpty={!getValues('userPw')}
-              />
-            </SignUpInputWrapper>
-            <SignUpErrorMsg>{errors?.userPw?.message}</SignUpErrorMsg>
-            <SignUpInputWrapper>
-              <SignUpInputName>비밀번호 확인</SignUpInputName>
-              <SignUpInput
-                {...register('userPw2', {
-                  required: '비밀번호를 다시 입력하세요',
-                  validate: (userPw2) => {
-                    if (!getValues('userPw')) return;
-                    return (
-                      getValues('userPw') === userPw2 || '비밀번호가 일치하지 않습니다'
-                    );
-                  },
-                })}
-                type="password"
-                placeholder="비밀번호 다시 입력해주세요"
-                isValid={!errors.userPw2}
-                isDuplicate={!getValues('userPw')}
-                isEmpty={!getValues('userPw2')}
-              />
-            </SignUpInputWrapper>
-            <SignUpErrorMsg>{errors?.userPw2?.message}</SignUpErrorMsg>
-            <SignUpInputWrapper>
-              <SignUpInputName>닉네임</SignUpInputName>
-              <SignUpInput
-                {...register('userNickname', {
-                  required: '닉네임을 입력하세요',
-                  validate: {
-                    pattern1: (value) =>
-                      !NICK_REG3.test(value) || '_만 이용해서 닉네임을 만들 수 없습니다',
-                    pattern2: (value) =>
-                      (NICK_REG1.test(value) && NICK_REG2.test(value)) ||
-                      '닉네임 형식에 맞지 않습니다',
-                  },
-                  minLength: {
-                    value: 3,
-                    message: '닉네임 길이는 3자 이상이여야 합니다',
-                  },
-                  maxLength: {
-                    value: 16,
-                    message: '닉네임 길이는 16자 이하여야 합니다',
-                  },
-                })}
-                type="text"
-                placeholder="3~16자 한글, 영문, 숫자, _만 사용 가능"
-                isValid={!errors.userNickname}
-                isDuplicate={isDuplicateNickname}
-                isEmpty={!getValues('userNickname')}
-              />
-              <DuplicateBtn
-                type="button"
-                onClick={checkDuplicateNickname}
-                disabled={
-                  !!errors.userNickname ||
-                  !isDuplicateNickname ||
-                  (!errors.userNickname && !getValues('userNickname'))
-                }
-                isActive={!errors.userNickname && !!getValues('userNickname')}
               >
-                닉네임 중복확인
-              </DuplicateBtn>
-            </SignUpInputWrapper>
-            <SignUpErrorMsg isDuplicate={isDuplicateNickname}>
-              {errors?.userNickname?.message ||
-                (isDuplicateNickname ? null : '사용 가능한 닉네임입니다')}
-            </SignUpErrorMsg>
-            <SignUpBtn
-              isActive={
-                !isDuplicateId &&
-                !!watch('userPw') &&
-                !!watch('userPw2') &&
-                !isDuplicateNickname &&
-                Object.keys(errors).length === 0
-              }
-              disabled={
-                isDuplicateId ||
-                !watch('userPw') ||
-                !watch('userPw2') ||
-                isDuplicateNickname ||
-                !(Object.keys(errors).length === 0)
-              }
-            >
-              완료
-            </SignUpBtn>
-          </SignUpForm>
-        </SignUpWrapper>
-        <SignUpBackPoint>
-          <span onClick={() => setEggSCOF((prev) => prev + 1)}>S</span>
-          <span onClick={() => setEggGINKSS((prev) => prev + 1)}>G</span>R
-        </SignUpBackPoint>
-        <SignUpBackPoint>☻</SignUpBackPoint>
-        <SignUpBackPoint egg={eggGINKSS >= 2}>GINK-SS</SignUpBackPoint>
-        <SignUpBackPoint egg={eggSCOF >= 2}>SCOF</SignUpBackPoint>
-        <SignUpBackPoint>❁</SignUpBackPoint>
-        <SignUpBackPoint>SEJONG COMMUNITY</SignUpBackPoint>
-        <SignUpBackPoint>✧</SignUpBackPoint>
+                로그인 하러가기
+              </SignUpCompleteBtn>
+            </SignUpComplete>
+          </SignUpWrapper>
+        ) : (
+          <>
+            <SignUpWrapper>
+              <SignUpTop>
+                <SignUpTitle>회원가입</SignUpTitle>
+                <ProgressBar
+                  completed={100}
+                  customLabel=" "
+                  height="5px"
+                  bgColor="rgba(195, 0, 47)"
+                  borderRadius="10px"
+                />
+              </SignUpTop>
+              <SignUpForm onSubmit={handleSubmit(onValid)}>
+                <SignUpInputWrapper>
+                  <SignUpInputName>학번</SignUpInputName>
+                  <SignUpInput type="text" value={studentId} disabled />
+                </SignUpInputWrapper>
+                <SignUpInputWrapper>
+                  <SignUpInputName>이름</SignUpInputName>
+                  <SignUpInput type="text" value={userName} disabled />
+                </SignUpInputWrapper>
+                <SignUpInputWrapper>
+                  <SignUpInputName>학과</SignUpInputName>
+                  <SignUpInput type="text" value={userMajor} disabled />
+                </SignUpInputWrapper>
+                <SignUpInputWrapper>
+                  <SignUpInputName>아이디</SignUpInputName>
+                  <SignUpInput
+                    {...register('userId', {
+                      required: '아이디를 입력하세요',
+                      pattern: { value: ID_REG, message: '아이디 형식에 맞지 않습니다' },
+                      minLength: {
+                        value: 5,
+                        message: '아이디 길이는 5자 이상이여야 합니다',
+                      },
+                      maxLength: {
+                        value: 20,
+                        message: '아이디 길이는 20자 이하여야 합니다',
+                      },
+                    })}
+                    type="text"
+                    placeholder="5~20자 영문, 숫자, _만 사용 가능"
+                    isValid={!errors.userId}
+                    isDuplicate={isDuplicateId}
+                    isEmpty={!getValues('userId')}
+                  />
+                  <DuplicateBtn
+                    type="button"
+                    onClick={checkDuplicateId}
+                    disabled={
+                      !!errors.userId ||
+                      !isDuplicateId ||
+                      (!errors.userId && !getValues('userId'))
+                    }
+                    isActive={!errors.userId && !!getValues('userId')}
+                  >
+                    아이디 중복확인
+                  </DuplicateBtn>
+                </SignUpInputWrapper>
+                <SignUpErrorMsg isDuplicate={isDuplicateId}>
+                  {errors?.userId?.message ||
+                    (isDuplicateId ? null : '사용 가능한 아이디입니다')}
+                </SignUpErrorMsg>
+                <SignUpInputWrapper>
+                  <SignUpInputName>비밀번호</SignUpInputName>
+                  <SignUpInput
+                    {...register('userPw', {
+                      required: '비밀번호를 입력하세요',
+                      validate: {
+                        pattern: (value) =>
+                          PW_REG1.test(value) ||
+                          '영문, 숫자, 특수문자가 반드시 포함되어야 합니다',
+                        pattern2: (value) =>
+                          PW_REG2.test(value) ||
+                          '사용할 수 없는 특수문자가 포함되어 있습니다',
+                      },
+                      minLength: {
+                        value: 8,
+                        message: '비밀번호 길이는 8자 이상이여야 합니다',
+                      },
+                      maxLength: {
+                        value: 16,
+                        message: '비밀번호 길이가 16자 이하여야 합니다',
+                      },
+                    })}
+                    type="password"
+                    placeholder="8~16자 영문,숫자,특수기호 반드시 포함"
+                    onInput={({ currentTarget: { value } }) => {
+                      if (
+                        !value ||
+                        !getValues('userPw2') ||
+                        value === getValues('userPw2')
+                      ) {
+                        clearErrors('userPw2');
+                        return;
+                      }
+                      setError('userPw2', { message: '비밀번호가 일치하지 않습니다' });
+                    }}
+                    isValid={!errors.userPw}
+                    isDuplicate={false}
+                    isEmpty={!getValues('userPw')}
+                  />
+                </SignUpInputWrapper>
+                <SignUpErrorMsg>{errors?.userPw?.message}</SignUpErrorMsg>
+                <SignUpInputWrapper>
+                  <SignUpInputName>비밀번호 확인</SignUpInputName>
+                  <SignUpInput
+                    {...register('userPw2', {
+                      required: '비밀번호를 다시 입력하세요',
+                      validate: (userPw2) => {
+                        if (!getValues('userPw')) return;
+                        return (
+                          getValues('userPw') === userPw2 ||
+                          '비밀번호가 일치하지 않습니다'
+                        );
+                      },
+                    })}
+                    type="password"
+                    placeholder="비밀번호 다시 입력해주세요"
+                    isValid={!errors.userPw2}
+                    isDuplicate={!getValues('userPw')}
+                    isEmpty={!getValues('userPw2')}
+                  />
+                </SignUpInputWrapper>
+                <SignUpErrorMsg>{errors?.userPw2?.message}</SignUpErrorMsg>
+                <SignUpInputWrapper>
+                  <SignUpInputName>닉네임</SignUpInputName>
+                  <SignUpInput
+                    {...register('userNickname', {
+                      required: '닉네임을 입력하세요',
+                      validate: {
+                        pattern1: (value) =>
+                          !NICK_REG3.test(value) ||
+                          '_만 이용해서 닉네임을 만들 수 없습니다',
+                        pattern2: (value) =>
+                          (NICK_REG1.test(value) && NICK_REG2.test(value)) ||
+                          '닉네임 형식에 맞지 않습니다',
+                      },
+                      minLength: {
+                        value: 3,
+                        message: '닉네임 길이는 3자 이상이여야 합니다',
+                      },
+                      maxLength: {
+                        value: 16,
+                        message: '닉네임 길이는 16자 이하여야 합니다',
+                      },
+                    })}
+                    type="text"
+                    placeholder="3~16자 한글, 영문, 숫자, _만 사용 가능"
+                    isValid={!errors.userNickname}
+                    isDuplicate={isDuplicateNickname}
+                    isEmpty={!getValues('userNickname')}
+                  />
+                  <DuplicateBtn
+                    type="button"
+                    onClick={checkDuplicateNickname}
+                    disabled={
+                      !!errors.userNickname ||
+                      !isDuplicateNickname ||
+                      (!errors.userNickname && !getValues('userNickname'))
+                    }
+                    isActive={!errors.userNickname && !!getValues('userNickname')}
+                  >
+                    닉네임 중복확인
+                  </DuplicateBtn>
+                </SignUpInputWrapper>
+                <SignUpErrorMsg isDuplicate={isDuplicateNickname}>
+                  {errors?.userNickname?.message ||
+                    (isDuplicateNickname ? null : '사용 가능한 닉네임입니다')}
+                </SignUpErrorMsg>
+                <SignUpBtn
+                  isActive={
+                    !isDuplicateId &&
+                    !!watch('userPw') &&
+                    !!watch('userPw2') &&
+                    !isDuplicateNickname &&
+                    Object.keys(errors).length === 0
+                  }
+                  disabled={
+                    isDuplicateId ||
+                    !watch('userPw') ||
+                    !watch('userPw2') ||
+                    isDuplicateNickname ||
+                    !(Object.keys(errors).length === 0)
+                  }
+                >
+                  완료
+                </SignUpBtn>
+              </SignUpForm>
+            </SignUpWrapper>
+            <SignUpBackPoint>
+              <span onClick={() => setEggSCOF((prev) => prev + 1)}>S</span>
+              <span onClick={() => setEggGINKSS((prev) => prev + 1)}>G</span>R
+            </SignUpBackPoint>
+            <SignUpBackPoint>☻</SignUpBackPoint>
+            <SignUpBackPoint egg={eggGINKSS >= 2}>GINK-SS</SignUpBackPoint>
+            <SignUpBackPoint egg={eggSCOF >= 2}>SCOF</SignUpBackPoint>
+            <SignUpBackPoint>❁</SignUpBackPoint>
+            <SignUpBackPoint>SEJONG COMMUNITY</SignUpBackPoint>
+            <SignUpBackPoint>✧</SignUpBackPoint>
+          </>
+        )}
       </SignUpContainer>
     </SignUpBackground>
   );
