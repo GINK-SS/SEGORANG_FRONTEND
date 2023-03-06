@@ -13,6 +13,11 @@ interface ISignUpFormData {
   isSejongAuth: boolean;
 }
 
+interface ILoginFormData {
+  userId: string;
+  userPw: string;
+}
+
 const BASE_URL = `http://scof.link`;
 
 export const fetchSJAuth = ({ studentId, studentPw }: ISJAuthFormData) => {
@@ -76,4 +81,23 @@ export const fetchDuplicateNickname = (userNickname: string) => {
       nickname: userNickname,
     }),
   }).then((res) => res.json());
+};
+
+export const fetchLogin = async ({ userId, userPw }: ILoginFormData) => {
+  const response = await fetch(`${BASE_URL}/api/auth/signin`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: userId,
+      pw: userPw,
+    }),
+  });
+
+  if (response.ok) {
+    return await response.json();
+  }
+
+  throw new Error('로그인 에러');
 };
