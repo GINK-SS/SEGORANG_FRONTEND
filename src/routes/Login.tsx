@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchLogin } from '../api';
 
@@ -27,6 +28,7 @@ function Login() {
     reset,
   } = useForm<ILoginForm>();
 
+  const history = useHistory();
   const submitLoginInput = async () => {
     console.log('서버 전송 후 일치 여부 확인! 없으면 에러 메세지 표시!');
     const { msg }: ILoginResponse = await fetchLogin({
@@ -36,6 +38,7 @@ function Login() {
 
     if (msg === 'success') {
       reset({ userId: '', userPw: '' });
+      history.push('/');
       return;
     }
   };
