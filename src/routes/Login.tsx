@@ -25,21 +25,24 @@ function Login() {
     formState: { errors },
     watch,
     getValues,
-    reset,
+    setError,
   } = useForm<ILoginForm>();
 
   const history = useHistory();
   const submitLoginInput = async () => {
-    console.log('서버 전송 후 일치 여부 확인! 없으면 에러 메세지 표시!');
-    const { msg }: ILoginResponse = await fetchLogin({
-      userId: getValues('userId'),
-      userPw: getValues('userPw'),
-    });
+    try {
+      const { msg }: ILoginResponse = await fetchLogin({
+        userId: getValues('userId'),
+        userPw: getValues('userPw'),
+      });
 
-    if (msg === 'success') {
-      reset({ userId: '', userPw: '' });
-      history.push('/');
-      return;
+      if (msg === 'success') {
+        history.push('/');
+
+        return;
+      }
+    } catch (err) {
+      setError('userId', { message: '서버 오류입니다. 나중에 다시 시도해주세요.' });
     }
   };
 

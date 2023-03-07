@@ -95,9 +95,5 @@ export const fetchLogin = async ({ userId, userPw }: ILoginFormData) => {
     }),
   });
 
-  if (response.ok) {
-    return await response.json();
-  }
-
-  throw new Error('로그인 에러');
+  return await response.json();
 };
