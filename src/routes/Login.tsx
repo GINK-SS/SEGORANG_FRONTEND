@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -24,11 +25,21 @@ function Login() {
     handleSubmit,
     formState: { errors },
     watch,
+    setValue,
     getValues,
     setError,
   } = useForm<ILoginForm>();
-
+  const [isSaveId, setIsSaveId] = useState(false);
   const history = useHistory();
+
+  useEffect(() => {
+    const userId = localStorage.getItem('sgrUserId');
+    if (userId) {
+      setValue('userId', userId);
+      setIsSaveId(true);
+    }
+  }, []);
+
   const submitLoginInput = async () => {
     try {
       const { msg }: ILoginResponse = await fetchLogin({
@@ -37,8 +48,13 @@ function Login() {
       });
 
       if (msg === 'success') {
-        history.push('/');
+        if (isSaveId) {
+          localStorage.setItem('sgrUserId', getValues('userId'));
+        } else {
+          localStorage.removeItem('sgrUserId');
+        }
 
+        history.push('/');
         return;
       }
     } catch (err) {
@@ -58,6 +74,9 @@ function Login() {
         type="password"
         placeholder="비밀번호"
       />
+      <div>
+        <span onClick={() => setIsSaveId((prev) => !prev)}>아이디 저장</span>
+      </div>
       <span>{errors?.userId?.message || errors?.userPw?.message}</span>
       <button disabled={!watch('userId') || !watch('userPw')}>로그인</button>
     </LoginForm>
