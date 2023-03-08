@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { fetchLogin } from '../api';
+import { fetchLogin, getUserInfo } from '../api';
+import { userInfoState } from '../atoms';
 
 const LoginForm = styled.form`
   display: flex;
@@ -22,6 +24,12 @@ interface ILoginResponse {
   };
 }
 
+interface IGetUserInfo {
+  name: string;
+  nickname: string;
+  major: string;
+}
+
 function Login() {
   const {
     register,
@@ -34,6 +42,7 @@ function Login() {
   } = useForm<ILoginForm>();
   const [isSaveId, setIsSaveId] = useState(false);
   const [isSaveLogin, setIsSaveLogin] = useState(false);
+  const setUserInfo = useSetRecoilState(userInfoState);
   const history = useHistory();
 
   useEffect(() => {
@@ -64,6 +73,18 @@ function Login() {
         if (isSaveLogin) {
           localStorage.setItem('sgrUserToken', access_token);
         }
+
+        const { name, nickname, major }: IGetUserInfo = await getUserInfo(access_token);
+
+        setUserInfo((prev) => {
+          return {
+            ...prev,
+            accessToken: access_token,
+            userName: name,
+            userNickname: nickname,
+            userMajor: major,
+          };
+        });
 
         history.replace('/');
         return;

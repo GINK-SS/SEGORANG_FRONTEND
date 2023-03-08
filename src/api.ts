@@ -97,3 +97,15 @@ export const fetchLogin = async ({ userId, userPw }: ILoginFormData) => {
 
   return await response.json();
 };
+
+export const getUserInfo = async (accessToken: string) => {
+  const response = await fetch(`${BASE_URL}/api/user`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  return await response.json();
+};
