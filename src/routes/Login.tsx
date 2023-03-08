@@ -17,6 +17,9 @@ interface ILoginForm {
 
 interface ILoginResponse {
   msg: string;
+  result: {
+    access_token: string;
+  };
 }
 
 function Login() {
@@ -30,6 +33,7 @@ function Login() {
     setError,
   } = useForm<ILoginForm>();
   const [isSaveId, setIsSaveId] = useState(false);
+  const [isSaveLogin, setIsSaveLogin] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -42,7 +46,10 @@ function Login() {
 
   const submitLoginInput = async () => {
     try {
-      const { msg }: ILoginResponse = await fetchLogin({
+      const {
+        msg,
+        result: { access_token },
+      }: ILoginResponse = await fetchLogin({
         userId: getValues('userId'),
         userPw: getValues('userPw'),
       });
@@ -54,7 +61,11 @@ function Login() {
           localStorage.removeItem('sgrUserId');
         }
 
-        history.push('/');
+        if (isSaveLogin) {
+          localStorage.setItem('sgrUserToken', access_token);
+        }
+
+        history.replace('/');
         return;
       }
     } catch (err) {
@@ -76,6 +87,7 @@ function Login() {
       />
       <div>
         <span onClick={() => setIsSaveId((prev) => !prev)}>아이디 저장</span>
+        <span onClick={() => setIsSaveLogin((prev) => !prev)}>자동 로그인</span>
       </div>
       <span>{errors?.userId?.message || errors?.userPw?.message}</span>
       <button disabled={!watch('userId') || !watch('userPw')}>로그인</button>
