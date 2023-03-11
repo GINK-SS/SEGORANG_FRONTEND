@@ -25,6 +25,7 @@ interface ILoginResponse {
 }
 
 interface IGetUserInfo {
+  id: string;
   name: string;
   nickname: string;
   major: string;
@@ -74,12 +75,15 @@ function Login() {
           localStorage.setItem('sgrUserToken', access_token);
         }
 
-        const { name, nickname, major }: IGetUserInfo = await getUserInfo(access_token);
+        const { id, name, nickname, major }: IGetUserInfo = await getUserInfo(
+          access_token
+        );
 
         setUserInfo((prev) => {
           return {
             ...prev,
             accessToken: access_token,
+            userId: id,
             userName: name,
             userNickname: nickname,
             userMajor: major,

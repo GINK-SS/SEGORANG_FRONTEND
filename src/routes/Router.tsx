@@ -7,24 +7,32 @@ import Login from './Login';
 import SignUp from './signUp/SignUp';
 import SJAuth from './signUp/SJAuth';
 
+interface IGetUserInfo {
+  id: string;
+  name: string;
+  nickname: string;
+  major: string;
+}
+
 function Router() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   useEffect(() => {
     const accessToken = localStorage.getItem('sgrUserToken');
 
-    if (accessToken) {
+    if (accessToken && !userInfo.accessToken) {
       initUserInfo(accessToken);
     }
   }, []);
 
   const initUserInfo = async (accessToken: string) => {
-    const { name, nickname, major } = await getUserInfo(accessToken);
+    const { id, name, nickname, major }: IGetUserInfo = await getUserInfo(accessToken);
 
     setUserInfo((prev) => {
       return {
         ...prev,
         accessToken: accessToken,
+        userId: id,
         userName: name,
         userNickname: nickname,
         userMajor: major,
