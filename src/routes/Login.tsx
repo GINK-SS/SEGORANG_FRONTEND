@@ -20,6 +20,11 @@ const LoginSelect = styled.span<{ isActive: boolean }>`
   cursor: pointer;
 `;
 
+const ErrorMsg = styled.span`
+  height: 30px;
+  color: #e01919;
+`;
+
 interface ILoginForm {
   userId: string;
   userPw: string;
@@ -27,7 +32,8 @@ interface ILoginForm {
 
 interface ILoginResponse {
   msg: string;
-  result: {
+  description?: string;
+  result?: {
     access_token: string;
   };
 }
@@ -64,10 +70,7 @@ function Login() {
 
   const submitLoginInput = async () => {
     try {
-      const {
-        msg,
-        result: { access_token },
-      }: ILoginResponse = await fetchLogin({
+      const { msg, result }: ILoginResponse = await fetchLogin({
         userId: getValues('userId'),
         userPw: getValues('userPw'),
       });
@@ -80,17 +83,17 @@ function Login() {
         }
 
         if (isSaveLogin) {
-          localStorage.setItem('sgrUserToken', access_token);
+          localStorage.setItem('sgrUserToken', result?.access_token as string);
         }
 
         const { id, name, nickname, major }: IGetUserInfo = await getUserInfo(
-          access_token
+          result?.access_token as string
         );
 
         setUserInfo((prev) => {
           return {
             ...prev,
-            accessToken: access_token,
+            accessToken: result?.access_token as string,
             userId: id,
             userName: name,
             userNickname: nickname,
@@ -99,7 +102,8 @@ function Login() {
         });
 
         history.replace('/');
-        return;
+      } else if (msg === 'fail') {
+        setError('userId', { message: '아이디 혹은 비밀번호를 잘못 입력하였습니다.' });
       }
     } catch (err) {
       setError('userId', { message: '서버 오류입니다. 나중에 다시 시도해주세요.' });
@@ -129,7 +133,7 @@ function Login() {
           자동 로그인
         </LoginSelect>
       </LoginSelectWrapper>
-      <span>{errors?.userId?.message || errors?.userPw?.message}</span>
+      <ErrorMsg>{errors.userId?.message || errors.userPw?.message}</ErrorMsg>
       <button disabled={!watch('userId') || !watch('userPw')}>로그인</button>
     </LoginForm>
   );
