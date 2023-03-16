@@ -54,7 +54,7 @@ function Login() {
     setValue,
     getValues,
     setError,
-  } = useForm<ILoginForm>();
+  } = useForm<ILoginForm>({ reValidateMode: 'onSubmit' });
   const [isSaveId, setIsSaveId] = useState(false);
   const [isSaveLogin, setIsSaveLogin] = useState(false);
   const setUserInfo = useSetRecoilState(userInfoState);
