@@ -12,6 +12,14 @@ const LoginForm = styled.form`
 `;
 const LoginInput = styled.input``;
 
+const LoginSelectWrapper = styled.div``;
+
+const LoginSelect = styled.span<{ isActive: boolean }>`
+  margin-right: 10px;
+  font-weight: ${(props) => (props.isActive ? '700' : '400')};
+  cursor: pointer;
+`;
+
 interface ILoginForm {
   userId: string;
   userPw: string;
@@ -110,10 +118,17 @@ function Login() {
         type="password"
         placeholder="비밀번호"
       />
-      <div>
-        <span onClick={() => setIsSaveId((prev) => !prev)}>아이디 저장</span>
-        <span onClick={() => setIsSaveLogin((prev) => !prev)}>자동 로그인</span>
-      </div>
+      <LoginSelectWrapper>
+        <LoginSelect isActive={isSaveId} onClick={() => setIsSaveId((prev) => !prev)}>
+          아이디 저장
+        </LoginSelect>
+        <LoginSelect
+          isActive={isSaveLogin}
+          onClick={() => setIsSaveLogin((prev) => !prev)}
+        >
+          자동 로그인
+        </LoginSelect>
+      </LoginSelectWrapper>
       <span>{errors?.userId?.message || errors?.userPw?.message}</span>
       <button disabled={!watch('userId') || !watch('userPw')}>로그인</button>
     </LoginForm>
