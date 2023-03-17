@@ -99,7 +99,7 @@ export const fetchLogin = async ({ userId, userPw }: ILoginFormData) => {
 };
 
 export const getUserInfo = async (accessToken: string) => {
-  const response = await fetch(`${BASE_URL}/api/user`, {
+  const response = await fetch(`${BASE_URL}/api/v1/user`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

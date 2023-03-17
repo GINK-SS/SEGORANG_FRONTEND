@@ -8,10 +8,13 @@ import SignUp from './signUp/SignUp';
 import SJAuth from './signUp/SJAuth';
 
 interface IGetUserInfo {
-  id: string;
-  name: string;
-  nickname: string;
-  major: string;
+  msg: string;
+  result: {
+    id: string;
+    name: string;
+    nickname: string;
+    major: string;
+  };
 }
 
 function Router() {
@@ -26,7 +29,9 @@ function Router() {
   }, []);
 
   const initUserInfo = async (accessToken: string) => {
-    const { id, name, nickname, major }: IGetUserInfo = await getUserInfo(accessToken);
+    const {
+      result: { id, name, nickname, major },
+    }: IGetUserInfo = await getUserInfo(accessToken);
 
     setUserInfo((prev) => {
       return {

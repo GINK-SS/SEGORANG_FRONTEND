@@ -56,10 +56,13 @@ interface ILoginResponse {
 }
 
 interface IGetUserInfo {
-  id: string;
-  name: string;
-  nickname: string;
-  major: string;
+  msg: string;
+  result: {
+    id: string;
+    name: string;
+    nickname: string;
+    major: string;
+  };
 }
 
 function Login() {
@@ -103,9 +106,9 @@ function Login() {
           localStorage.setItem('sgrUserToken', result?.access_token as string);
         }
 
-        const { id, name, nickname, major }: IGetUserInfo = await getUserInfo(
-          result?.access_token as string
-        );
+        const {
+          result: { id, name, nickname, major },
+        }: IGetUserInfo = await getUserInfo(result?.access_token as string);
 
         setUserInfo((prev) => {
           return {
