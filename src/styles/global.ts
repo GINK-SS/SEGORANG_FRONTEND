@@ -1,13 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
-import MontserratAlternatesExtraLight from './fonts/MontserratAlternates-ExtraLight.ttf';
+import './fonts/fonts.css';
+
 export const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-style: normal;
-    src: url(${MontserratAlternatesExtraLight}) format('truetype');
-    font-family: 'MontserratAlternatesExtraLight';
-    font-weight: 200;
-  }
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
@@ -36,7 +30,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   body {
     line-height: 1;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: Noto Sans KR, sans-serif;
   }
   ol, ul {
     list-style: none;
