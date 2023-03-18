@@ -1,54 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
 import Router from './routes/Router';
-
-const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
-  html, body, div, span, applet, object, iframe,
-  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-  a, abbr, acronym, address, big, cite, code,
-  del, dfn, em, img, ins, kbd, q, s, samp,
-  small, strike, strong, sub, sup, tt, var,
-  b, u, i, center,
-  dl, dt, dd, ol, ul, li,
-  fieldset, form, label, legend,
-  table, caption, tbody, tfoot, thead, tr, th, td,
-  article, aside, canvas, details, embed, 
-  figure, figcaption, footer, header, hgroup, 
-  menu, nav, output, ruby, section, summary,
-  time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 16px;
-    font: inherit;
-    vertical-align: baseline;
-    box-sizing: border-box;
-  }
-  /* HTML5 display-role reset for older browsers */
-  article, aside, details, figcaption, figure, 
-  footer, header, hgroup, menu, nav, section {
-    display: block;
-  }
-  body {
-    line-height: 1;
-    font-family: 'Noto Sans KR', sans-serif;
-  }
-  ol, ul {
-    list-style: none;
-  }
-  blockquote, q {
-    quotes: none;
-  }
-  blockquote:before, blockquote:after,
-  q:before, q:after {
-    content: '';
-    content: none;
-  }
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
-`;
+import { GlobalStyle } from './styles/global';
 
 function App() {
   /**
@@ -62,15 +13,17 @@ function App() {
     %c╚════██║██╔══╝  ██║   ██║██║   ██║██╔══██╗██╔══██║██║╚██╗██║██║   ██║
     %c███████║███████╗╚██████╔╝╚██████╔╝██║  ██║██║  ██║██║ ╚████║╚██████╔╝
     %c╚══════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝
+    %c <-- 세종대학교 커뮤니티 서비스 (by GINK-SS & Scof) -->
     `,
     'color: #f55252',
     'color: #ec9265',
     'color: #e9ac6d',
     'color: #e5c875',
     'color: #e4d278',
-    'color: #ddff86'
+    'color: #ddff86',
+    'color: #FFFFFF; font-size: 15px;'
   );
-  console.log(`%c*--*--------by GINK-SS & Scof--------*--*`, 'font-size: 20px');
+
   return (
     <>
       <GlobalStyle />
