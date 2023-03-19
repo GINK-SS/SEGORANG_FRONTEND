@@ -1,36 +1,51 @@
 @font-face {
-  font-family: 'MontserratAlternates';
-  src: url('./MontserratAlternates-ExtraLight.ttf');
+  font-family: 'Montserrat Alternates';
+  src: local('Montserrat Alternates'),
+    url('./MontserratAlternates-ExtraLight.woff2') format('woff2'),
+    url('./MontserratAlternates-ExtraLight.woff') format('woff'),
+    url('./MontserratAlternates-ExtraLight.ttf') format('truetype');
   font-weight: 200;
 }
 
 @font-face {
   font-family: 'Noto Sans KR';
-  src: url('./NotoSansKR-Black.otf');
+  src: local('NotoSansKR'), url('./NotoSansKR-Black.woff2') format('woff2'),
+    url('./NotoSansKR-Black.woff') format('woff'),
+    url('./NotoSansKR-Black.otf') format('opentype');
   font-weight: 900;
 }
 @font-face {
   font-family: 'Noto Sans KR';
-  src: url('./NotoSansKR-Bold.otf');
+  src: local('NotoSansKR'), url('./NotoSansKR-Bold.woff2') format('woff2'),
+    url('./NotoSansKR-Bold.woff') format('woff'),
+    url('./NotoSansKR-Bold.otf') format('opentype');
   font-weight: 700;
 }
 @font-face {
   font-family: 'Noto Sans KR';
-  src: url('./NotoSansKR-Medium.otf');
+  src: local('NotoSansKR'), url('./NotoSansKR-Medium.woff2') format('woff2'),
+    url('./NotoSansKR-Medium.woff') format('woff'),
+    url('./NotoSansKR-Medium.otf') format('opentype');
   font-weight: 500;
 }
 @font-face {
   font-family: 'Noto Sans KR';
-  src: url('./NotoSansKR-Regular.otf');
+  src: local('NotoSansKR'), url('./NotoSansKR-Regular.woff2') format('woff2'),
+    url('./NotoSansKR-Regular.woff') format('woff'),
+    url('./NotoSansKR-Regular.otf') format('opentype');
   font-weight: 400;
 }
 @font-face {
   font-family: 'Noto Sans KR';
-  src: url('./NotoSansKR-Light.otf');
+  src: local('NotoSansKR'), url('./NotoSansKR-Light.woff2') format('woff2'),
+    url('./NotoSansKR-Light.woff') format('woff'),
+    url('./NotoSansKR-Light.otf') format('opentype');
   font-weight: 300;
 }
 @font-face {
   font-family: 'Noto Sans KR';
-  src: url('./NotoSansKR-Thin.otf');
+  src: local('NotoSansKR'), url('./NotoSansKR-Thin.woff2') format('woff2'),
+    url('./NotoSansKR-Thin.woff') format('woff'),
+    url('./NotoSansKR-Thin.otf') format('opentype');
   font-weight: 100;
 }
