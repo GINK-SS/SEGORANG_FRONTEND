@@ -60,6 +60,7 @@ function Router() {
           path={'/signUpForm'}
           component={() => (userInfo.accessToken ? <Redirect to={'/'} /> : <SignUp />)}
         />
+
       </Switch>
     </BrowserRouter>
   );
