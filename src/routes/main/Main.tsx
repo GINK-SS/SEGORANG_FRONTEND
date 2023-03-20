@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { userInfoState } from '../../atoms';
+import { useHistory } from 'react-router-dom';
 
 const Header = styled.div`
   display: flex;
@@ -24,6 +25,7 @@ const HeaderLogo = styled.span`
   margin-bottom: 100px;
   color: ${(props) => props.theme.accentColor};
   letter-spacing: -2px;
+  cursor: pointer;
 `;
 
 const Header__Right = styled.div`
@@ -93,13 +95,14 @@ const UserInfoWrapper = styled.div`
 
 function Main() {
   const userInfo = useRecoilValue(userInfoState);
+  const history = useHistory();
   const [search, setSearch] = useState('');
 
   return (
     <div>
       <Header>
         <Header__Left>
-          <HeaderLogo>SEGORANG。</HeaderLogo>
+          <HeaderLogo onClick={() => history.push('/')}>SEGORANG。</HeaderLogo>
         </Header__Left>
         <Header__Right>
           <HeaderSearch
