@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil';
 import { getUserInfo } from '../api';
 import { userInfoState } from '../atoms';
 import Login from './Login';
+import Main from './main/Main';
 import SignUp from './signUp/SignUp';
 import SJAuth from './signUp/SJAuth';
 
@@ -60,7 +61,10 @@ function Router() {
           path={'/signUpForm'}
           component={() => (userInfo.accessToken ? <Redirect to={'/'} /> : <SignUp />)}
         />
-
+        <Route
+          path={'/'}
+          component={() => (userInfo.accessToken ? <Main /> : <Redirect to={'/login'} />)}
+        />
       </Switch>
     </BrowserRouter>
   );
