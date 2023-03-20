@@ -1,6 +1,67 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { userInfoState } from '../../atoms';
+
+const Header = styled.div`
+  display: flex;
+  max-width: 1300px;
+  margin: 20px auto;
+  padding: 0 25px;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Header__Left = styled.div``;
+
+const HeaderLogo = styled.span`
+  font-family: 'Montserrat Alternates', sans-serif;
+  text-align: center;
+  font-size: 45px;
+  font-weight: 200;
+  margin-bottom: 100px;
+  color: ${(props) => props.theme.accentColor};
+  letter-spacing: -2px;
+`;
+
+const Header__Right = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+const HeaderSearch = styled.input`
+  width: 350px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 3px 65px 3px 20px;
+  font-size: 15px;
+
+  &:hover {
+    border: 1px solid ${(props) => props.theme.sejongCrimsonRed02};
+  }
+  &:focus {
+    outline: 0px;
+    border: 1px solid ${(props) => props.theme.sejongCrimsonRed};
+  }
+`;
+
+const HeaderSearch__Button = styled.div`
+  position: absolute;
+  right: 0px;
+  padding: 15px 15px 15px 0px;
+  cursor: pointer;
+
+  &::before {
+    content: '|';
+    margin-right: 10px;
+    color: rgba(0, 0, 0, 0.1);
+  }
+`;
 
 const UserContainer = styled.div``;
 
@@ -32,8 +93,25 @@ const UserInfoWrapper = styled.div`
 
 function Main() {
   const userInfo = useRecoilValue(userInfoState);
+  const [search, setSearch] = useState('');
+
   return (
     <div>
+      <Header>
+        <Header__Left>
+          <HeaderLogo>SEGORANG。</HeaderLogo>
+        </Header__Left>
+        <Header__Right>
+          <HeaderSearch
+            value={search}
+            placeholder="세고랑 통합검색"
+            onChange={({ target: { value } }) => setSearch(value)}
+          />
+          <HeaderSearch__Button>
+            <FontAwesomeIcon icon={faMagnifyingGlass} color="rgba(0,0,0,0.5)" />
+          </HeaderSearch__Button>
+        </Header__Right>
+      </Header>
       <UserContainer>
         <UserInfoWrapper>
           <span>{userInfo.userNickname}</span>
