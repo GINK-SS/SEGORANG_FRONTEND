@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faX } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { userInfoState } from '../../atoms';
 import { useHistory } from 'react-router-dom';
@@ -191,8 +191,15 @@ const UserOptionItemIcon = styled.div`
 
 function Main() {
   const userInfo = useRecoilValue(userInfoState);
+  const resetUserInfo = useResetRecoilState(userInfoState);
   const history = useHistory();
   const [search, setSearch] = useState('');
+
+  const logOut = () => {
+    localStorage.removeItem('sgrUserToken');
+    resetUserInfo();
+    history.replace('/login');
+  };
 
   return (
     <>
@@ -256,7 +263,7 @@ function Main() {
                 </UserOptionItemIcon>
               </UserOptionItem>
               <UserOptionItem>마이페이지</UserOptionItem>
-              <UserOptionItem>로그아웃</UserOptionItem>
+              <UserOptionItem onClick={logOut}>로그아웃</UserOptionItem>
             </UserOptionWrapper>
           </UserContainer>
         </Main__Right>
