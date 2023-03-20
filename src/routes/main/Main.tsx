@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faX } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
@@ -40,7 +40,7 @@ const HeaderSearch = styled.input`
   background-color: rgba(0, 0, 0, 0.03);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  padding: 3px 65px 3px 20px;
+  padding: 3px 70px 3px 20px;
   font-size: 15px;
 
   &:hover {
@@ -50,6 +50,13 @@ const HeaderSearch = styled.input`
     outline: 0px;
     border: 1px solid ${(props) => props.theme.sejongCrimsonRed};
   }
+`;
+
+const HeaderSearch__Delete = styled.div<{ isEmpty: boolean }>`
+  position: absolute;
+  visibility: ${(props) => (props.isEmpty ? 'hidden' : 'visible')};
+  right: 55px;
+  cursor: pointer;
 `;
 
 const HeaderSearch__Button = styled.div`
@@ -110,6 +117,9 @@ function Main() {
             placeholder="세고랑 통합검색"
             onChange={({ target: { value } }) => setSearch(value)}
           />
+          <HeaderSearch__Delete isEmpty={!search} onClick={() => setSearch('')}>
+            <FontAwesomeIcon icon={faX} size="2xs" color="rgba(0,0,0,0.5)" />
+          </HeaderSearch__Delete>
           <HeaderSearch__Button>
             <FontAwesomeIcon icon={faMagnifyingGlass} color="rgba(0,0,0,0.5)" />
           </HeaderSearch__Button>
