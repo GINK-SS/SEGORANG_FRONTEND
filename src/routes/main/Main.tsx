@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { userInfoState } from '../../atoms';
 import { useHistory } from 'react-router-dom';
+import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 
 const Header = styled.div`
   display: flex;
@@ -113,18 +114,34 @@ const NavItem = styled.li`
   }
 `;
 
-const UserContainer = styled.div``;
+const MainContainer = styled.div`
+  display: flex;
+  max-width: 1300px;
+  margin: 20px auto;
+  padding: 0 25px;
+`;
+
+const Main__Left = styled.div`
+  flex-grow: 1;
+`;
+
+const Main__Right = styled.div`
+  margin-left: 15px;
+`;
+
+const UserContainer = styled.div`
+  width: 350px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.03);
+`;
 
 const UserInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 350px;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  padding: 15px 10px;
-  background-color: rgba(0, 0, 0, 0.03);
+  padding: 20px 5px;
 
   span {
     &:first-child {
@@ -141,13 +158,44 @@ const UserInfoWrapper = styled.div`
   }
 `;
 
+const UserOptionWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 8px 0px;
+`;
+
+const UserOptionItem = styled.span`
+  width: 120px;
+  text-align: center;
+  font-weight: 500;
+  color: ${(props) => props.theme.accentColor};
+  border-right: 2px solid rgba(0, 0, 0, 0.05);
+  padding: 8px 0px;
+  cursor: pointer;
+
+  &:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &:last-child {
+    border-right: 0px;
+  }
+`;
+
+const UserOptionItemIcon = styled.div`
+  margin-left: 5px;
+`;
+
 function Main() {
   const userInfo = useRecoilValue(userInfoState);
   const history = useHistory();
   const [search, setSearch] = useState('');
 
   return (
-    <div>
+    <>
       <Header>
         <Header__Left>
           <HeaderLogo onClick={() => history.push('/')}>SEGORANG。</HeaderLogo>
@@ -190,15 +238,30 @@ function Main() {
           </NavWrapper>
         </NavContainer>
       </NavContainerOuter>
-      <UserContainer>
-        <UserInfoWrapper>
-          <span>{userInfo.userNickname}</span>
-          <span>
-            {userInfo.userName} / {userInfo.userMajor}
-          </span>
-        </UserInfoWrapper>
-      </UserContainer>
-    </div>
+      <MainContainer>
+        <Main__Left></Main__Left>
+        <Main__Right>
+          <UserContainer>
+            <UserInfoWrapper>
+              <span>{userInfo.userNickname}</span>
+              <span>
+                {userInfo.userName} / {userInfo.userMajor}
+              </span>
+            </UserInfoWrapper>
+            <UserOptionWrapper>
+              <UserOptionItem>
+                북마크
+                <UserOptionItemIcon>
+                  <FontAwesomeIcon icon={faBookmark} />
+                </UserOptionItemIcon>
+              </UserOptionItem>
+              <UserOptionItem>마이페이지</UserOptionItem>
+              <UserOptionItem>로그아웃</UserOptionItem>
+            </UserOptionWrapper>
+          </UserContainer>
+        </Main__Right>
+      </MainContainer>
+    </>
   );
 }
 
