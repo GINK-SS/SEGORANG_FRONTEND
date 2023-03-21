@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { userInfoState } from '../../atoms';
 import { useHistory } from 'react-router-dom';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
+import MainBoardItem from '../../components/MainBoardItem';
 
 const Header = styled.div`
   display: flex;
@@ -192,42 +193,6 @@ const Left__BoardItemWrapper = styled.ul`
   padding: 10px 0;
   background-color: rgba(0, 0, 0, 0.01);
 `;
-
-const Left__BoardItem = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 15px;
-
-  &:hover {
-    background-color: #f2f2f2;
-  }
-`;
-
-const Left__BoardItemCTCWrapper = styled.div``;
-
-const Left__BoardItemCategory = styled.span`
-  color: ${(props) => props.theme.sejongGray};
-  margin-right: 20px;
-`;
-
-const Left__BoardItemTitle = styled.span`
-  margin-right: 5px;
-  cursor: pointer;
-
-  &:hover {
-    color: ${(props) => props.theme.sejongCrimsonRed};
-  }
-`;
-
-const Left__BoardItemCommentCount = styled.span`
-  color: rgba(0, 0, 0, 0.5);
-`;
-
-const Left__BoardItemLike = styled.span`
-  color: ${(props) => props.theme.accentColor};
-`;
-
 const Main__Right = styled.div`
   margin-left: 30px;
 `;
@@ -360,12 +325,32 @@ function Main() {
                 <Left__BoardTitle>HOT 게시판</Left__BoardTitle>
                 <FontAwesomeIcon icon={faChevronRight} color="rgba(0,0,0,0.5)" />
               </Left__BoardTitleContainer>
+              <Left__BoardItemWrapper>
+                {hotData.map((data) => (
+                  <MainBoardItem
+                    category={data.category}
+                    title={data.title}
+                    commentNum={data.commentNum}
+                    likeNum={data.likeNum}
+                  />
+                ))}
+              </Left__BoardItemWrapper>
             </Left__MainBoard>
             <Left__MainBoard>
               <Left__BoardTitleContainer>
                 <Left__BoardTitle>자유게시판</Left__BoardTitle>
                 <FontAwesomeIcon icon={faChevronRight} color="rgba(0,0,0,0.5)" />
               </Left__BoardTitleContainer>
+              <Left__BoardItemWrapper>
+                {freeData.map((data) => (
+                  <MainBoardItem
+                    category={data.category}
+                    title={data.title}
+                    commentNum={data.commentNum}
+                    likeNum={data.likeNum}
+                  />
+                ))}
+              </Left__BoardItemWrapper>
             </Left__MainBoard>
           </Left__BoardWrapper>
         </Main__Left>
