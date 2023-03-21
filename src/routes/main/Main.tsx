@@ -127,6 +127,31 @@ const Main__Left = styled.div`
   flex-grow: 1;
 `;
 
+const BannerWrapper = styled.div`
+  position: relative;
+  width: 90%;
+  height: 120px;
+  margin: 10px auto;
+`;
+
+const BannerText = styled.span`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  font-size: 50px;
+  letter-spacing: 3px;
+  font-family: 'Concert One', cursive;
+  text-align: center;
+  color: ${(props) => props.theme.sejongCrimsonRed};
+`;
+
+const CenterBanner = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
 const Main__Right = styled.div`
   margin-left: 15px;
 `;
@@ -248,7 +273,12 @@ function Main() {
         </NavContainer>
       </NavContainerOuter>
       <MainContainer>
-        <Main__Left></Main__Left>
+        <Main__Left>
+          <BannerWrapper>
+            <BannerText>COMING SOON</BannerText>
+            <CenterBanner src="images/banner.png" alt="centerBanner" />
+          </BannerWrapper>
+        </Main__Left>
         <Main__Right>
           <UserContainer>
             <UserInfoWrapper>
