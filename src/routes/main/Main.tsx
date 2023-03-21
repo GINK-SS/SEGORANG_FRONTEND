@@ -90,9 +90,11 @@ const NavContainer = styled.nav`
 `;
 
 const NavWrapper = styled.ul`
-  width: 320px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
   border-left: 2px solid rgba(0, 0, 0, 0.05);
-  text-align: center;
+  align-items: center;
 
   &:last-child {
     border-right: 2px solid rgba(0, 0, 0, 0.05);
@@ -166,7 +168,7 @@ const UserOptionWrapper = styled.div`
 `;
 
 const UserOptionItem = styled.span`
-  width: 120px;
+  flex-grow: 1;
   text-align: center;
   font-weight: 500;
   color: ${(props) => props.theme.accentColor};
