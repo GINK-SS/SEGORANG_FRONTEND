@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faBullhorn,
   faChevronRight,
   faMagnifyingGlass,
   faX,
@@ -257,6 +258,28 @@ const UserOptionItemIcon = styled.div`
   margin-left: 5px;
 `;
 
+const Right__NoticeContainer = styled.div`
+  background-color: rgba(0, 0, 0, 0.03);
+  margin-top: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 13px 10px;
+  cursor: pointer;
+`;
+
+const Right__NoticeContent = styled.p`
+  display: flex;
+  justify-content: space-between;
+  color: ${(props) => props.theme.sejongGray};
+
+  span {
+    margin: 0 5px 0 10px;
+    color: ${(props) => props.theme.accentColor};
+  }
+`;
+
+const Right__NoticeWrapper = styled.div``;
+
 function Main() {
   const userInfo = useRecoilValue(userInfoState);
   const resetUserInfo = useResetRecoilState(userInfoState);
@@ -499,6 +522,16 @@ function Main() {
               <UserOptionItem onClick={logOut}>로그아웃</UserOptionItem>
             </UserOptionWrapper>
           </UserContainer>
+          <Right__NoticeContainer>
+            <Right__NoticeContent>
+              <Right__NoticeWrapper>
+                <FontAwesomeIcon icon={faBullhorn} color="#990011" />
+                <span>[공지]</span>
+                세종인을 위한 커뮤니티가 곧 완성됩...
+              </Right__NoticeWrapper>
+              <FontAwesomeIcon icon={faChevronRight} color="rgba(0,0,0,0.5)" />
+            </Right__NoticeContent>
+          </Right__NoticeContainer>
         </Main__Right>
       </MainContainer>
     </>
