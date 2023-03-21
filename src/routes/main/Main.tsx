@@ -1,5 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faX } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronRight,
+  faMagnifyingGlass,
+  faX,
+} from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -152,6 +156,38 @@ const CenterBanner = styled.img`
   height: 100%;
 `;
 
+const Left__BoardWrapper = styled.div`
+  display: flex;
+  margin-top: 40px;
+`;
+
+const Left__MainBoard = styled.div`
+  flex-grow: 1;
+
+  &:first-child {
+    margin-right: 10px;
+  }
+
+  &:last-child {
+    margin-left: 10px;
+  }
+`;
+
+const Left__BoardTitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px 30px 0 0;
+  padding: 15px 30px;
+  background-color: rgba(0, 0, 0, 0.03);
+`;
+
+const Left__BoardTitle = styled.span`
+  font-size: 18px;
+  font-weight: 600;
+`;
+
 const Main__Right = styled.div`
   margin-left: 15px;
 `;
@@ -278,6 +314,20 @@ function Main() {
             <BannerText>COMING SOON</BannerText>
             <CenterBanner src="images/banner.png" alt="centerBanner" />
           </BannerWrapper>
+          <Left__BoardWrapper>
+            <Left__MainBoard>
+              <Left__BoardTitleContainer>
+                <Left__BoardTitle>HOT 게시판</Left__BoardTitle>
+                <FontAwesomeIcon icon={faChevronRight} color="rgba(0,0,0,0.5)" />
+              </Left__BoardTitleContainer>
+            </Left__MainBoard>
+            <Left__MainBoard>
+              <Left__BoardTitleContainer>
+                <Left__BoardTitle>자유게시판</Left__BoardTitle>
+                <FontAwesomeIcon icon={faChevronRight} color="rgba(0,0,0,0.5)" />
+              </Left__BoardTitleContainer>
+            </Left__MainBoard>
+          </Left__BoardWrapper>
         </Main__Left>
         <Main__Right>
           <UserContainer>
