@@ -162,7 +162,7 @@ const Left__BoardWrapper = styled.div`
 `;
 
 const Left__MainBoard = styled.div`
-  flex-grow: 1;
+  width: 50%;
 
   &:first-child {
     margin-right: 10px;
@@ -180,7 +180,7 @@ const Left__BoardTitleContainer = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 10px 30px 0 0;
   padding: 15px 30px;
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: rgba(0, 0, 0, 0.05);
 `;
 
 const Left__BoardTitle = styled.span`
@@ -188,8 +188,48 @@ const Left__BoardTitle = styled.span`
   font-weight: 600;
 `;
 
+const Left__BoardItemWrapper = styled.ul`
+  padding: 10px 0;
+  background-color: rgba(0, 0, 0, 0.01);
+`;
+
+const Left__BoardItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
+`;
+
+const Left__BoardItemCTCWrapper = styled.div``;
+
+const Left__BoardItemCategory = styled.span`
+  color: ${(props) => props.theme.sejongGray};
+  margin-right: 20px;
+`;
+
+const Left__BoardItemTitle = styled.span`
+  margin-right: 5px;
+  cursor: pointer;
+
+  &:hover {
+    color: ${(props) => props.theme.sejongCrimsonRed};
+  }
+`;
+
+const Left__BoardItemCommentCount = styled.span`
+  color: rgba(0, 0, 0, 0.5);
+`;
+
+const Left__BoardItemLike = styled.span`
+  color: ${(props) => props.theme.accentColor};
+`;
+
 const Main__Right = styled.div`
-  margin-left: 15px;
+  margin-left: 30px;
 `;
 
 const UserContainer = styled.div`
