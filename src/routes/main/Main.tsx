@@ -280,6 +280,40 @@ const Right__NoticeContent = styled.p`
 
 const Right__NoticeWrapper = styled.div``;
 
+const Right__ShortCutContainer = styled.div`
+  margin-top: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+`;
+
+const Right__ShortCutTitle = styled.span`
+  background-color: rgba(0, 0, 0, 0.03);
+  display: block;
+  padding: 20px 20px 15px;
+  font-size: 17px;
+  font-weight: 600;
+`;
+
+const Right__ShortCutWrapper = styled.div`
+  display: grid;
+  padding: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 30px;
+`;
+
+const Right__ShortCutItem = styled.div``;
+
+const Right__ShortCutItemTitle = styled.a`
+  color: ${(props) => props.theme.sejongGray};
+  cursor: pointer;
+
+  &:hover {
+    color: ${(props) => props.theme.sejongCrimsonRed};
+  }
+`;
+
 function Main() {
   const userInfo = useRecoilValue(userInfoState);
   const resetUserInfo = useResetRecoilState(userInfoState);
@@ -532,6 +566,40 @@ function Main() {
               <FontAwesomeIcon icon={faChevronRight} color="rgba(0,0,0,0.5)" />
             </Right__NoticeContent>
           </Right__NoticeContainer>
+          <Right__ShortCutContainer>
+            <Right__ShortCutTitle>링크 바로가기</Right__ShortCutTitle>
+            <Right__ShortCutWrapper>
+              <Right__ShortCutItem>
+                <Right__ShortCutItemTitle href="http://sejong.ac.kr/" target="_blank">
+                  세종대학교
+                </Right__ShortCutItemTitle>
+              </Right__ShortCutItem>
+              <Right__ShortCutItem>
+                <Right__ShortCutItemTitle
+                  href="https://portal.sejong.ac.kr/"
+                  target="_blank"
+                >
+                  세종대 포털
+                </Right__ShortCutItemTitle>
+              </Right__ShortCutItem>
+              <Right__ShortCutItem>
+                <Right__ShortCutItemTitle
+                  href="http://classic.sejong.ac.kr/"
+                  target="_blank"
+                >
+                  대양휴머니티칼리지
+                </Right__ShortCutItemTitle>
+              </Right__ShortCutItem>
+              <Right__ShortCutItem>
+                <Right__ShortCutItemTitle
+                  href="https://sjpt.sejong.ac.kr/"
+                  target="_blank"
+                >
+                  학사정보시스템
+                </Right__ShortCutItemTitle>
+              </Right__ShortCutItem>
+            </Right__ShortCutWrapper>
+          </Right__ShortCutContainer>
         </Main__Right>
       </MainContainer>
     </>
