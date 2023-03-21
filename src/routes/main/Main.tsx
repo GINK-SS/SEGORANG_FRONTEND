@@ -269,6 +269,132 @@ function Main() {
     history.replace('/login');
   };
 
+  const hotData = [
+    {
+      category: '익명',
+      title: '안녕하세요 아이유입니다',
+      commentNum: 928,
+      likeNum: 3139,
+    },
+    {
+      category: '동아리',
+      title: 'SKBS 모집합니다 !!',
+      commentNum: 42,
+      likeNum: 31,
+    },
+    {
+      category: '자유',
+      title: '누가 엄준식 깼냐 ?',
+      commentNum: 31,
+      likeNum: 19,
+    },
+    {
+      category: '자유',
+      title: '식',
+      commentNum: 52,
+      likeNum: 133,
+    },
+    {
+      category: '익명',
+      title: '올해도 행복하자 우리',
+      commentNum: 21,
+      likeNum: 11,
+    },
+    {
+      category: '자유',
+      title: '준',
+      commentNum: 23,
+      likeNum: 134,
+    },
+    {
+      category: '자유',
+      title: '엄',
+      commentNum: 55,
+      likeNum: 321,
+    },
+    {
+      category: '자유',
+      title: '제목 어디까지 길어질 수 있을까요? 알려주세요 제발요',
+      commentNum: 5,
+      likeNum: 20,
+    },
+    {
+      category: '자유',
+      title: '세고랑 잘 되길',
+      commentNum: 1,
+      likeNum: 59,
+    },
+    {
+      category: '자유',
+      title: '첫 게시물 등록합니다',
+      commentNum: 14,
+      likeNum: 9,
+    },
+  ];
+
+  const freeData = [
+    {
+      category: '자유',
+      title: '3월 말까지 제발',
+      commentNum: 14,
+      likeNum: 9,
+    },
+    {
+      category: '자유',
+      title: '할 게 산더미 ?!',
+      commentNum: 5,
+      likeNum: 1,
+    },
+    {
+      category: '자유',
+      title: '식',
+      commentNum: 52,
+      likeNum: 133,
+    },
+    {
+      category: '자유',
+      title: '준',
+      commentNum: 23,
+      likeNum: 134,
+    },
+    {
+      category: '자유',
+      title: '엄',
+      commentNum: 55,
+      likeNum: 321,
+    },
+    {
+      category: '자유',
+      title: '어떻게 하면 더 예쁘게 하지? 누구라도 답을 알려줘',
+      commentNum: 4,
+      likeNum: 3,
+    },
+    {
+      category: '자유',
+      title: '제목 어디까지 길어질 수 있을까요? 알려주세요 제발요',
+      commentNum: 5,
+      likeNum: 20,
+    },
+    {
+      category: '자유',
+      title: '세고랑 잘 되길',
+      commentNum: 1,
+      likeNum: 59,
+    },
+    {
+      category: '자유',
+      title: '디자인은 알다가도 모르겠다',
+      commentNum: 5,
+      likeNum: 2,
+    },
+    {
+      category: '자유',
+      title: '첫 게시물 등록합니다',
+      commentNum: 14,
+      likeNum: 9,
+    },
+  ];
+
   return (
     <>
       <Header>
