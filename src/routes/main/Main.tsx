@@ -314,6 +314,75 @@ const Right__ShortCutItemTitle = styled.a`
   }
 `;
 
+const Right__BestContainer = styled.div`
+  margin-top: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+`;
+
+const Right__BestTitle = styled.span`
+  background-color: rgba(0, 0, 0, 0.03);
+  display: block;
+  padding: 20px 20px 15px;
+  font-size: 17px;
+  font-weight: 600;
+`;
+
+const Right__BestOptionWrapper = styled.div`
+  display: flex;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.3);
+`;
+
+const Right__BestOption = styled.div`
+  flex: 1;
+  text-align: center;
+  margin: 5px 0;
+  border-right: 2px solid rgba(0, 0, 0, 0.03);
+  padding: 10px 0;
+  cursor: pointer;
+
+  &:hover {
+    span {
+      color: ${(props) => props.theme.sejongCrimsonRed};
+    }
+  }
+  span {
+    color: rgba(0, 0, 0, 0.5);
+  }
+`;
+
+const Right__BestItemWrapper = styled.ul``;
+
+const Right__BestItem = styled.li`
+  display: flex;
+  align-items: center;
+  padding: 10px 0 8px 15px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+
+  span {
+    &:first-child {
+      width: 20px;
+      margin-right: 15px;
+      font-size: 25px;
+      font-weight: 600;
+      font-style: italic;
+      color: ${(props) => props.theme.accentColor};
+    }
+
+    &:last-child {
+      cursor: pointer;
+
+      &:hover {
+        color: ${(props) => props.theme.sejongCrimsonRed};
+      }
+    }
+  }
+`;
+
 function Main() {
   const userInfo = useRecoilValue(userInfoState);
   const resetUserInfo = useResetRecoilState(userInfoState);
@@ -600,6 +669,19 @@ function Main() {
               </Right__ShortCutItem>
             </Right__ShortCutWrapper>
           </Right__ShortCutContainer>
+          <Right__BestContainer>
+            <Right__BestTitle>주간 랭킹 TOP 5</Right__BestTitle>
+            <Right__BestOptionWrapper>
+              <Right__BestOption>
+                <span>조회순</span>
+              </Right__BestOption>
+              <Right__BestOption>
+                <span>추천순</span>
+              </Right__BestOption>
+            </Right__BestOptionWrapper>
+            <Right__BestItemWrapper>
+            </Right__BestItemWrapper>
+          </Right__BestContainer>
         </Main__Right>
       </MainContainer>
     </>
