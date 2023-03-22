@@ -13,6 +13,7 @@ import { useHistory } from 'react-router-dom';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import MainBoardItem from '../../components/MainBoardItem';
 import MainBestItem from '../../components/MainBestItem';
+import MainYoutubeItem from '../../components/MainYoutubeItem';
 
 const Header = styled.div`
   display: flex;
@@ -219,42 +220,6 @@ const MediaSejongWrapper = styled.div`
   display: flex;
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.01);
-`;
-
-const MediaSejongItem = styled.a`
-  flex: 1;
-  margin-right: 10px;
-  border-radius: 10px 10px 0 0;
-  padding: 10px;
-  cursor: pointer;
-
-  &:last-child {
-    margin-right: 0px;
-  }
-
-  &:hover {
-    background-color: #f2f2f2;
-
-    img {
-      transform: scale(1.02);
-    }
-
-    p {
-      color: ${(props) => props.theme.sejongCrimsonRed};
-    }
-  }
-`;
-
-const MediaSejongThumbNail = styled.img`
-  max-width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  transition: 0.2s;
-`;
-
-const MediaSejongDescription = styled.p`
-  margin: 10px 5px;
-  line-height: 20px;
 `;
 
 const Main__Right = styled.div`
@@ -669,6 +634,22 @@ function Main() {
               </Left__BoardItemWrapper>
             </Left__MainBoard>
           </Left__BoardWrapper>
+          <MediaSejongContainer>
+            <MediaSejongTitleContainer>
+              <MediaSejongTitle>세종대학교 유튜브</MediaSejongTitle>
+              <FontAwesomeIcon icon={faChevronRight} color="rgba(0,0,0,0.5)" />
+            </MediaSejongTitleContainer>
+            <MediaSejongWrapper>
+              {youtubeData.map((data, index) => (
+                <MainYoutubeItem
+                  key={index}
+                  thumbNail={data.thumbNail}
+                  title={data.title}
+                  link={data.link}
+                />
+              ))}
+            </MediaSejongWrapper>
+          </MediaSejongContainer>
         </Main__Left>
         <Main__Right>
           <UserContainer>
