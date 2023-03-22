@@ -195,6 +195,68 @@ const Left__BoardItemWrapper = styled.ul`
   padding: 10px 0;
   background-color: rgba(0, 0, 0, 0.01);
 `;
+
+const MediaSejongContainer = styled.div`
+  margin-top: 20px;
+`;
+
+const MediaSejongTitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px 30px 0 0;
+  padding: 15px 30px;
+  background-color: rgba(0, 0, 0, 0.05);
+`;
+
+const MediaSejongTitle = styled.p`
+  font-size: 18px;
+  font-weight: 600;
+`;
+
+const MediaSejongWrapper = styled.div`
+  display: flex;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.01);
+`;
+
+const MediaSejongItem = styled.a`
+  flex: 1;
+  margin-right: 10px;
+  border-radius: 10px 10px 0 0;
+  padding: 10px;
+  cursor: pointer;
+
+  &:last-child {
+    margin-right: 0px;
+  }
+
+  &:hover {
+    background-color: #f2f2f2;
+
+    img {
+      transform: scale(1.02);
+    }
+
+    p {
+      color: ${(props) => props.theme.sejongCrimsonRed};
+    }
+  }
+`;
+
+const MediaSejongThumbNail = styled.img`
+  max-width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  transition: 0.2s;
+`;
+
+const MediaSejongDescription = styled.p`
+  margin: 10px 5px;
+  line-height: 20px;
+`;
+
 const Main__Right = styled.div`
   margin-left: 30px;
 `;
