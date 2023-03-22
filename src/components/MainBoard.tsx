@@ -1,15 +1,16 @@
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import MainBoardItem from './MainBoardItem';
 
-const BoardContainer = styled.div`
+const BoardsContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 40px;
 `;
 
-const MainBoardWrapper = styled.div`
+const BoardWrapper = styled.div`
   width: 49%;
 `;
 
@@ -21,6 +22,7 @@ const BoardTitleContainer = styled.div`
   border-radius: 10px 30px 0 0;
   padding: 15px 30px;
   background-color: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
 `;
 
 const BoardTitle = styled.span`
@@ -44,22 +46,26 @@ interface IBoardData {
 interface IMainBoardProps {
   leftBoard: {
     leftTitle: string;
+    leftId: string;
     leftData: IBoardData[];
   };
   rightBoard: {
     rightTitle: string;
+    rightId: string;
     rightData: IBoardData[];
   };
 }
 
 function MainBoard({
-  leftBoard: { leftTitle, leftData },
-  rightBoard: { rightTitle, rightData },
+  leftBoard: { leftTitle, leftId, leftData },
+  rightBoard: { rightTitle, rightId, rightData },
 }: IMainBoardProps) {
+  const history = useHistory();
+
   return (
-    <BoardContainer>
-      <MainBoardWrapper>
-        <BoardTitleContainer>
+    <BoardsContainer>
+      <BoardWrapper>
+        <BoardTitleContainer onClick={() => history.push(`/board/${leftId}`)}>
           <BoardTitle>{leftTitle}</BoardTitle>
           <FontAwesomeIcon icon={faChevronRight} color="rgba(0,0,0,0.5)" />
         </BoardTitleContainer>
@@ -74,9 +80,9 @@ function MainBoard({
             />
           ))}
         </BoardItemWrapper>
-      </MainBoardWrapper>
-      <MainBoardWrapper>
-        <BoardTitleContainer>
+      </BoardWrapper>
+      <BoardWrapper>
+        <BoardTitleContainer onClick={() => history.push(`/board/${rightId}`)}>
           <BoardTitle>{rightTitle}</BoardTitle>
           <FontAwesomeIcon icon={faChevronRight} color="rgba(0,0,0,0.5)" />
         </BoardTitleContainer>
@@ -91,8 +97,8 @@ function MainBoard({
             />
           ))}
         </BoardItemWrapper>
-      </MainBoardWrapper>
-    </BoardContainer>
+      </BoardWrapper>
+    </BoardsContainer>
   );
 }
 

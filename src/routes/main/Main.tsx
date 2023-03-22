@@ -374,6 +374,7 @@ function Main() {
 
   const hotData = {
     title: 'HOT 게시판',
+    id: 'hot',
     data: [
       {
         category: '익명',
@@ -440,6 +441,7 @@ function Main() {
 
   const freeData = {
     title: '자유게시판',
+    id: 'bulletin',
     data: [
       {
         category: '자유',
@@ -592,8 +594,16 @@ function Main() {
             <CenterBanner src="images/banner.png" alt="centerBanner" />
           </BannerWrapper>
           <MainBoard
-            leftBoard={{ leftTitle: hotData.title, leftData: hotData.data }}
-            rightBoard={{ rightTitle: freeData.title, rightData: freeData.data }}
+            leftBoard={{
+              leftTitle: hotData.title,
+              leftId: hotData.id,
+              leftData: hotData.data,
+            }}
+            rightBoard={{
+              rightTitle: freeData.title,
+              rightId: freeData.id,
+              rightData: freeData.data,
+            }}
           />
           <MediaSejongContainer>
             <MediaSejongTitleContainer
