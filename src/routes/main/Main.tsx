@@ -268,7 +268,7 @@ const Right__NoticeContainer = styled.div`
   cursor: pointer;
 `;
 
-const Right__NoticeContent = styled.p`
+const Right__NoticeContent = styled.div`
   display: flex;
   justify-content: space-between;
   color: ${(props) => props.theme.sejongGray};
@@ -578,8 +578,9 @@ function Main() {
                 <FontAwesomeIcon icon={faChevronRight} color="rgba(0,0,0,0.5)" />
               </Left__BoardTitleContainer>
               <Left__BoardItemWrapper>
-                {hotData.map((data) => (
+                {hotData.map((data, index) => (
                   <MainBoardItem
+                    key={index}
                     category={data.category}
                     title={data.title}
                     commentNum={data.commentNum}
@@ -594,8 +595,9 @@ function Main() {
                 <FontAwesomeIcon icon={faChevronRight} color="rgba(0,0,0,0.5)" />
               </Left__BoardTitleContainer>
               <Left__BoardItemWrapper>
-                {freeData.map((data) => (
+                {freeData.map((data, index) => (
                   <MainBoardItem
+                    key={index}
                     category={data.category}
                     title={data.title}
                     commentNum={data.commentNum}
@@ -688,10 +690,10 @@ function Main() {
             <Right__BestItemWrapper>
               {isChoiceHits
                 ? topHitsData.map((data, index) => (
-                    <MainBestItem title={data} index={index} />
+                    <MainBestItem key={index} title={data} index={index} />
                   ))
                 : topLikesData.map((data, index) => (
-                    <MainBestItem title={data} index={index} />
+                    <MainBestItem key={index} title={data} index={index} />
                   ))}
             </Right__BestItemWrapper>
           </Right__BestContainer>
