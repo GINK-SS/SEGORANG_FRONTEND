@@ -334,21 +334,32 @@ const Right__BestOptionWrapper = styled.div`
   border-bottom: 1.5px solid rgba(0, 0, 0, 0.3);
 `;
 
-const Right__BestOption = styled.div`
+const Right__BestOption = styled.div<{ isActive: boolean }>`
   flex: 1;
   text-align: center;
   margin: 5px 0;
-  border-right: 2px solid rgba(0, 0, 0, 0.03);
   padding: 10px 0;
+  background-color: ${(props) => (props.isActive ? 'rgba(0,0,0,0.03)' : '#FFF')};
   cursor: pointer;
+
+  &:first-child {
+    border-right: 1.5px solid rgba(0, 0, 0, 0.05);
+  }
+
+  &:last-child {
+    border-left: 1.5px solid rgba(0, 0, 0, 0.05);
+  }
 
   &:hover {
     span {
       color: ${(props) => props.theme.sejongCrimsonRed};
+      opacity: ${(props) => (props.isActive ? '1' : '0.7')};
     }
   }
   span {
-    color: rgba(0, 0, 0, 0.5);
+    color: ${(props) =>
+      props.isActive ? props.theme.sejongCrimsonRed : 'rgba(0, 0, 0, 0.5)'};
+    font-weight: ${(props) => (props.isActive ? '600' : '400')};
   }
 `;
 
@@ -388,6 +399,7 @@ function Main() {
   const resetUserInfo = useResetRecoilState(userInfoState);
   const history = useHistory();
   const [search, setSearch] = useState('');
+  const [isChoiceHits, setIsChoiceHits] = useState(true);
 
   const logOut = () => {
     localStorage.removeItem('sgrUserToken');
@@ -672,14 +684,33 @@ function Main() {
           <Right__BestContainer>
             <Right__BestTitle>주간 랭킹 TOP 5</Right__BestTitle>
             <Right__BestOptionWrapper>
-              <Right__BestOption>
+              <Right__BestOption
+                isActive={isChoiceHits}
+                onClick={() => setIsChoiceHits(true)}
+              >
                 <span>조회순</span>
               </Right__BestOption>
-              <Right__BestOption>
+              <Right__BestOption
+                isActive={!isChoiceHits}
+                onClick={() => setIsChoiceHits(false)}
+              >
                 <span>추천순</span>
               </Right__BestOption>
             </Right__BestOptionWrapper>
             <Right__BestItemWrapper>
+              {isChoiceHits
+                ? topHitsData.map((data, index) => (
+                    <Right__BestItem>
+                      <span>{index + 1}</span>
+                      <span>{data.length > 16 ? `${data.slice(0, 17)}	…` : data}</span>
+                    </Right__BestItem>
+                  ))
+                : topLikesData.map((data, index) => (
+                    <Right__BestItem>
+                      <span>{index + 1}</span>
+                      <span>{data.length > 16 ? `${data.slice(0, 17)}	…` : data}</span>
+                    </Right__BestItem>
+                  ))}
             </Right__BestItemWrapper>
           </Right__BestContainer>
         </Main__Right>
