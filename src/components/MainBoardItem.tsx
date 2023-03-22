@@ -48,7 +48,7 @@ function MainBoardItem({ category, title, commentNum, likeNum }: IMainBoardItemP
       <BoardItemCTCWrapper>
         <BoardItemCategory>{category}</BoardItemCategory>
         <BoardItemTitle>
-          {title.length > 20 ? `${title.slice(0, 21)}...` : title}
+          {title.length > 20 ? `${title.slice(0, 21)}…` : title}
         </BoardItemTitle>
         <BoardItemCommentCount>[{commentNum}]</BoardItemCommentCount>
       </BoardItemCTCWrapper>

@@ -5,18 +5,12 @@ import MainBoardItem from './MainBoardItem';
 
 const BoardContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   margin-top: 40px;
 `;
 
 const MainBoardWrapper = styled.div`
-  width: 50%;
-  &:first-child {
-    margin-right: 10px;
-  }
-
-  &:last-child {
-    margin-left: 10px;
-  }
+  width: 49%;
 `;
 
 const BoardTitleContainer = styled.div`
