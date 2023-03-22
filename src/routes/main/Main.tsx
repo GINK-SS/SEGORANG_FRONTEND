@@ -201,7 +201,7 @@ const MediaSejongContainer = styled.div`
   margin-top: 20px;
 `;
 
-const MediaSejongTitleContainer = styled.div`
+const MediaSejongTitleContainer = styled.a`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -209,6 +209,8 @@ const MediaSejongTitleContainer = styled.div`
   border-radius: 10px 30px 0 0;
   padding: 15px 30px;
   background-color: rgba(0, 0, 0, 0.05);
+  color: #000;
+  cursor: pointer;
 `;
 
 const MediaSejongTitle = styled.p`
@@ -656,7 +658,10 @@ function Main() {
             </Left__MainBoard>
           </Left__BoardWrapper>
           <MediaSejongContainer>
-            <MediaSejongTitleContainer>
+            <MediaSejongTitleContainer
+              href="https://www.youtube.com/@channelsejongUCC/featured"
+              target="_blank"
+            >
               <MediaSejongTitle>세종대학교 유튜브</MediaSejongTitle>
               <FontAwesomeIcon icon={faChevronRight} color="rgba(0,0,0,0.5)" />
             </MediaSejongTitleContainer>
