@@ -34,6 +34,7 @@ const MediaSejongThumbNail = styled.img`
 const MediaSejongDescription = styled.p`
   margin: 10px 5px;
   line-height: 20px;
+  color: #333;
 `;
 
 interface IMainYoutubeItemProps {
@@ -44,7 +45,7 @@ interface IMainYoutubeItemProps {
 
 function MainYoutubeItem({ thumbNail, title, link }: IMainYoutubeItemProps) {
   return (
-    <MediaSejongItem href={link}>
+    <MediaSejongItem href={link} target="_blank">
       <MediaSejongThumbNail alt={title} src={thumbNail} />
 
       <MediaSejongDescription>{title}</MediaSejongDescription>
