@@ -12,6 +12,7 @@ import { userInfoState } from '../../atoms';
 import { useHistory } from 'react-router-dom';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import MainBoardItem from '../../components/MainBoardItem';
+import MainBestItem from '../../components/MainBestItem';
 
 const Header = styled.div`
   display: flex;
@@ -365,35 +366,6 @@ const Right__BestOption = styled.div<{ isActive: boolean }>`
 
 const Right__BestItemWrapper = styled.ul``;
 
-const Right__BestItem = styled.li`
-  display: flex;
-  align-items: center;
-  padding: 10px 0 8px 15px;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.03);
-  }
-
-  span {
-    &:first-child {
-      width: 20px;
-      margin-right: 15px;
-      font-size: 25px;
-      font-weight: 600;
-      font-style: italic;
-      color: ${(props) => props.theme.accentColor};
-    }
-
-    &:last-child {
-      cursor: pointer;
-
-      &:hover {
-        color: ${(props) => props.theme.sejongCrimsonRed};
-      }
-    }
-  }
-`;
-
 function Main() {
   const userInfo = useRecoilValue(userInfoState);
   const resetUserInfo = useResetRecoilState(userInfoState);
@@ -716,16 +688,10 @@ function Main() {
             <Right__BestItemWrapper>
               {isChoiceHits
                 ? topHitsData.map((data, index) => (
-                    <Right__BestItem>
-                      <span>{index + 1}</span>
-                      <span>{data.length > 16 ? `${data.slice(0, 17)}	…` : data}</span>
-                    </Right__BestItem>
+                    <MainBestItem title={data} index={index} />
                   ))
                 : topLikesData.map((data, index) => (
-                    <Right__BestItem>
-                      <span>{index + 1}</span>
-                      <span>{data.length > 16 ? `${data.slice(0, 17)}	…` : data}</span>
-                    </Right__BestItem>
+                    <MainBestItem title={data} index={index} />
                   ))}
             </Right__BestItemWrapper>
           </Right__BestContainer>
