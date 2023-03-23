@@ -3,6 +3,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { getUserInfo } from '../api';
 import { userInfoState } from '../atoms';
+import NormalBoard from './board/NormalBoard';
 import Login from './Login';
 import Main from './main/Main';
 import SignUp from './signUp/SignUp';
@@ -60,6 +61,12 @@ function Router() {
         <Route
           path={'/signUpForm'}
           component={() => (userInfo.accessToken ? <Redirect to={'/'} /> : <SignUp />)}
+        />
+        <Route
+          path={'/board/:title'}
+          component={() =>
+            userInfo.accessToken ? <NormalBoard /> : <Redirect to={'/login'} />
+          }
         />
         <Route
           path={'/'}
