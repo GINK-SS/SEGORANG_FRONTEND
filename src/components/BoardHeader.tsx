@@ -1,5 +1,7 @@
 import { useHistory } from 'react-router-dom';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { userInfoState } from '../atoms';
 
 const Header = styled.div`
   display: flex;
@@ -10,7 +12,7 @@ const Header = styled.div`
   justify-content: space-between;
 `;
 
-const Header__Left = styled.div``;
+const LeftContainer = styled.div``;
 
 const HeaderLogo = styled.span`
   font-family: 'Montserrat Alternates', sans-serif;
@@ -23,21 +25,78 @@ const HeaderLogo = styled.span`
   cursor: pointer;
 `;
 
-const Header__Right = styled.div`
-  position: relative;
+const RightContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 70px;
+  justify-content: space-around;
+`;
+
+const UserNickname = styled.span`
+  font-size: 20px;
+  font-weight: 600;
+  color: ${(props) => props.theme.sejongCrimsonRed};
+`;
+
+const NavOptionWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
 
+const NavOption = styled.nav`
+  margin-left: 30px;
+  border-left: 2px solid rgba(0, 0, 0, 0.1);
+  padding-left: 30px;
+
+  &:first-child {
+    margin-left: 0;
+    border: 0;
+    padding-left: 0;
+  }
+`;
+
+const NavOptionTitle = styled.span`
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+
+  &:hover {
+    color: ${(props) => props.theme.sejongCrimsonRed};
+  }
+`;
+
 function BoardHeader() {
+  const userInfo = useRecoilValue(userInfoState);
+  const resetUserInfo = useResetRecoilState(userInfoState);
   const history = useHistory();
+
+  const logOut = () => {
+    localStorage.removeItem('sgrUserToken');
+    resetUserInfo();
+    history.replace('/login');
+  };
 
   return (
     <Header>
-      <Header__Left>
+      <LeftContainer>
         <HeaderLogo onClick={() => history.push('/')}>SEGORANG。</HeaderLogo>
-      </Header__Left>
-      <Header__Right></Header__Right>
+      </LeftContainer>
+      <RightContainer>
+        <UserNickname>{`${userInfo.userNickname} :-)`}</UserNickname>
+        <NavOptionWrapper>
+          <NavOption>
+            <NavOptionTitle>북마크</NavOptionTitle>
+          </NavOption>
+          <NavOption>
+            <NavOptionTitle>마이페이지</NavOptionTitle>
+          </NavOption>
+          <NavOption>
+            <NavOptionTitle onClick={logOut}>로그아웃</NavOptionTitle>
+          </NavOption>
+        </NavOptionWrapper>
+      </RightContainer>
     </Header>
   );
 }
