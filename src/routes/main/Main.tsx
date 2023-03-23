@@ -82,49 +82,6 @@ const HeaderSearch__Button = styled.div`
   }
 `;
 
-const NavContainerOuter = styled.div`
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-top: 1.5px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 2.5px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-`;
-
-const NavContainer = styled.nav`
-  display: flex;
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 20px 25px;
-  justify-content: space-evenly;
-`;
-
-const NavWrapper = styled.ul`
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  border-left: 2px solid rgba(0, 0, 0, 0.05);
-  align-items: center;
-
-  &:last-child {
-    border-right: 2px solid rgba(0, 0, 0, 0.05);
-  }
-`;
-
-const NavItem = styled.li`
-  margin-bottom: 20px;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.8);
-  cursor: pointer;
-
-  &:hover {
-    color: ${(props) => props.theme.accentColor};
-  }
-
-  &:last-child {
-    margin-bottom: 0px;
-  }
-`;
-
 const MainContainer = styled.div`
   display: flex;
   max-width: 1300px;
@@ -563,30 +520,7 @@ function Main() {
           </HeaderSearch__Button>
         </Header__Right>
       </Header>
-      <NavContainerOuter>
-        <NavContainer>
-          <NavWrapper>
-            <NavItem>HOT 게시판</NavItem>
-            <NavItem>자유 게시판</NavItem>
-            <NavItem>익명 게시판</NavItem>
-            <NavItem>재학생 게시판</NavItem>
-            <NavItem>졸업생 게시판</NavItem>
-          </NavWrapper>
-          <NavWrapper>
-            <NavItem>강의 평가</NavItem>
-            <NavItem>세종 뉴스</NavItem>
-          </NavWrapper>
-          <NavWrapper>
-            <NavItem>동아리</NavItem>
-            <NavItem>스터디</NavItem>
-            <NavItem>장터</NavItem>
-          </NavWrapper>
-          <NavWrapper>
-            <NavItem>공지사항</NavItem>
-            <NavItem>운영자 문의</NavItem>
-          </NavWrapper>
-        </NavContainer>
-      </NavContainerOuter>
+      <NavContainer />
       <MainContainer>
         <Main__Left>
           <BannerWrapper>
