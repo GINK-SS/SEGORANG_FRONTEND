@@ -41,10 +41,11 @@ const BoardItem = styled.li`
   }
 `;
 
-const Category = styled.span`
+const Category = styled.span<{ hasCategory: boolean }>`
   width: 70px;
   border-right: 1px solid rgba(0, 0, 0, 0.3);
   text-align: center;
+  display: ${(props) => (props.hasCategory ? 'block' : 'none')};
 `;
 
 const LikeNum = styled.span`
@@ -83,10 +84,47 @@ const Date = styled.span`
   color: rgba(0, 0, 0, 0.5);
 `;
 
-function BoardItemList() {
+interface IBoardItemProps {
+  category?: string;
+  likeNum: number;
+  title: string;
+  commentNum: number;
+  writer: string;
+  viewNum: number;
+  date: string;
+}
+
+interface IBoardItemListProps {
+  boardItem: IBoardItemProps[];
+}
+
+function BoardItemList({ boardItem }: IBoardItemListProps) {
+  const hasCategory = boardItem[0].category ? true : false;
+
   return (
     <BoardContainer>
       <BoardItemWrapper>
+        <BoardItem>
+          <Category hasCategory={hasCategory}>분류</Category>
+          <LikeNum>추천</LikeNum>
+          <Title>제목</Title>
+          <Writer>작성자</Writer>
+          <ViewNum>조회</ViewNum>
+          <Date>날짜</Date>
+        </BoardItem>
+        {boardItem.map((item, index) => (
+          <BoardItem key={index}>
+            <Category hasCategory={hasCategory}>{item.category}</Category>
+            <LikeNum>{item.likeNum}</LikeNum>
+            <Title>
+              {item.title}
+              <CommentNum>{`[${item.commentNum}]`}</CommentNum>
+            </Title>
+            <Writer>{item.writer}</Writer>
+            <ViewNum>{item.viewNum}</ViewNum>
+            <Date>{item.date}</Date>
+          </BoardItem>
+        ))}
       </BoardItemWrapper>
     </BoardContainer>
   );
