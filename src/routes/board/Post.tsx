@@ -1,4 +1,6 @@
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { postInfoState } from '../../atoms';
 import BoardHeader from '../../components/BoardHeader';
 import NavContainer from '../../components/NavContainer';
 
@@ -68,8 +70,32 @@ const ContentWrapper = styled.div`
 const ContentText = styled.p``;
 
 function Post() {
+  const postInfo = useRecoilValue(postInfoState);
   return (
     <>
+      <BoardHeader />
+      <NavContainer />
+      <Container>
+        <TopWrapper>
+          <BoardTitle>{postInfo.boardTitle}</BoardTitle>
+          <PostTitle>{postInfo.postTitle}</PostTitle>
+          <PostTopWrapper>
+            <PostTopLeft>
+              <Writer>{postInfo.writer}</Writer>
+              <Date>{postInfo.date}</Date>
+            </PostTopLeft>
+            <PostTopRight>
+              <ViewNum>{`조회: ${postInfo.viewNum}`}</ViewNum>
+              <LikeNum>{`추천: ${postInfo.likeNum}`}</LikeNum>
+            </PostTopRight>
+          </PostTopWrapper>
+        </TopWrapper>
+        <ContentWrapper>
+          {postInfo.postContent.map((sentence, index) => (
+            <ContentText key={index}>{sentence}</ContentText>
+          ))}
+        </ContentWrapper>
+      </Container>
     </>
   );
 }
