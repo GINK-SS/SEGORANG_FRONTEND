@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const BoardContainer = styled.div`
   max-width: 1300px;
-  margin: 20px auto;
+  margin: 40px auto 20px;
   padding: 0 25px;
 `;
 
@@ -54,7 +54,7 @@ const BoardItem = styled.li`
 `;
 
 const Category = styled.span<{ hasCategory: boolean }>`
-  width: 70px;
+  width: 90px;
   border-right: 1px solid rgba(0, 0, 0, 0.3);
   text-align: center;
   display: ${(props) => (props.hasCategory ? 'block' : 'none')};
@@ -96,6 +96,14 @@ const Date = styled.span`
   color: rgba(0, 0, 0, 0.5);
 `;
 
+const NoItem = styled.div`
+  padding: 150px 0;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+  text-align: center;
+`;
+
+const NoItemText = styled.p``;
+
 interface IBoardItemProps {
   category?: string;
   likeNum: number;
@@ -111,7 +119,8 @@ interface IBoardItemListProps {
 }
 
 function BoardItemList({ boardItem }: IBoardItemListProps) {
-  const hasCategory = boardItem[0].category ? true : false;
+  const hasCategory =
+    boardItem.length !== 0 ? (boardItem[0].category ? true : false) : false;
 
   return (
     <BoardContainer>
@@ -124,19 +133,25 @@ function BoardItemList({ boardItem }: IBoardItemListProps) {
           <ViewNum>조회</ViewNum>
           <Date>날짜</Date>
         </BoardItem>
-        {boardItem.map((item, index) => (
-          <BoardItem key={index}>
-            <Category hasCategory={hasCategory}>{item.category}</Category>
-            <LikeNum>{item.likeNum}</LikeNum>
-            <Title>
-              {item.title}
-              <CommentNum>{`[${item.commentNum}]`}</CommentNum>
-            </Title>
-            <Writer>{item.writer}</Writer>
-            <ViewNum>{item.viewNum}</ViewNum>
-            <Date>{item.date}</Date>
-          </BoardItem>
-        ))}
+        {boardItem.length !== 0 ? (
+          boardItem.map((item, index) => (
+            <BoardItem key={index}>
+              <Category hasCategory={hasCategory}>{item.category}</Category>
+              <LikeNum>{item.likeNum}</LikeNum>
+              <Title>
+                {item.title}
+                <CommentNum>{`[${item.commentNum}]`}</CommentNum>
+              </Title>
+              <Writer>{item.writer}</Writer>
+              <ViewNum>{item.viewNum}</ViewNum>
+              <Date>{item.date}</Date>
+            </BoardItem>
+          ))
+        ) : (
+          <NoItem>
+            <NoItemText>등록된 글이 없습니다</NoItemText>
+          </NoItem>
+        )}
       </BoardItemWrapper>
     </BoardContainer>
   );

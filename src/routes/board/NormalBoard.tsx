@@ -85,7 +85,7 @@ function NormalBoard() {
     },
   ];
 
-  const [boardItems, setBoardItems] = useState<IBoardItem[]>(hotData);
+  const [boardItems, setBoardItems] = useState<IBoardItem[]>([]);
   const { title }: IParams = useParams();
 
   const getBoardItems = () => {
@@ -94,6 +94,7 @@ function NormalBoard() {
     // 일단 아래로 대체
     if (title === 'hot') setBoardItems(hotData);
     else if (title === 'bulletin') setBoardItems(bulletinData);
+    else setBoardItems([]);
   };
 
   useEffect(() => {
