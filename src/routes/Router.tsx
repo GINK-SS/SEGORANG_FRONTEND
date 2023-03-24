@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil';
 import { getUserInfo } from '../api';
 import { userInfoState } from '../atoms';
 import NormalBoard from './board/NormalBoard';
+import Post from './board/Post';
 import Login from './Login';
 import Main from './main/Main';
 import SignUp from './signUp/SignUp';
@@ -63,12 +64,19 @@ function Router() {
           component={() => (userInfo.accessToken ? <Redirect to={'/'} /> : <SignUp />)}
         />
         <Route
+          exact
           path={'/board/:title'}
           component={() =>
             userInfo.accessToken ? <NormalBoard /> : <Redirect to={'/login'} />
           }
         />
         <Route
+          exact
+          path={'/board/:title/:postId'}
+          component={() => (userInfo.accessToken ? <Post /> : <Redirect to={'/login'} />)}
+        />
+        <Route
+          exact
           path={'/'}
           component={() => (userInfo.accessToken ? <Main /> : <Redirect to={'/login'} />)}
         />

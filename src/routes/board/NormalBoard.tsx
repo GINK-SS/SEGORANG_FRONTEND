@@ -10,6 +10,7 @@ interface IParams {
 }
 
 interface IBoardItem {
+  boardCategory: string;
   category?: string;
   likeNum: number;
   title: string;
@@ -17,11 +18,13 @@ interface IBoardItem {
   writer: string;
   viewNum: number;
   date: string;
+  postNum: number;
 }
 
 function NormalBoard() {
   const hotData = [
     {
+      boardCategory: 'club',
       category: '동아리',
       likeNum: 13,
       title: '동아리 홍보 한번 하겠습니다 !',
@@ -29,8 +32,10 @@ function NormalBoard() {
       writer: '동아리요정',
       viewNum: 196,
       date: '52분 전',
+      postNum: 4,
     },
     {
+      boardCategory: 'bulletin',
       category: '자유',
       likeNum: 241,
       title: '최치열 강의 들어보신 분 있나요? 1조원의 남자 최치열입니다.',
@@ -38,8 +43,10 @@ function NormalBoard() {
       writer: '자유게시판일타강사',
       viewNum: 1465,
       date: '14:23',
+      postNum: 3,
     },
     {
+      boardCategory: 'notice',
       category: '공지',
       likeNum: 29,
       title: '세고랑 관련하여 공지 남깁니다.',
@@ -47,8 +54,10 @@ function NormalBoard() {
       writer: '운영자',
       viewNum: 146,
       date: '23.03.23',
+      postNum: 2,
     },
     {
+      boardCategory: 'anonymous',
       category: '익명',
       likeNum: 1326,
       title: '안녕하세요, 아이유 입니다.',
@@ -56,32 +65,39 @@ function NormalBoard() {
       writer: '아이유',
       viewNum: 14642,
       date: '23.03.23',
+      postNum: 1,
     },
   ];
   const bulletinData = [
     {
+      boardCategory: 'bulletin',
       likeNum: 2,
       title: '분류 없는 게시글들',
       commentNum: 3,
       writer: '운영자',
       viewNum: 146,
       date: '23.03.23',
+      postNum: 3,
     },
     {
+      boardCategory: 'bulletin',
       likeNum: 54,
       title: '예를 들어 공지 같은 것들',
       commentNum: 16,
       writer: '운영자',
       viewNum: 161,
       date: '23.03.23',
+      postNum: 2,
     },
     {
+      boardCategory: 'bulletin',
       likeNum: 24,
       title: '안녕하세요 공지 남깁니다.',
       commentNum: 23,
       writer: '운영자',
       viewNum: 146,
       date: '23.03.23',
+      postNum: 1,
     },
   ];
 

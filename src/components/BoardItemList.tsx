@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const BoardContainer = styled.div`
@@ -39,15 +40,18 @@ const BoardItem = styled.li`
       background-color: #f2f2f2;
     }
 
-    span {
+    span,
+    a {
       padding-top: 15px;
       padding-bottom: 15px;
+    }
 
-      &:nth-child(3) {
-        cursor: pointer;
-        &:hover {
-          color: ${(props) => props.theme.sejongCrimsonRed};
-        }
+    a {
+      flex: 1;
+      color: #000;
+      cursor: pointer;
+      &:hover {
+        color: ${(props) => props.theme.sejongCrimsonRed};
       }
     }
   }
@@ -105,6 +109,7 @@ const NoItem = styled.div`
 const NoItemText = styled.p``;
 
 interface IBoardItemProps {
+  boardCategory: string;
   category?: string;
   likeNum: number;
   title: string;
@@ -112,6 +117,7 @@ interface IBoardItemProps {
   writer: string;
   viewNum: number;
   date: string;
+  postNum: number;
 }
 
 interface IBoardItemListProps {
@@ -138,10 +144,12 @@ function BoardItemList({ boardItem }: IBoardItemListProps) {
             <BoardItem key={index}>
               <Category hasCategory={hasCategory}>{item.category}</Category>
               <LikeNum>{item.likeNum}</LikeNum>
-              <Title>
-                {item.title}
-                <CommentNum>{`[${item.commentNum}]`}</CommentNum>
-              </Title>
+              <Link to={`${item.boardCategory}/${item.postNum}`}>
+                <Title>
+                  {item.title}
+                  <CommentNum>{`[${item.commentNum}]`}</CommentNum>
+                </Title>
+              </Link>
               <Writer>{item.writer}</Writer>
               <ViewNum>{item.viewNum}</ViewNum>
               <Date>{item.date}</Date>
