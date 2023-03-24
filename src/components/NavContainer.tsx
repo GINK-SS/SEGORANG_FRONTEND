@@ -32,11 +32,14 @@ const Wrapper = styled.ul`
 const Item = styled.li`
   margin-bottom: 20px;
   font-weight: 500;
-  color: rgba(0, 0, 0, 0.8);
   cursor: pointer;
 
-  &:hover {
-    color: ${(props) => props.theme.accentColor};
+  a {
+    color: rgba(0, 0, 0, 0.8);
+
+    &:hover {
+      color: ${(props) => props.theme.accentColor};
+    }
   }
 
   &:last-child {
@@ -55,22 +58,51 @@ function NavContainer() {
           <Item>
             <Link to="/board/bulletin">자유 게시판</Link>
           </Item>
-          <Item>익명 게시판</Item>
-          <Item>재학생 게시판</Item>
-          <Item>졸업생 게시판</Item>
+          <Item>
+            <Link to={'/board/anonymous'}>익명 게시판</Link>
+          </Item>
+          <Item>
+            <Link to={'/board/student'}>재학생 게시판</Link>
+          </Item>
+          <Item>
+            <Link to={'/board/graduate'}>졸업생 게시판</Link>
+          </Item>
         </Wrapper>
         <Wrapper>
-          <Item>강의 평가</Item>
-          <Item>세종 뉴스</Item>
+          <Item>
+            <Link to={'/board/lecture-evaluation'}>강의 평가</Link>
+          </Item>
+          <Item>
+            <Link to={'/board/sejong-news'}>세종 뉴스</Link>
+          </Item>
+          <Item>
+            <Link to={'/board/sejong-council'}>세종 학생회</Link>
+          </Item>
         </Wrapper>
         <Wrapper>
-          <Item>동아리</Item>
-          <Item>스터디</Item>
-          <Item>장터</Item>
+          <Item>
+            <Link to={'/board/club'}>동아리</Link>
+          </Item>
+          <Item>
+            <Link to={'/board/study'}>스터디</Link>
+          </Item>
+          <Item>
+            <Link to={'/board/market'}>장터</Link>
+          </Item>
+          <Item>
+            <Link to={'/board/job'}>알바 · 과외</Link>
+          </Item>
+          <Item>
+            <Link to={'/board/travel'}>여행</Link>
+          </Item>
         </Wrapper>
         <Wrapper>
-          <Item>공지사항</Item>
-          <Item>운영자 문의</Item>
+          <Item>
+            <Link to={'/board/notice'}>공지사항</Link>
+          </Item>
+          <Item>
+            <Link to={'/board/inquiry'}>운영자 문의</Link>
+          </Item>
         </Wrapper>
       </Container>
     </ContainerOuter>
