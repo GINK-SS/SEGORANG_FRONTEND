@@ -61,6 +61,12 @@ const LikeNum = styled.p`
   margin-left: 10px;
 `;
 
+const ContentWrapper = styled.div`
+  padding: 50px;
+`;
+
+const ContentText = styled.p``;
+
 function Post() {
   return (
     <>
