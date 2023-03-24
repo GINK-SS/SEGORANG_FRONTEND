@@ -1,4 +1,10 @@
-import { faMagnifyingGlass, faPen, faX } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCaretLeft,
+  faCaretRight,
+  faMagnifyingGlass,
+  faPen,
+  faX,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -104,6 +110,36 @@ const WriteText = styled.p`
   margin-left: 10px;
 `;
 
+const PageContainer = styled.div`
+  display: flex;
+  margin: 40px auto;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PageIcon = styled.div`
+  margin: 0 15px;
+  padding: 5px;
+  transform: scale(2);
+  cursor: pointer;
+
+  &:hover {
+    color: ${(props) => props.theme.sejongCrimsonRed};
+  }
+`;
+
+const PageNumber = styled.span<{ isCurrent: boolean }>`
+  margin: 0 15px;
+  padding: 5px;
+  font-size: 20px;
+  color: ${(props) => (props.isCurrent ? props.theme.accentColor : '#000')};
+  cursor: pointer;
+
+  &:hover {
+    color: ${(props) => props.theme.sejongCrimsonRed};
+  }
+`;
+
 function BoardListFooter() {
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState('titleContent');
@@ -116,6 +152,8 @@ function BoardListFooter() {
     { id: 1, name: '제목', value: 'title' },
     { id: 2, name: '작성자', value: 'writer' },
   ];
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 639];
 
   return (
     <Container>
@@ -153,6 +191,34 @@ function BoardListFooter() {
           <WriteText>쓰기</WriteText>
         </WriteBtn>
       </UpperBox>
+      <PageContainer>
+        <PageIcon>
+          <FontAwesomeIcon icon={faCaretLeft} />
+        </PageIcon>
+        {pageNumbers.map((number, index) => {
+          if (index === 10) return;
+          return (
+            <PageNumber
+              key={number}
+              isCurrent={currentPage === number}
+              onClick={() => setCurrentPage(number)}
+            >
+              {number}
+            </PageNumber>
+          );
+        })}
+        ..
+        <PageNumber
+          key={pageNumbers[10]}
+          isCurrent={currentPage === pageNumbers[10]}
+          onClick={() => setCurrentPage(pageNumbers[10])}
+        >
+          {pageNumbers[10]}
+        </PageNumber>
+        <PageIcon>
+          <FontAwesomeIcon icon={faCaretRight} />
+        </PageIcon>
+      </PageContainer>
     </Container>
   );
 }
