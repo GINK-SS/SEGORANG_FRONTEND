@@ -49,8 +49,12 @@ function NavContainer() {
     <ContainerOuter>
       <Container>
         <Wrapper>
-          <Item>HOT 게시판</Item>
-          <Item>자유 게시판</Item>
+          <Item>
+            <Link to="/board/hot">HOT 게시판</Link>
+          </Item>
+          <Item>
+            <Link to="/board/bulletin">자유 게시판</Link>
+          </Item>
           <Item>익명 게시판</Item>
           <Item>재학생 게시판</Item>
           <Item>졸업생 게시판</Item>

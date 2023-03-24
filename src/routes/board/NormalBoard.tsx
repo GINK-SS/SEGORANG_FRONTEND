@@ -1,7 +1,23 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import BoardHeader from '../../components/BoardHeader';
 import BoardItemList from '../../components/BoardItemList';
 import BoardListFooter from '../../components/BoardListFooter';
 import NavContainer from '../../components/NavContainer';
+
+interface IParams {
+  title: string;
+}
+
+interface IBoardItem {
+  category?: string;
+  likeNum: number;
+  title: string;
+  commentNum: number;
+  writer: string;
+  viewNum: number;
+  date: string;
+}
 
 function NormalBoard() {
   const hotData = [
@@ -42,7 +58,7 @@ function NormalBoard() {
       date: '23.03.23',
     },
   ];
-  const newData = [
+  const bulletinData = [
     {
       likeNum: 2,
       title: '분류 없는 게시글들',
@@ -68,11 +84,27 @@ function NormalBoard() {
       date: '23.03.23',
     },
   ];
+
+  const [boardItems, setBoardItems] = useState<IBoardItem[]>(hotData);
+  const { title }: IParams = useParams();
+
+  const getBoardItems = () => {
+    // toDo
+    // param으로 받은 title로 API 연결해서 게시판 글 데이터 받아오기
+    // 일단 아래로 대체
+    if (title === 'hot') setBoardItems(hotData);
+    else if (title === 'bulletin') setBoardItems(bulletinData);
+  };
+
+  useEffect(() => {
+    getBoardItems();
+  }, [title]);
+
   return (
     <>
       <BoardHeader />
       <NavContainer />
-      <BoardItemList boardItem={hotData} />
+      <BoardItemList boardItem={boardItems} />
       <BoardListFooter />
     </>
   );
