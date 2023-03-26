@@ -6,9 +6,12 @@ import { worker } from './mocks/browser';
 import { theme } from './theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-worker.start({
-  onUnhandledRequest: 'bypass',
-});
+
+if (process.env.REACT_APP_USE_MOCK) {
+  worker.start({
+    onUnhandledRequest: 'bypass',
+  });
+}
 
 root.render(
   <RecoilRoot>
