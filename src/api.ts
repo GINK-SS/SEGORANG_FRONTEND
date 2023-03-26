@@ -19,6 +19,12 @@ interface ILoginFormData {
 }
 
 const BASE_URL = `http://scof.link`;
+interface IGetPostData {
+  boardTitle: string;
+  postId: number;
+  accessToken: string;
+}
+
 
 export const fetchSJAuth = ({ studentId, studentPw }: ISJAuthFormData) => {
   return fetch(`${BASE_URL}/api/auth/sejong`, {
@@ -100,6 +106,31 @@ export const fetchLogin = async ({ userId, userPw }: ILoginFormData) => {
 
 export const getUserInfo = async (accessToken: string) => {
   const response = await fetch(`${BASE_URL}/api/v1/user`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  return await response.json();
+};
+
+// MOCK
+export const getBoardList = async (boardTitle: string, accessToken: string) => {
+  const response = await fetch(`${BASE_URL}/api/board/${boardTitle}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  return await response.json();
+};
+
+export const getPost = async ({ boardTitle, postId, accessToken }: IGetPostData) => {
+  const response = await fetch(`${BASE_URL}/api/board/${boardTitle}/${postId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
