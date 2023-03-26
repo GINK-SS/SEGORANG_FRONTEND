@@ -1,5 +1,5 @@
 import { rest, RestRequest } from 'msw';
-import { bulletinBoardData, hotBoardData } from '../mockData';
+import { getBulletinBoardData, getHotBoardData } from '../mockData';
 
 const BASE_URL = `http://scof.link:7000`;
 
@@ -20,8 +20,8 @@ type IBoardItems = {
 };
 
 const boardItems: IBoardItems = {
-  hot: { data: hotBoardData },
-  bulletin: { data: bulletinBoardData },
+  hot: { data: getHotBoardData() },
+  bulletin: { data: getBulletinBoardData() },
 };
 
 export const boardHandlers = [
