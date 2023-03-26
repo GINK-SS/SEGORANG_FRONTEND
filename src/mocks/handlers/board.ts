@@ -6,15 +6,15 @@ const BASE_URL = `http://scof.link:7000`;
 type IBoardItems = {
   [key: string]: {
     data: {
-      boardCategory: string;
-      category?: string;
+      boardTitle: string;
+      postCategory?: string;
       likeNum: number;
-      title: string;
+      postTitle: string;
       commentNum: number;
       writer: string;
       viewNum: number;
       date: string;
-      postNum: number;
+      postId: string;
     }[];
   };
 };
@@ -58,9 +58,7 @@ export const boardHandlers = [
     (req: RestRequest<{}, { boardTitle: string; postId: string }>, res, ctx) => {
       const { boardTitle, postId } = req.params;
 
-      return res(
-        ctx.json(getPostData({ boardCategory: boardTitle, postNum: Number(postId) }))
-      );
+      return res(ctx.json(getPostData({ boardTitle, postId })));
     }
   ),
 ];

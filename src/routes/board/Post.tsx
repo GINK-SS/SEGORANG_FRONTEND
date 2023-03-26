@@ -73,7 +73,7 @@ const ContentWrapper = styled.div`
 const ContentText = styled.p``;
 
 interface IPostParams {
-  title: string;
+  boardTitle: string;
   postId: string;
 }
 
@@ -84,7 +84,7 @@ interface IPostInfo {
   date: string;
   viewNum: number;
   likeNum: number;
-  postContent: string[];
+  content: string[];
 }
 
 function Post() {
@@ -96,14 +96,14 @@ function Post() {
     date: '',
     viewNum: 0,
     likeNum: 0,
-    postContent: [],
+    content: [],
   });
-  const { title, postId }: IPostParams = useParams();
+  const { boardTitle, postId }: IPostParams = useParams();
 
   const getPostInfo = async () => {
     const response = await getPost({
-      boardTitle: title,
-      postId: Number(postId),
+      boardTitle,
+      postId,
       accessToken: userInfo.accessToken,
     });
 
@@ -112,7 +112,7 @@ function Post() {
 
   useEffect(() => {
     getPostInfo();
-  }, [title, postId]);
+  }, [boardTitle, postId]);
 
   return (
     <>
@@ -134,7 +134,7 @@ function Post() {
           </PostTopWrapper>
         </TopWrapper>
         <ContentWrapper>
-          {postInfo.postContent.map((sentence, index) => (
+          {postInfo.content.map((sentence, index) => (
             <ContentText key={index}>{sentence}</ContentText>
           ))}
         </ContentWrapper>

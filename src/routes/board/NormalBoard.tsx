@@ -13,15 +13,15 @@ interface IParams {
 }
 
 interface IBoardItem {
-  boardCategory: string;
+  boardTitle: string;
   category?: string;
   likeNum: number;
-  title: string;
+  postTitle: string;
   commentNum: number;
   writer: string;
   viewNum: number;
   date: string;
-  postNum: number;
+  postId: string;
 }
 
 function NormalBoard() {

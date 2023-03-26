@@ -109,15 +109,15 @@ const NoItem = styled.div`
 const NoItemText = styled.p``;
 
 interface IBoardItemProps {
-  boardCategory: string;
-  category?: string;
+  boardTitle: string;
+  postCategory?: string;
   likeNum: number;
-  title: string;
+  postTitle: string;
   commentNum: number;
   writer: string;
   viewNum: number;
   date: string;
-  postNum: number;
+  postId: string;
 }
 
 interface IBoardItemListProps {
@@ -126,7 +126,7 @@ interface IBoardItemListProps {
 
 function BoardItemList({ boardItem }: IBoardItemListProps) {
   const hasCategory =
-    boardItem.length !== 0 ? (boardItem[0]?.category ? true : false) : false;
+    boardItem.length !== 0 ? (boardItem[0]?.postCategory ? true : false) : false;
 
   return (
     <BoardContainer>
@@ -142,11 +142,11 @@ function BoardItemList({ boardItem }: IBoardItemListProps) {
         {boardItem.length !== 0 ? (
           boardItem.map((item, index) => (
             <BoardItem key={index}>
-              <Category hasCategory={hasCategory}>{item.category}</Category>
+              <Category hasCategory={hasCategory}>{item.postCategory}</Category>
               <LikeNum>{item.likeNum}</LikeNum>
-              <Link to={`${item.boardCategory}/${item.postNum}`}>
+              <Link to={`${item.boardTitle}/${item.postId}`}>
                 <Title>
-                  {item.title}
+                  {item.postTitle}
                   <CommentNum>{`[${item.commentNum}]`}</CommentNum>
                 </Title>
               </Link>

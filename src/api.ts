@@ -18,13 +18,13 @@ interface ILoginFormData {
   userPw: string;
 }
 
-const BASE_URL = `http://scof.link`;
 interface IGetPostData {
   boardTitle: string;
-  postId: number;
+  postId: string;
   accessToken: string;
 }
 
+const BASE_URL = `http://scof.link:7000`;
 
 export const fetchSJAuth = ({ studentId, studentPw }: ISJAuthFormData) => {
   return fetch(`${BASE_URL}/api/auth/sejong`, {
