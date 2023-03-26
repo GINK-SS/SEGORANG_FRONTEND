@@ -65,7 +65,7 @@ function Router() {
         />
         <Route
           exact
-          path={'/board/:title'}
+          path={'/board/:boardTitle'}
           component={() =>
             userInfo.accessToken ? <NormalBoard /> : <Redirect to={'/login'} />
           }
