@@ -1,6 +1,9 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { postInfoState } from '../../atoms';
+import { getPost } from '../../api';
+import { userInfoState } from '../../atoms';
 import BoardHeader from '../../components/BoardHeader';
 import NavContainer from '../../components/NavContainer';
 
@@ -27,7 +30,7 @@ const PostTitle = styled.p`
   text-align: center;
   font-size: 28px;
   font-weight: 500;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 `;
 
 const PostTopWrapper = styled.div`
@@ -70,14 +73,8 @@ const ContentWrapper = styled.div`
 const ContentText = styled.p``;
 
 interface IPostParams {
-  boardTitle: string;
+  title: string;
   postId: string;
-}
-
-interface IGetPostData {
-  boardTitle: string;
-  postId: number;
-  accessToken: string;
 }
 
 interface IPostInfo {
@@ -92,12 +89,20 @@ interface IPostInfo {
 
 function Post() {
   const userInfo = useRecoilValue(userInfoState);
-  const [postInfo, setPostInfo] = useState<IPostInfo>({} as IPostInfo);
-  const { boardTitle, postId }: IPostParams = useParams();
+  const [postInfo, setPostInfo] = useState<IPostInfo>({
+    boardTitle: '',
+    postTitle: '',
+    writer: '',
+    date: '',
+    viewNum: 0,
+    likeNum: 0,
+    postContent: [],
+  });
+  const { title, postId }: IPostParams = useParams();
 
   const getPostInfo = async () => {
     const response = await getPost({
-      boardTitle,
+      boardTitle: title,
       postId: Number(postId),
       accessToken: userInfo.accessToken,
     });
@@ -107,7 +112,7 @@ function Post() {
 
   useEffect(() => {
     getPostInfo();
-  }, [boardTitle, postId]);
+  }, [title, postId]);
 
   return (
     <>
