@@ -69,8 +69,46 @@ const ContentWrapper = styled.div`
 
 const ContentText = styled.p``;
 
+interface IPostParams {
+  boardTitle: string;
+  postId: string;
+}
+
+interface IGetPostData {
+  boardTitle: string;
+  postId: number;
+  accessToken: string;
+}
+
+interface IPostInfo {
+  boardTitle: string;
+  postTitle: string;
+  writer: string;
+  date: string;
+  viewNum: number;
+  likeNum: number;
+  postContent: string[];
+}
+
 function Post() {
-  const postInfo = useRecoilValue(postInfoState);
+  const userInfo = useRecoilValue(userInfoState);
+  const [postInfo, setPostInfo] = useState<IPostInfo>({} as IPostInfo);
+  const { boardTitle, postId }: IPostParams = useParams();
+
+  const getPostInfo = async () => {
+    const response = await getPost({
+      boardTitle,
+      postId: Number(postId),
+      accessToken: userInfo.accessToken,
+    });
+
+    setPostInfo(response);
+  };
+
+  useEffect(() => {
+    getPostInfo();
+  }, [boardTitle, postId]);
+
   return (
     <>
       <BoardHeader />

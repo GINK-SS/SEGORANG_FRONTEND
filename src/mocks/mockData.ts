@@ -5,7 +5,7 @@ export const getHotBoardData = () => {
       boardCategory: 'bulletin',
       category: '자유',
       likeNum: i * 2,
-      title: `HOT 게시판 게시물 ${i}`,
+      title: `자유 게시판 게시물 ${i}`,
       commentNum: i * 3,
       writer: `임시유저${i}`,
       viewNum: i * 10,
@@ -36,4 +36,27 @@ export const getBulletinBoardData = () => {
   }
 
   return bulletinBoardData;
+};
+
+interface IGetPostProps {
+  boardCategory: string;
+  postNum: number;
+}
+
+export const getPostData = ({ boardCategory, postNum }: IGetPostProps) => {
+  return {
+    boardTitle: '자유 게시판',
+    postTitle: `자유 게시판 게시물 ${postNum}`,
+    writer: `임시유저${postNum}`,
+    date: '23.03.26',
+    viewNum: postNum * 10,
+    likeNum: postNum * 2,
+    postContent: [
+      '임시 데이터',
+      '\n',
+      '임시입니다.',
+      '\n',
+      '에러없이 잘 작동했으면 좋겠습니다.',
+    ],
+  };
 };
