@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Post } from '../types/board';
+import { Post } from '../../types/board';
 
 interface PostListProps {
   postList: Post[];

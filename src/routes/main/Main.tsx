@@ -11,10 +11,10 @@ import styled from 'styled-components';
 import { userInfoState } from '../../atoms';
 import { useHistory } from 'react-router-dom';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
-import MainBestItem from '../../components/MainBestItem';
-import MainYoutubeItem from '../../components/MainYoutubeItem';
-import MainBoard from '../../components/MainBoard';
-import NavContainer from '../../components/NavContainer';
+import MainBestItem from '../../components/board/MainBestItem';
+import MainYoutubeItem from '../../components/board/MainYoutubeItem';
+import MainBoard from '../../components/board/MainBoard';
+import NavContainer from '../../components/board/NavContainer';
 
 function Main() {
   const userInfo = useRecoilValue(userInfoState);

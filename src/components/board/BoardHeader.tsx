@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { userInfoState } from '../atoms';
+import { userInfoState } from '../../atoms';
 
 function BoardHeader() {
   const userInfo = useRecoilValue(userInfoState);
