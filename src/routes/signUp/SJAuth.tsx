@@ -6,6 +6,131 @@ import styled, { keyframes } from 'styled-components';
 import { fetchSJAuth } from '../../api';
 import { SJAuthFormData } from '../../types/signUp';
 
+function SJAuth() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    clearErrors,
+    watch,
+    getValues,
+  } = useForm<SJAuthFormData>({ mode: 'onChange' });
+  const history = useHistory();
+  const [eggGINKSS, setEggGINKSS] = useState(0);
+  const [eggSCOF, setEggSCOF] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const submitSJAuthInput = async () => {
+    try {
+      setIsLoading(true);
+      const studentId = getValues('studentId');
+      const studentPw = getValues('studentPw');
+      const { result, msg } = await fetchSJAuth(studentId, studentPw);
+      if (msg !== 'success') {
+        setError('studentId', { message: '학번이나 비밀번호를 잘못 입력하였습니다' });
+        setIsLoading(false);
+        return;
+      }
+
+      if (result?.in_db) {
+        setError('studentId', { message: '세고랑 회원입니다 로그인 해주세요' });
+        setIsLoading(false);
+        return;
+      }
+
+      history.push({
+        pathname: '/signUpForm',
+        state: {
+          studentId,
+          userName: result?.AuthResponse[4].name,
+          userMajor: result?.AuthResponse[4].major,
+        },
+      });
+
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      setError('studentId', { message: '서버 오류입니다. 나중에 다시 시도해주세요.' });
+    }
+  };
+
+  return (
+    <SignUpBackground>
+      <LoadingBG isLoading={isLoading} />
+      <Spinner isLoading={isLoading} />
+      <SignUpContainer>
+        <SignUpWrapper>
+          <SignUpTop>
+            <SignUpTitle>회원가입</SignUpTitle>
+            <ProgressBar
+              completed={50}
+              customLabel=" "
+              height="5px"
+              bgColor="rgba(195, 0, 47)"
+              borderRadius="10px"
+            />
+          </SignUpTop>
+          <SignUpDesc>세종대 구성원 인증을 위해</SignUpDesc>
+          <SignUpDesc>
+            <SignUpDescAccent>세종대학교 포털 아이디와 비밀번호</SignUpDescAccent>를
+            입력해주세요.
+          </SignUpDesc>
+          <SignUpDesc>
+            인증을 위해서만 사용하고, 비밀번호는 절대 저장하지 않습니다.
+          </SignUpDesc>
+          <SignUpForm onSubmit={handleSubmit(submitSJAuthInput)}>
+            <SignUpInput
+              {...register('studentId', { required: '학번을 입력하세요' })}
+              type="text"
+              placeholder="학번"
+            />
+            <SignUpInput
+              {...register('studentPw', { required: '비밀번호를 입력하세요' })}
+              type="password"
+              placeholder="비밀번호"
+              onFocus={() => {
+                if (!!getValues('studentId') && !!errors.studentId) {
+                  clearErrors('studentId');
+                }
+              }}
+            />
+            <SignUpErrorMsg isError={!(Object.keys(errors).length === 0)}>
+              {errors?.studentId?.message || errors?.studentPw?.message}
+            </SignUpErrorMsg>
+            <SignUpBtn
+              isActive={
+                !!(Object.keys(errors).length === 0) &&
+                !!watch('studentId') &&
+                !!watch('studentPw')
+              }
+              disabled={
+                !watch('studentId') ||
+                !watch('studentPw') ||
+                !(Object.keys(errors).length === 0)
+              }
+            >
+              인증하기
+            </SignUpBtn>
+          </SignUpForm>
+        </SignUpWrapper>
+        <SignUpBackPoint>
+          <span onClick={() => setEggSCOF((prev) => prev + 1)}>S</span>
+          <span onClick={() => setEggGINKSS((prev) => prev + 1)}>G</span>R
+        </SignUpBackPoint>
+        <SignUpBackPoint>☻</SignUpBackPoint>
+        <SignUpBackPoint egg={eggGINKSS >= 2}>GINK-SS</SignUpBackPoint>
+        <SignUpBackPoint egg={eggSCOF >= 2}>SCOF</SignUpBackPoint>
+        <SignUpBackPoint>❁</SignUpBackPoint>
+        <SignUpBackPoint>SEJONG COMMUNITY</SignUpBackPoint>
+        <SignUpBackPoint>✧</SignUpBackPoint>
+      </SignUpContainer>
+    </SignUpBackground>
+  );
+}
+
+export default SJAuth;
+
 const animation = keyframes`
   0% {
     transform:rotate(0deg);
@@ -245,128 +370,3 @@ const SignUpBackPoint = styled.span<{ egg?: boolean }>`
     display: none;
   }
 `;
-
-function SJAuth() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-    clearErrors,
-    watch,
-    getValues,
-  } = useForm<SJAuthFormData>({ mode: 'onChange' });
-  const history = useHistory();
-  const [eggGINKSS, setEggGINKSS] = useState(0);
-  const [eggSCOF, setEggSCOF] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const submitSJAuthInput = async () => {
-    try {
-      setIsLoading(true);
-      const studentId = getValues('studentId');
-      const studentPw = getValues('studentPw');
-      const { result, msg } = await fetchSJAuth(studentId, studentPw);
-      if (msg !== 'success') {
-        setError('studentId', { message: '학번이나 비밀번호를 잘못 입력하였습니다' });
-        setIsLoading(false);
-        return;
-      }
-
-      if (result?.in_db) {
-        setError('studentId', { message: '세고랑 회원입니다 로그인 해주세요' });
-        setIsLoading(false);
-        return;
-      }
-
-      history.push({
-        pathname: '/signUpForm',
-        state: {
-          studentId,
-          userName: result?.AuthResponse[4].name,
-          userMajor: result?.AuthResponse[4].major,
-        },
-      });
-
-      setIsLoading(false);
-    } catch (err) {
-      setIsLoading(false);
-      setError('studentId', { message: '서버 오류입니다. 나중에 다시 시도해주세요.' });
-    }
-  };
-
-  return (
-    <SignUpBackground>
-      <LoadingBG isLoading={isLoading} />
-      <Spinner isLoading={isLoading} />
-      <SignUpContainer>
-        <SignUpWrapper>
-          <SignUpTop>
-            <SignUpTitle>회원가입</SignUpTitle>
-            <ProgressBar
-              completed={50}
-              customLabel=" "
-              height="5px"
-              bgColor="rgba(195, 0, 47)"
-              borderRadius="10px"
-            />
-          </SignUpTop>
-          <SignUpDesc>세종대 구성원 인증을 위해</SignUpDesc>
-          <SignUpDesc>
-            <SignUpDescAccent>세종대학교 포털 아이디와 비밀번호</SignUpDescAccent>를
-            입력해주세요.
-          </SignUpDesc>
-          <SignUpDesc>
-            인증을 위해서만 사용하고, 비밀번호는 절대 저장하지 않습니다.
-          </SignUpDesc>
-          <SignUpForm onSubmit={handleSubmit(submitSJAuthInput)}>
-            <SignUpInput
-              {...register('studentId', { required: '학번을 입력하세요' })}
-              type="text"
-              placeholder="학번"
-            />
-            <SignUpInput
-              {...register('studentPw', { required: '비밀번호를 입력하세요' })}
-              type="password"
-              placeholder="비밀번호"
-              onFocus={() => {
-                if (!!getValues('studentId') && !!errors.studentId) {
-                  clearErrors('studentId');
-                }
-              }}
-            />
-            <SignUpErrorMsg isError={!(Object.keys(errors).length === 0)}>
-              {errors?.studentId?.message || errors?.studentPw?.message}
-            </SignUpErrorMsg>
-            <SignUpBtn
-              isActive={
-                !!(Object.keys(errors).length === 0) &&
-                !!watch('studentId') &&
-                !!watch('studentPw')
-              }
-              disabled={
-                !watch('studentId') ||
-                !watch('studentPw') ||
-                !(Object.keys(errors).length === 0)
-              }
-            >
-              인증하기
-            </SignUpBtn>
-          </SignUpForm>
-        </SignUpWrapper>
-        <SignUpBackPoint>
-          <span onClick={() => setEggSCOF((prev) => prev + 1)}>S</span>
-          <span onClick={() => setEggGINKSS((prev) => prev + 1)}>G</span>R
-        </SignUpBackPoint>
-        <SignUpBackPoint>☻</SignUpBackPoint>
-        <SignUpBackPoint egg={eggGINKSS >= 2}>GINK-SS</SignUpBackPoint>
-        <SignUpBackPoint egg={eggSCOF >= 2}>SCOF</SignUpBackPoint>
-        <SignUpBackPoint>❁</SignUpBackPoint>
-        <SignUpBackPoint>SEJONG COMMUNITY</SignUpBackPoint>
-        <SignUpBackPoint>✧</SignUpBackPoint>
-      </SignUpContainer>
-    </SignUpBackground>
-  );
-}
-
-export default SJAuth;

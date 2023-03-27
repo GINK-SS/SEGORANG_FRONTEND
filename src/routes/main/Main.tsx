@@ -11,310 +11,10 @@ import styled from 'styled-components';
 import { userInfoState } from '../../atoms';
 import { useHistory } from 'react-router-dom';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
-import MainBoardItem from '../../components/MainBoardItem';
 import MainBestItem from '../../components/MainBestItem';
 import MainYoutubeItem from '../../components/MainYoutubeItem';
 import MainBoard from '../../components/MainBoard';
-
-const Header = styled.div`
-  display: flex;
-  max-width: 1300px;
-  margin: 20px auto;
-  padding: 0 25px;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const Header__Left = styled.div``;
-
-const HeaderLogo = styled.span`
-  font-family: 'Montserrat Alternates', sans-serif;
-  text-align: center;
-  font-size: 45px;
-  font-weight: 200;
-  margin-bottom: 100px;
-  color: ${(props) => props.theme.accentColor};
-  letter-spacing: -2px;
-  cursor: pointer;
-`;
-
-const Header__Right = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-`;
-
-const HeaderSearch = styled.input`
-  width: 350px;
-  height: 40px;
-  background-color: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 3px 70px 3px 20px;
-  font-size: 15px;
-
-  &:hover {
-    border: 1px solid ${(props) => props.theme.sejongCrimsonRed02};
-  }
-  &:focus {
-    outline: 0px;
-    border: 1px solid ${(props) => props.theme.sejongCrimsonRed};
-  }
-`;
-
-const HeaderSearch__Delete = styled.div<{ isEmpty: boolean }>`
-  position: absolute;
-  visibility: ${(props) => (props.isEmpty ? 'hidden' : 'visible')};
-  right: 55px;
-  cursor: pointer;
-`;
-
-const HeaderSearch__Button = styled.div`
-  position: absolute;
-  right: 0px;
-  padding: 15px 15px 15px 0px;
-  cursor: pointer;
-
-  &::before {
-    content: '|';
-    margin-right: 10px;
-    color: rgba(0, 0, 0, 0.1);
-  }
-`;
-
-const MainContainer = styled.div`
-  display: flex;
-  max-width: 1300px;
-  margin: 20px auto;
-  padding: 0 25px;
-`;
-
-const Main__Left = styled.div`
-  flex-grow: 1;
-`;
-
-const BannerWrapper = styled.div`
-  position: relative;
-  width: 90%;
-  height: 120px;
-  margin: 10px auto;
-`;
-
-const BannerText = styled.span`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  font-size: 50px;
-  letter-spacing: 3px;
-  font-family: 'Concert One', cursive;
-  text-align: center;
-  color: ${(props) => props.theme.sejongCrimsonRed};
-`;
-
-const CenterBanner = styled.img`
-  width: 100%;
-  height: 100%;
-`;
-
-const MediaSejongContainer = styled.div`
-  margin-top: 20px;
-`;
-
-const MediaSejongTitleContainer = styled.a`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 10px 30px 0 0;
-  padding: 15px 30px;
-  background-color: rgba(0, 0, 0, 0.05);
-  color: #000;
-  cursor: pointer;
-`;
-
-const MediaSejongTitle = styled.p`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const MediaSejongWrapper = styled.div`
-  display: flex;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.01);
-`;
-
-const Main__Right = styled.div`
-  margin-left: 30px;
-`;
-
-const UserContainer = styled.div`
-  width: 350px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.03);
-`;
-
-const UserInfoWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px 5px;
-
-  span {
-    &:first-child {
-      color: ${(props) => props.theme.sejongCrimsonRed};
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 15px;
-    }
-
-    &:last-child {
-      color: ${(props) => props.theme.sejongGray};
-      font-size: 14px;
-    }
-  }
-`;
-
-const UserOptionWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  border-top: 1px solid rgba(0, 0, 0, 0.3);
-  padding: 8px 0px;
-`;
-
-const UserOptionItem = styled.span`
-  flex-grow: 1;
-  text-align: center;
-  font-weight: 500;
-  color: ${(props) => props.theme.accentColor};
-  border-right: 2px solid rgba(0, 0, 0, 0.05);
-  padding: 8px 0px;
-  cursor: pointer;
-
-  &:first-child {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &:last-child {
-    border-right: 0px;
-  }
-`;
-
-const UserOptionItemIcon = styled.div`
-  margin-left: 5px;
-`;
-
-const Right__NoticeContainer = styled.div`
-  background-color: rgba(0, 0, 0, 0.03);
-  margin-top: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  padding: 13px 10px;
-  cursor: pointer;
-`;
-
-const Right__NoticeContent = styled.div`
-  display: flex;
-  justify-content: space-between;
-  color: ${(props) => props.theme.sejongGray};
-
-  span {
-    margin: 0 5px 0 10px;
-    color: ${(props) => props.theme.accentColor};
-  }
-`;
-
-const Right__NoticeWrapper = styled.div``;
-
-const Right__ShortCutContainer = styled.div`
-  margin-top: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-`;
-
-const Right__ShortCutTitle = styled.span`
-  background-color: rgba(0, 0, 0, 0.03);
-  display: block;
-  padding: 20px 20px 15px;
-  font-size: 17px;
-  font-weight: 600;
-`;
-
-const Right__ShortCutWrapper = styled.div`
-  display: grid;
-  padding: 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.3);
-  grid-template-rows: repeat(2, 1fr);
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px 30px;
-`;
-
-const Right__ShortCutItem = styled.div``;
-
-const Right__ShortCutItemTitle = styled.a`
-  color: ${(props) => props.theme.sejongGray};
-  cursor: pointer;
-
-  &:hover {
-    color: ${(props) => props.theme.sejongCrimsonRed};
-  }
-`;
-
-const Right__BestContainer = styled.div`
-  margin-top: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-`;
-
-const Right__BestTitle = styled.span`
-  background-color: rgba(0, 0, 0, 0.03);
-  display: block;
-  padding: 20px 20px 15px;
-  font-size: 17px;
-  font-weight: 600;
-`;
-
-const Right__BestOptionWrapper = styled.div`
-  display: flex;
-  border-top: 1px solid rgba(0, 0, 0, 0.3);
-  border-bottom: 1.5px solid rgba(0, 0, 0, 0.3);
-`;
-
-const Right__BestOption = styled.div<{ isActive: boolean }>`
-  flex: 1;
-  text-align: center;
-  margin: 5px 0;
-  padding: 10px 0;
-  background-color: ${(props) => (props.isActive ? 'rgba(0,0,0,0.03)' : '#FFF')};
-  cursor: pointer;
-
-  &:first-child {
-    border-right: 1.5px solid rgba(0, 0, 0, 0.05);
-  }
-
-  &:last-child {
-    border-left: 1.5px solid rgba(0, 0, 0, 0.05);
-  }
-
-  &:hover {
-    span {
-      color: ${(props) => props.theme.sejongCrimsonRed};
-      opacity: ${(props) => (props.isActive ? '1' : '0.7')};
-    }
-  }
-  span {
-    color: ${(props) =>
-      props.isActive ? props.theme.sejongCrimsonRed : 'rgba(0, 0, 0, 0.5)'};
-    font-weight: ${(props) => (props.isActive ? '600' : '400')};
-  }
-`;
-
-const Right__BestItemWrapper = styled.ul``;
+import NavContainer from '../../components/NavContainer';
 
 function Main() {
   const userInfo = useRecoilValue(userInfoState);
@@ -655,3 +355,303 @@ function Main() {
 }
 
 export default Main;
+
+const Header = styled.div`
+  display: flex;
+  max-width: 1300px;
+  margin: 20px auto;
+  padding: 0 25px;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Header__Left = styled.div``;
+
+const HeaderLogo = styled.span`
+  font-family: 'Montserrat Alternates', sans-serif;
+  text-align: center;
+  font-size: 45px;
+  font-weight: 200;
+  margin-bottom: 100px;
+  color: ${(props) => props.theme.accentColor};
+  letter-spacing: -2px;
+  cursor: pointer;
+`;
+
+const Header__Right = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+const HeaderSearch = styled.input`
+  width: 350px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 3px 70px 3px 20px;
+  font-size: 15px;
+
+  &:hover {
+    border: 1px solid ${(props) => props.theme.sejongCrimsonRed02};
+  }
+  &:focus {
+    outline: 0px;
+    border: 1px solid ${(props) => props.theme.sejongCrimsonRed};
+  }
+`;
+
+const HeaderSearch__Delete = styled.div<{ isEmpty: boolean }>`
+  position: absolute;
+  visibility: ${(props) => (props.isEmpty ? 'hidden' : 'visible')};
+  right: 55px;
+  cursor: pointer;
+`;
+
+const HeaderSearch__Button = styled.div`
+  position: absolute;
+  right: 0px;
+  padding: 15px 15px 15px 0px;
+  cursor: pointer;
+
+  &::before {
+    content: '|';
+    margin-right: 10px;
+    color: rgba(0, 0, 0, 0.1);
+  }
+`;
+
+const MainContainer = styled.div`
+  display: flex;
+  max-width: 1300px;
+  margin: 20px auto;
+  padding: 0 25px;
+`;
+
+const Main__Left = styled.div`
+  flex-grow: 1;
+`;
+
+const BannerWrapper = styled.div`
+  position: relative;
+  width: 90%;
+  height: 120px;
+  margin: 10px auto;
+`;
+
+const BannerText = styled.span`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  font-size: 50px;
+  letter-spacing: 3px;
+  font-family: 'Concert One', cursive;
+  text-align: center;
+  color: ${(props) => props.theme.sejongCrimsonRed};
+`;
+
+const CenterBanner = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+const MediaSejongContainer = styled.div`
+  margin-top: 20px;
+`;
+
+const MediaSejongTitleContainer = styled.a`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px 30px 0 0;
+  padding: 15px 30px;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #000;
+  cursor: pointer;
+`;
+
+const MediaSejongTitle = styled.p`
+  font-size: 18px;
+  font-weight: 600;
+`;
+
+const MediaSejongWrapper = styled.div`
+  display: flex;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.01);
+`;
+
+const Main__Right = styled.div`
+  margin-left: 30px;
+`;
+
+const UserContainer = styled.div`
+  width: 350px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.03);
+`;
+
+const UserInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 5px;
+
+  span {
+    &:first-child {
+      color: ${(props) => props.theme.sejongCrimsonRed};
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    &:last-child {
+      color: ${(props) => props.theme.sejongGray};
+      font-size: 14px;
+    }
+  }
+`;
+
+const UserOptionWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 8px 0px;
+`;
+
+const UserOptionItem = styled.span`
+  flex-grow: 1;
+  text-align: center;
+  font-weight: 500;
+  color: ${(props) => props.theme.accentColor};
+  border-right: 2px solid rgba(0, 0, 0, 0.05);
+  padding: 8px 0px;
+  cursor: pointer;
+
+  &:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &:last-child {
+    border-right: 0px;
+  }
+`;
+
+const UserOptionItemIcon = styled.div`
+  margin-left: 5px;
+`;
+
+const Right__NoticeContainer = styled.div`
+  background-color: rgba(0, 0, 0, 0.03);
+  margin-top: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 13px 10px;
+  cursor: pointer;
+`;
+
+const Right__NoticeContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+  color: ${(props) => props.theme.sejongGray};
+
+  span {
+    margin: 0 5px 0 10px;
+    color: ${(props) => props.theme.accentColor};
+  }
+`;
+
+const Right__NoticeWrapper = styled.div``;
+
+const Right__ShortCutContainer = styled.div`
+  margin-top: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+`;
+
+const Right__ShortCutTitle = styled.span`
+  background-color: rgba(0, 0, 0, 0.03);
+  display: block;
+  padding: 20px 20px 15px;
+  font-size: 17px;
+  font-weight: 600;
+`;
+
+const Right__ShortCutWrapper = styled.div`
+  display: grid;
+  padding: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 30px;
+`;
+
+const Right__ShortCutItem = styled.div``;
+
+const Right__ShortCutItemTitle = styled.a`
+  color: ${(props) => props.theme.sejongGray};
+  cursor: pointer;
+
+  &:hover {
+    color: ${(props) => props.theme.sejongCrimsonRed};
+  }
+`;
+
+const Right__BestContainer = styled.div`
+  margin-top: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+`;
+
+const Right__BestTitle = styled.span`
+  background-color: rgba(0, 0, 0, 0.03);
+  display: block;
+  padding: 20px 20px 15px;
+  font-size: 17px;
+  font-weight: 600;
+`;
+
+const Right__BestOptionWrapper = styled.div`
+  display: flex;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.3);
+`;
+
+const Right__BestOption = styled.div<{ isActive: boolean }>`
+  flex: 1;
+  text-align: center;
+  margin: 5px 0;
+  padding: 10px 0;
+  background-color: ${(props) => (props.isActive ? 'rgba(0,0,0,0.03)' : '#FFF')};
+  cursor: pointer;
+
+  &:first-child {
+    border-right: 1.5px solid rgba(0, 0, 0, 0.05);
+  }
+
+  &:last-child {
+    border-left: 1.5px solid rgba(0, 0, 0, 0.05);
+  }
+
+  &:hover {
+    span {
+      color: ${(props) => props.theme.sejongCrimsonRed};
+      opacity: ${(props) => (props.isActive ? '1' : '0.7')};
+    }
+  }
+  span {
+    color: ${(props) =>
+      props.isActive ? props.theme.sejongCrimsonRed : 'rgba(0, 0, 0, 0.5)'};
+    font-weight: ${(props) => (props.isActive ? '600' : '400')};
+  }
+`;
+
+const Right__BestItemWrapper = styled.ul``;

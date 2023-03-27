@@ -5,6 +5,17 @@ interface MainBestItemProps {
   index: number;
 }
 
+function MainBestItem({ title, index }: MainBestItemProps) {
+  return (
+    <BestItem>
+      <span>{index + 1}</span>
+      <span>{title.length > 16 ? `${title.slice(0, 17)}	…` : title}</span>
+    </BestItem>
+  );
+}
+
+export default MainBestItem;
+
 const BestItem = styled.li`
   display: flex;
   align-items: center;
@@ -33,14 +44,3 @@ const BestItem = styled.li`
     }
   }
 `;
-
-function MainBestItem({ title, index }: MainBestItemProps) {
-  return (
-    <BestItem>
-      <span>{index + 1}</span>
-      <span>{title.length > 16 ? `${title.slice(0, 17)}	…` : title}</span>
-    </BestItem>
-  );
-}
-
-export default MainBestItem;

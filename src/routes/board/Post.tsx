@@ -8,6 +8,64 @@ import BoardHeader from '../../components/BoardHeader';
 import NavContainer from '../../components/NavContainer';
 import { PostInfoResponse, PostURLParams } from '../../types/post';
 
+function Post() {
+  const userInfo = useRecoilValue(userInfoState);
+  const [postInfo, setPostInfo] = useState<PostInfoResponse>({
+    boardTitle: '',
+    postTitle: '',
+    writer: '',
+    date: '',
+    viewNum: 0,
+    likeNum: 0,
+    content: [],
+  });
+  const { boardTitle, postId }: PostURLParams = useParams();
+
+  const getPostInfo = async () => {
+    const response = await fetchPostInfo({
+      boardTitle,
+      postId,
+      accessToken: userInfo.accessToken,
+    });
+
+    setPostInfo(response);
+  };
+
+  useEffect(() => {
+    getPostInfo();
+  }, [boardTitle, postId]);
+
+  return (
+    <>
+      <BoardHeader />
+      <NavContainer />
+      <Container>
+        <TopWrapper>
+          <BoardTitle>{postInfo.boardTitle}</BoardTitle>
+          <PostTitle>{postInfo.postTitle}</PostTitle>
+          <PostTopWrapper>
+            <PostTopLeft>
+              <Writer>{postInfo.writer}</Writer>
+              <Date>{postInfo.date}</Date>
+            </PostTopLeft>
+            <PostTopRight>
+              <ViewNum>{`조회: ${postInfo.viewNum}`}</ViewNum>
+              <LikeNum>{`추천: ${postInfo.likeNum}`}</LikeNum>
+            </PostTopRight>
+          </PostTopWrapper>
+        </TopWrapper>
+        <ContentWrapper>
+          {postInfo.content.map((sentence, index) => (
+            <ContentText key={index}>{sentence}</ContentText>
+          ))}
+        </ContentWrapper>
+      </Container>
+    </>
+  );
+}
+
+export default Post;
+
 const Container = styled.div`
   max-width: 1300px;
   margin: 40px auto 20px;
@@ -72,61 +130,3 @@ const ContentWrapper = styled.div`
 `;
 
 const ContentText = styled.p``;
-
-function Post() {
-  const userInfo = useRecoilValue(userInfoState);
-  const [postInfo, setPostInfo] = useState<PostInfoResponse>({
-    boardTitle: '',
-    postTitle: '',
-    writer: '',
-    date: '',
-    viewNum: 0,
-    likeNum: 0,
-    content: [],
-  });
-  const { boardTitle, postId }: PostURLParams = useParams();
-
-  const getPostInfo = async () => {
-    const response = await fetchPostInfo({
-      boardTitle,
-      postId,
-      accessToken: userInfo.accessToken,
-    });
-
-    setPostInfo(response);
-  };
-
-  useEffect(() => {
-    getPostInfo();
-  }, [boardTitle, postId]);
-
-  return (
-    <>
-      <BoardHeader />
-      <NavContainer />
-      <Container>
-        <TopWrapper>
-          <BoardTitle>{postInfo.boardTitle}</BoardTitle>
-          <PostTitle>{postInfo.postTitle}</PostTitle>
-          <PostTopWrapper>
-            <PostTopLeft>
-              <Writer>{postInfo.writer}</Writer>
-              <Date>{postInfo.date}</Date>
-            </PostTopLeft>
-            <PostTopRight>
-              <ViewNum>{`조회: ${postInfo.viewNum}`}</ViewNum>
-              <LikeNum>{`추천: ${postInfo.likeNum}`}</LikeNum>
-            </PostTopRight>
-          </PostTopWrapper>
-        </TopWrapper>
-        <ContentWrapper>
-          {postInfo.content.map((sentence, index) => (
-            <ContentText key={index}>{sentence}</ContentText>
-          ))}
-        </ContentWrapper>
-      </Container>
-    </>
-  );
-}
-
-export default Post;

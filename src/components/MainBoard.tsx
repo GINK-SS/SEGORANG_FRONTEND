@@ -5,38 +5,6 @@ import styled from 'styled-components';
 import { MainBoardPost } from '../types/board';
 import MainBoardItem from './MainBoardItem';
 
-const BoardsContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 40px;
-`;
-
-const BoardWrapper = styled.div`
-  width: 49%;
-`;
-
-const BoardTitleContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 10px 30px 0 0;
-  padding: 15px 30px;
-  background-color: rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-`;
-
-const BoardTitle = styled.span`
-  font-size: 18px;
-  font-weight: 600;
-  margin-top: 5px;
-`;
-
-const BoardItemWrapper = styled.ul`
-  padding: 10px 0;
-  background-color: rgba(0, 0, 0, 0.01);
-`;
-
 interface MainBoardProps {
   leftBoard: {
     leftTitle: string;
@@ -97,3 +65,35 @@ function MainBoard({
 }
 
 export default MainBoard;
+
+const BoardsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+`;
+
+const BoardWrapper = styled.div`
+  width: 49%;
+`;
+
+const BoardTitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px 30px 0 0;
+  padding: 15px 30px;
+  background-color: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+`;
+
+const BoardTitle = styled.span`
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 5px;
+`;
+
+const BoardItemWrapper = styled.ul`
+  padding: 10px 0;
+  background-color: rgba(0, 0, 0, 0.01);
+`;

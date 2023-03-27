@@ -1,5 +1,29 @@
 import styled from 'styled-components';
 
+interface MainBoardItemProps {
+  category: string;
+  title: string;
+  commentNum: number;
+  likeNum: number;
+}
+
+function MainBoardItem({ category, title, commentNum, likeNum }: MainBoardItemProps) {
+  return (
+    <BoardItem>
+      <BoardItemCTCWrapper>
+        <BoardItemCategory>{category}</BoardItemCategory>
+        <BoardItemTitle>
+          {title.length > 20 ? `${title.slice(0, 21)}…` : title}
+        </BoardItemTitle>
+        <BoardItemCommentCount>[{commentNum}]</BoardItemCommentCount>
+      </BoardItemCTCWrapper>
+      <BoardItemLike>{likeNum}</BoardItemLike>
+    </BoardItem>
+  );
+}
+
+export default MainBoardItem;
+
 const BoardItem = styled.li`
   display: flex;
   justify-content: space-between;
@@ -34,27 +58,3 @@ const BoardItemCommentCount = styled.span`
 const BoardItemLike = styled.span`
   color: ${(props) => props.theme.accentColor};
 `;
-
-interface MainBoardItemProps {
-  category: string;
-  title: string;
-  commentNum: number;
-  likeNum: number;
-}
-
-function MainBoardItem({ category, title, commentNum, likeNum }: MainBoardItemProps) {
-  return (
-    <BoardItem>
-      <BoardItemCTCWrapper>
-        <BoardItemCategory>{category}</BoardItemCategory>
-        <BoardItemTitle>
-          {title.length > 20 ? `${title.slice(0, 21)}…` : title}
-        </BoardItemTitle>
-        <BoardItemCommentCount>[{commentNum}]</BoardItemCommentCount>
-      </BoardItemCTCWrapper>
-      <BoardItemLike>{likeNum}</BoardItemLike>
-    </BoardItem>
-  );
-}
-
-export default MainBoardItem;

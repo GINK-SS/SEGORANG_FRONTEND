@@ -3,6 +3,42 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { userInfoState } from '../atoms';
 
+function BoardHeader() {
+  const userInfo = useRecoilValue(userInfoState);
+  const resetUserInfo = useResetRecoilState(userInfoState);
+  const history = useHistory();
+
+  const logOut = () => {
+    localStorage.removeItem('sgrUserToken');
+    resetUserInfo();
+    history.replace('/login');
+  };
+
+  return (
+    <Header>
+      <LeftContainer>
+        <HeaderLogo onClick={() => history.push('/')}>SEGORANG。</HeaderLogo>
+      </LeftContainer>
+      <RightContainer>
+        <UserNickname>{`${userInfo.userNickname} :-)`}</UserNickname>
+        <NavOptionWrapper>
+          <NavOption>
+            <NavOptionTitle>북마크</NavOptionTitle>
+          </NavOption>
+          <NavOption>
+            <NavOptionTitle>마이페이지</NavOptionTitle>
+          </NavOption>
+          <NavOption>
+            <NavOptionTitle onClick={logOut}>로그아웃</NavOptionTitle>
+          </NavOption>
+        </NavOptionWrapper>
+      </RightContainer>
+    </Header>
+  );
+}
+
+export default BoardHeader;
+
 const Header = styled.div`
   display: flex;
   max-width: 1300px;
@@ -66,39 +102,3 @@ const NavOptionTitle = styled.span`
     color: ${(props) => props.theme.sejongCrimsonRed};
   }
 `;
-
-function BoardHeader() {
-  const userInfo = useRecoilValue(userInfoState);
-  const resetUserInfo = useResetRecoilState(userInfoState);
-  const history = useHistory();
-
-  const logOut = () => {
-    localStorage.removeItem('sgrUserToken');
-    resetUserInfo();
-    history.replace('/login');
-  };
-
-  return (
-    <Header>
-      <LeftContainer>
-        <HeaderLogo onClick={() => history.push('/')}>SEGORANG。</HeaderLogo>
-      </LeftContainer>
-      <RightContainer>
-        <UserNickname>{`${userInfo.userNickname} :-)`}</UserNickname>
-        <NavOptionWrapper>
-          <NavOption>
-            <NavOptionTitle>북마크</NavOptionTitle>
-          </NavOption>
-          <NavOption>
-            <NavOptionTitle>마이페이지</NavOptionTitle>
-          </NavOption>
-          <NavOption>
-            <NavOptionTitle onClick={logOut}>로그아웃</NavOptionTitle>
-          </NavOption>
-        </NavOptionWrapper>
-      </RightContainer>
-    </Header>
-  );
-}
-
-export default BoardHeader;

@@ -7,6 +7,121 @@ import { fetchLogin, fetchUserInfo } from '../api';
 import { userInfoState } from '../atoms';
 import { LoginFormData } from '../types/login';
 
+function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    setValue,
+    getValues,
+    setError,
+  } = useForm<LoginFormData>({ reValidateMode: 'onSubmit' });
+  const [isSaveId, setIsSaveId] = useState(false);
+  const [isSaveLogin, setIsSaveLogin] = useState(false);
+  const setUserInfo = useSetRecoilState(userInfoState);
+  const history = useHistory();
+
+  useEffect(() => {
+    const userId = localStorage.getItem('sgrUserId');
+    if (userId) {
+      setValue('userId', userId);
+      setIsSaveId(true);
+    }
+  }, [setValue]);
+
+  const submitLoginInput = async () => {
+    try {
+      const { msg, result } = await fetchLogin({
+        userId: getValues('userId'),
+        userPw: getValues('userPw'),
+      });
+
+      if (msg === 'success') {
+        if (isSaveId) {
+          localStorage.setItem('sgrUserId', getValues('userId'));
+        } else {
+          localStorage.removeItem('sgrUserId');
+        }
+
+        if (isSaveLogin) {
+          localStorage.setItem('sgrUserToken', result?.access_token as string);
+        }
+
+        const {
+          result: { id, name, nickname, major },
+        } = await fetchUserInfo(result?.access_token as string);
+
+        setUserInfo((prev) => {
+          return {
+            ...prev,
+            accessToken: result?.access_token as string,
+            userId: id,
+            userName: name,
+            userNickname: nickname,
+            userMajor: major,
+          };
+        });
+
+        history.replace('/');
+      } else if (msg === 'fail') {
+        setError('userId', { message: '아이디 혹은 비밀번호를 잘못 입력하였습니다.' });
+      }
+    } catch (err) {
+      setError('userId', { message: '서버 오류입니다. 나중에 다시 시도해주세요.' });
+    }
+  };
+
+  return (
+    <Container>
+      <LeftContainer></LeftContainer>
+      <RightContainer>
+        <RightTitle>SEGORANG</RightTitle>
+        <LoginForm onSubmit={handleSubmit(submitLoginInput)}>
+          <LoginInput
+            {...register('userId', { required: '아이디를 입력하세요' })}
+            type="text"
+            placeholder="아이디"
+          />
+          <LoginInput
+            {...register('userPw', { required: '비밀번호를 입력하세요' })}
+            type="password"
+            placeholder="비밀번호"
+            isBlank={!getValues('userPw')}
+          />
+          <ErrorMsg>{errors.userId?.message || errors.userPw?.message}</ErrorMsg>
+          <LoginButton
+            isActive={!!watch('userId') && !!watch('userPw')}
+            disabled={!watch('userId') || !watch('userPw')}
+          >
+            로그인
+          </LoginButton>
+        </LoginForm>
+        <OptionWrapper>
+          <SelectWrapper>
+            <LoginSelect isActive={isSaveId} onClick={() => setIsSaveId((prev) => !prev)}>
+              아이디 저장
+            </LoginSelect>
+            <LoginSelect
+              isActive={isSaveLogin}
+              onClick={() => setIsSaveLogin((prev) => !prev)}
+            >
+              자동 로그인
+            </LoginSelect>
+          </SelectWrapper>
+          <FindIdPw>아이디/비밀번호 찾기</FindIdPw>
+        </OptionWrapper>
+        <SignUpWrapper>
+          <span>세고랑이 처음이라면?</span>
+          <span onClick={() => history.push('/signUp')}>회원가입</span>
+        </SignUpWrapper>
+      </RightContainer>
+    </Container>
+  );
+}
+
+export default Login;
+
 const Container = styled.div`
   display: flex;
 `;
@@ -129,118 +244,3 @@ const SignUpWrapper = styled.div`
     }
   }
 `;
-
-function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-    setValue,
-    getValues,
-    setError,
-  } = useForm<LoginFormData>({ reValidateMode: 'onSubmit' });
-  const [isSaveId, setIsSaveId] = useState(false);
-  const [isSaveLogin, setIsSaveLogin] = useState(false);
-  const setUserInfo = useSetRecoilState(userInfoState);
-  const history = useHistory();
-
-  useEffect(() => {
-    const userId = localStorage.getItem('sgrUserId');
-    if (userId) {
-      setValue('userId', userId);
-      setIsSaveId(true);
-    }
-  }, []);
-
-  const submitLoginInput = async () => {
-    try {
-      const { msg, result } = await fetchLogin({
-        userId: getValues('userId'),
-        userPw: getValues('userPw'),
-      });
-
-      if (msg === 'success') {
-        if (isSaveId) {
-          localStorage.setItem('sgrUserId', getValues('userId'));
-        } else {
-          localStorage.removeItem('sgrUserId');
-        }
-
-        if (isSaveLogin) {
-          localStorage.setItem('sgrUserToken', result?.access_token as string);
-        }
-
-        const {
-          result: { id, name, nickname, major },
-        } = await fetchUserInfo(result?.access_token as string);
-
-        setUserInfo((prev) => {
-          return {
-            ...prev,
-            accessToken: result?.access_token as string,
-            userId: id,
-            userName: name,
-            userNickname: nickname,
-            userMajor: major,
-          };
-        });
-
-        history.replace('/');
-      } else if (msg === 'fail') {
-        setError('userId', { message: '아이디 혹은 비밀번호를 잘못 입력하였습니다.' });
-      }
-    } catch (err) {
-      setError('userId', { message: '서버 오류입니다. 나중에 다시 시도해주세요.' });
-    }
-  };
-
-  return (
-    <Container>
-      <LeftContainer></LeftContainer>
-      <RightContainer>
-        <RightTitle>SEGORANG</RightTitle>
-        <LoginForm onSubmit={handleSubmit(submitLoginInput)}>
-          <LoginInput
-            {...register('userId', { required: '아이디를 입력하세요' })}
-            type="text"
-            placeholder="아이디"
-          />
-          <LoginInput
-            {...register('userPw', { required: '비밀번호를 입력하세요' })}
-            type="password"
-            placeholder="비밀번호"
-            isBlank={!getValues('userPw')}
-          />
-          <ErrorMsg>{errors.userId?.message || errors.userPw?.message}</ErrorMsg>
-          <LoginButton
-            isActive={!!watch('userId') && !!watch('userPw')}
-            disabled={!watch('userId') || !watch('userPw')}
-          >
-            로그인
-          </LoginButton>
-        </LoginForm>
-        <OptionWrapper>
-          <SelectWrapper>
-            <LoginSelect isActive={isSaveId} onClick={() => setIsSaveId((prev) => !prev)}>
-              아이디 저장
-            </LoginSelect>
-            <LoginSelect
-              isActive={isSaveLogin}
-              onClick={() => setIsSaveLogin((prev) => !prev)}
-            >
-              자동 로그인
-            </LoginSelect>
-          </SelectWrapper>
-          <FindIdPw>아이디/비밀번호 찾기</FindIdPw>
-        </OptionWrapper>
-        <SignUpWrapper>
-          <span>세고랑이 처음이라면?</span>
-          <span onClick={() => history.push('/signUp')}>회원가입</span>
-        </SignUpWrapper>
-      </RightContainer>
-    </Container>
-  );
-}
-
-export default Login;

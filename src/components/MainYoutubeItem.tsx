@@ -1,5 +1,23 @@
 import styled from 'styled-components';
 
+interface MainYoutubeItemProps {
+  thumbNail: string;
+  title: string;
+  link: string;
+}
+
+function MainYoutubeItem({ thumbNail, title, link }: MainYoutubeItemProps) {
+  return (
+    <MediaSejongItem href={link} target="_blank">
+      <MediaSejongThumbNail alt={title} src={thumbNail} />
+
+      <MediaSejongDescription>{title}</MediaSejongDescription>
+    </MediaSejongItem>
+  );
+}
+
+export default MainYoutubeItem;
+
 const MediaSejongItem = styled.a`
   flex: 1;
   margin-right: 10px;
@@ -36,21 +54,3 @@ const MediaSejongDescription = styled.p`
   line-height: 20px;
   color: #333;
 `;
-
-interface MainYoutubeItemProps {
-  thumbNail: string;
-  title: string;
-  link: string;
-}
-
-function MainYoutubeItem({ thumbNail, title, link }: MainYoutubeItemProps) {
-  return (
-    <MediaSejongItem href={link} target="_blank">
-      <MediaSejongThumbNail alt={title} src={thumbNail} />
-
-      <MediaSejongDescription>{title}</MediaSejongDescription>
-    </MediaSejongItem>
-  );
-}
-
-export default MainYoutubeItem;

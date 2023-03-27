@@ -2,6 +2,53 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Post } from '../types/board';
 
+interface PostListProps {
+  postList: Post[];
+}
+
+function PostList({ postList }: PostListProps) {
+  const hasCategory =
+    postList.length !== 0 ? (postList[0]?.postCategory ? true : false) : false;
+
+  return (
+    <BoardContainer>
+      <BoardItemWrapper>
+        <BoardItem>
+          <Category hasCategory={hasCategory}>분류</Category>
+          <LikeNum>추천</LikeNum>
+          <Title>제목</Title>
+          <Writer>작성자</Writer>
+          <ViewNum>조회</ViewNum>
+          <Date>날짜</Date>
+        </BoardItem>
+        {postList.length !== 0 ? (
+          postList.map((post, index) => (
+            <BoardItem key={index}>
+              <Category hasCategory={hasCategory}>{post.postCategory}</Category>
+              <LikeNum>{post.likeNum}</LikeNum>
+              <Link to={`${post.boardTitle}/${post.postId}`}>
+                <Title>
+                  {post.postTitle}
+                  <CommentNum>{`[${post.commentNum}]`}</CommentNum>
+                </Title>
+              </Link>
+              <Writer>{post.writer}</Writer>
+              <ViewNum>{post.viewNum}</ViewNum>
+              <Date>{post.date}</Date>
+            </BoardItem>
+          ))
+        ) : (
+          <NoItem>
+            <NoItemText>등록된 글이 없습니다</NoItemText>
+          </NoItem>
+        )}
+      </BoardItemWrapper>
+    </BoardContainer>
+  );
+}
+
+export default PostList;
+
 const BoardContainer = styled.div`
   max-width: 1300px;
   margin: 40px auto 20px;
@@ -108,50 +155,3 @@ const NoItem = styled.div`
 `;
 
 const NoItemText = styled.p``;
-
-interface PostListProps {
-  postList: Post[];
-}
-
-function PostList({ postList }: PostListProps) {
-  const hasCategory =
-    postList.length !== 0 ? (postList[0]?.postCategory ? true : false) : false;
-
-  return (
-    <BoardContainer>
-      <BoardItemWrapper>
-        <BoardItem>
-          <Category hasCategory={hasCategory}>분류</Category>
-          <LikeNum>추천</LikeNum>
-          <Title>제목</Title>
-          <Writer>작성자</Writer>
-          <ViewNum>조회</ViewNum>
-          <Date>날짜</Date>
-        </BoardItem>
-        {postList.length !== 0 ? (
-          postList.map((post, index) => (
-            <BoardItem key={index}>
-              <Category hasCategory={hasCategory}>{post.postCategory}</Category>
-              <LikeNum>{post.likeNum}</LikeNum>
-              <Link to={`${post.boardTitle}/${post.postId}`}>
-                <Title>
-                  {post.postTitle}
-                  <CommentNum>{`[${post.commentNum}]`}</CommentNum>
-                </Title>
-              </Link>
-              <Writer>{post.writer}</Writer>
-              <ViewNum>{post.viewNum}</ViewNum>
-              <Date>{post.date}</Date>
-            </BoardItem>
-          ))
-        ) : (
-          <NoItem>
-            <NoItemText>등록된 글이 없습니다</NoItemText>
-          </NoItem>
-        )}
-      </BoardItemWrapper>
-    </BoardContainer>
-  );
-}
-
-export default PostList;

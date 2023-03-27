@@ -9,6 +9,91 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import styled from 'styled-components';
 
+function BoardListFooter() {
+  const [search, setSearch] = useState('');
+  const [selected, setSelected] = useState('titleContent');
+  const selectOptions = [
+    {
+      id: 0,
+      name: '제목+내용',
+      value: 'titleContent',
+    },
+    { id: 1, name: '제목', value: 'title' },
+    { id: 2, name: '작성자', value: 'writer' },
+  ];
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 639];
+
+  return (
+    <Container>
+      <UpperBox>
+        <SearchWrapper>
+          <SearchSelect
+            onChange={({ target: { value } }) => setSelected(value)}
+            value={selected}
+          >
+            {selectOptions.map((option) => (
+              <option key={option.id} value={option.value}>
+                {option.name}
+              </option>
+            ))}
+          </SearchSelect>
+          <SearchInput
+            isBlank={!search}
+            value={search}
+            placeholder="검색"
+            onChange={({ target: { value } }) => setSearch(value)}
+          />
+          <SearchInput__Delete isEmpty={!search} onClick={() => setSearch('')}>
+            <FontAwesomeIcon icon={faX} size="2xs" color="rgba(0,0,0,0.5)" />
+          </SearchInput__Delete>
+          <SearchInput__Button
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <FontAwesomeIcon icon={faMagnifyingGlass} color="rgba(0,0,0,0.5)" />
+          </SearchInput__Button>
+        </SearchWrapper>
+        <WriteBtn>
+          <FontAwesomeIcon icon={faPen} />
+          <WriteText>쓰기</WriteText>
+        </WriteBtn>
+      </UpperBox>
+      <PageContainer>
+        <PageIcon>
+          <FontAwesomeIcon icon={faCaretLeft} />
+        </PageIcon>
+        {pageNumbers.map((number, index) => {
+          if (index === 10) return;
+          return (
+            <PageNumber
+              key={number}
+              isCurrent={currentPage === number}
+              onClick={() => setCurrentPage(number)}
+            >
+              {number}
+            </PageNumber>
+          );
+        })}
+        ..
+        <PageNumber
+          key={pageNumbers[10]}
+          isCurrent={currentPage === pageNumbers[10]}
+          onClick={() => setCurrentPage(pageNumbers[10])}
+        >
+          {pageNumbers[10]}
+        </PageNumber>
+        <PageIcon>
+          <FontAwesomeIcon icon={faCaretRight} />
+        </PageIcon>
+      </PageContainer>
+    </Container>
+  );
+}
+
+export default BoardListFooter;
+
 const Container = styled.div`
   max-width: 1300px;
   margin: 0 auto;
@@ -139,88 +224,3 @@ const PageNumber = styled.span<{ isCurrent: boolean }>`
     color: ${(props) => props.theme.sejongCrimsonRed};
   }
 `;
-
-function BoardListFooter() {
-  const [search, setSearch] = useState('');
-  const [selected, setSelected] = useState('titleContent');
-  const selectOptions = [
-    {
-      id: 0,
-      name: '제목+내용',
-      value: 'titleContent',
-    },
-    { id: 1, name: '제목', value: 'title' },
-    { id: 2, name: '작성자', value: 'writer' },
-  ];
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 639];
-
-  return (
-    <Container>
-      <UpperBox>
-        <SearchWrapper>
-          <SearchSelect
-            onChange={({ target: { value } }) => setSelected(value)}
-            value={selected}
-          >
-            {selectOptions.map((option) => (
-              <option key={option.id} value={option.value}>
-                {option.name}
-              </option>
-            ))}
-          </SearchSelect>
-          <SearchInput
-            isBlank={!search}
-            value={search}
-            placeholder="검색"
-            onChange={({ target: { value } }) => setSearch(value)}
-          />
-          <SearchInput__Delete isEmpty={!search} onClick={() => setSearch('')}>
-            <FontAwesomeIcon icon={faX} size="2xs" color="rgba(0,0,0,0.5)" />
-          </SearchInput__Delete>
-          <SearchInput__Button
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <FontAwesomeIcon icon={faMagnifyingGlass} color="rgba(0,0,0,0.5)" />
-          </SearchInput__Button>
-        </SearchWrapper>
-        <WriteBtn>
-          <FontAwesomeIcon icon={faPen} />
-          <WriteText>쓰기</WriteText>
-        </WriteBtn>
-      </UpperBox>
-      <PageContainer>
-        <PageIcon>
-          <FontAwesomeIcon icon={faCaretLeft} />
-        </PageIcon>
-        {pageNumbers.map((number, index) => {
-          if (index === 10) return;
-          return (
-            <PageNumber
-              key={number}
-              isCurrent={currentPage === number}
-              onClick={() => setCurrentPage(number)}
-            >
-              {number}
-            </PageNumber>
-          );
-        })}
-        ..
-        <PageNumber
-          key={pageNumbers[10]}
-          isCurrent={currentPage === pageNumbers[10]}
-          onClick={() => setCurrentPage(pageNumbers[10])}
-        >
-          {pageNumbers[10]}
-        </PageNumber>
-        <PageIcon>
-          <FontAwesomeIcon icon={faCaretRight} />
-        </PageIcon>
-      </PageContainer>
-    </Container>
-  );
-}
-
-export default BoardListFooter;

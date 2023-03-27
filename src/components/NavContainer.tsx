@@ -1,52 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const ContainerOuter = styled.div`
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-top: 1.5px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 2.5px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-`;
-
-const Container = styled.nav`
-  display: flex;
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 20px 25px;
-  justify-content: space-evenly;
-`;
-
-const Wrapper = styled.ul`
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  border-left: 2px solid rgba(0, 0, 0, 0.05);
-  align-items: center;
-
-  &:last-child {
-    border-right: 2px solid rgba(0, 0, 0, 0.05);
-  }
-`;
-
-const Item = styled.li`
-  margin-bottom: 20px;
-  font-weight: 500;
-  cursor: pointer;
-
-  a {
-    color: rgba(0, 0, 0, 0.8);
-
-    &:hover {
-      color: ${(props) => props.theme.accentColor};
-    }
-  }
-
-  &:last-child {
-    margin-bottom: 0px;
-  }
-`;
-
 function NavContainer() {
   return (
     <ContainerOuter>
@@ -110,3 +64,49 @@ function NavContainer() {
 }
 
 export default NavContainer;
+
+const ContainerOuter = styled.div`
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-top: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 2.5px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+`;
+
+const Container = styled.nav`
+  display: flex;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 20px 25px;
+  justify-content: space-evenly;
+`;
+
+const Wrapper = styled.ul`
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  border-left: 2px solid rgba(0, 0, 0, 0.05);
+  align-items: center;
+
+  &:last-child {
+    border-right: 2px solid rgba(0, 0, 0, 0.05);
+  }
+`;
+
+const Item = styled.li`
+  margin-bottom: 20px;
+  font-weight: 500;
+  cursor: pointer;
+
+  a {
+    color: rgba(0, 0, 0, 0.8);
+
+    &:hover {
+      color: ${(props) => props.theme.accentColor};
+    }
+  }
+
+  &:last-child {
+    margin-bottom: 0px;
+  }
+`;
