@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { fetchUserInfo } from '../api';
+import { fetchUserInfo } from '../api/common';
 import { userInfoState } from '../atoms';
 import NormalBoard from './board/NormalBoard';
 import Post from './board/Post';

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import { fetchDuplicateId, fetchDuplicateNickname, fetchSignUp } from '../../api';
+import { fetchDuplicateId, fetchDuplicateNickname, fetchSignUp } from '../../api/signUp';
 import { SignUpFormData, SJAuthState } from '../../types/signUp';
 
 function SignUp() {

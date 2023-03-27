@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { fetchPostInfo } from '../../api';
+import { fetchPostInfo } from '../../api/post';
 import { userInfoState } from '../../atoms';
 import BoardHeader from '../../components/board/BoardHeader';
 import NavContainer from '../../components/board/NavContainer';

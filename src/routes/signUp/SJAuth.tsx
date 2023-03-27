@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import { fetchSJAuth } from '../../api';
+import { fetchSJAuth } from '../../api/signUp';
 import { SJAuthFormData } from '../../types/signUp';
 
 function SJAuth() {
