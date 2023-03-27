@@ -2,8 +2,8 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { MainBoardPost } from '../../types/board';
-import MainBoardItem from './MainBoardItem';
+import { MainBoardPost } from '../../../types/board';
+import MainBoardItem from '../../items/MainBoardItem';
 
 interface MainBoardProps {
   leftBoard: {

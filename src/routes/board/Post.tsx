@@ -4,8 +4,8 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { fetchPostInfo } from '../../api/post';
 import { userInfoState } from '../../atoms';
-import BoardHeader from '../../components/board/BoardHeader';
-import NavContainer from '../../components/board/NavContainer';
+import BoardHeader from '../../components/container/board/BoardHeader';
+import NavContainer from '../../components/container/board/NavContainer';
 import { PostInfoResponse, PostURLParams } from '../../types/post';
 
 function Post() {

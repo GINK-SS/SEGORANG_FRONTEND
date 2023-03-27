@@ -4,8 +4,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchDuplicateId, fetchDuplicateNickname, fetchSignUp } from '../../api/signUp';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
-import BackgroundPointContainer from '../../components/signUp/BackgroundPointContainer';
-import Header from '../../components/signUp/Header';
+import BackgroundPointContainer from '../../components/container/signUp/BackgroundPointContainer';
+import Header from '../../components/container/signUp/Header';
 import { SignUpFormData, SJAuthState } from '../../types/signUp';
 
 function SignUp() {
