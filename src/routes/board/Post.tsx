@@ -6,6 +6,7 @@ import { fetchPostInfo } from '../../api/post';
 import { userInfoState } from '../../atoms';
 import BoardHeader from '../../components/container/board/BoardHeader';
 import NavContainer from '../../components/container/board/NavContainer';
+import PostBoardTitle from '../../components/items/PostBoardTitle';
 import { PostInfoResponse, PostURLParams } from '../../types/post';
 
 function Post() {
@@ -41,7 +42,7 @@ function Post() {
       <NavContainer />
       <Container>
         <TopWrapper>
-          <BoardTitle>{postInfo.boardTitle}</BoardTitle>
+          <PostBoardTitle boardTitle={postInfo.boardTitle} />
           <PostTitle>{postInfo.postTitle}</PostTitle>
           <PostTopWrapper>
             <PostTopLeft>
@@ -77,12 +78,6 @@ const Container = styled.div`
 const TopWrapper = styled.div`
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   padding: 0 25px 15px;
-`;
-
-const BoardTitle = styled.p`
-  font-size: 16px;
-  color: ${(props) => props.theme.sejongGray};
-  margin-bottom: 50px;
 `;
 
 const PostTitle = styled.p`

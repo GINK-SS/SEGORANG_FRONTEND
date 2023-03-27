@@ -44,9 +44,7 @@ interface GetPostProps {
 
 export const getPostData = ({ boardTitle, postId }: GetPostProps) => {
   return {
-    // To Do
-    // boardTitle에 맞춰 한국어로 바꿔야함
-    boardTitle: boardTitle,
+    boardTitle,
     postTitle: `자유 게시판 게시물 ${postId}`,
     writer: `임시유저${postId}`,
     date: '23.03.26',

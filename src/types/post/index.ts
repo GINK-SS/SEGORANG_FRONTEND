@@ -18,3 +18,7 @@ export interface PostURLParams {
   boardTitle: string;
   postId: string;
 }
+
+export interface BoardTitleList {
+  [key: string]: string;
+}
