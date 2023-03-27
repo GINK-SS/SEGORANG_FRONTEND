@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchDuplicateId, fetchDuplicateNickname, fetchSignUp } from '../../api/signUp';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
 import BackgroundPointContainer from '../../components/signUp/BackgroundPointContainer';
 import { SignUpFormData, SJAuthState } from '../../types/signUp';
 
@@ -136,8 +137,7 @@ function SignUp() {
 
   return (
     <SignUpBackground>
-      <LoadingBG isLoading={isLoading} />
-      <Spinner isLoading={isLoading} />
+      <LoadingSpinner isLoading={isLoading} />
       <SignUpContainer>
         {isSignUp ? (
           <SignUpWrapper>
@@ -367,44 +367,6 @@ const SignUpBackground = styled.div`
   justify-content: center;
   overflow: hidden;
   position: relative;
-`;
-
-const LoadingBG = styled.div<{ isLoading: boolean }>`
-  position: absolute;
-  display: ${(props) => (props.isLoading ? 'block' : 'none')};
-  z-index: 4;
-  min-width: 100%;
-  min-height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-`;
-
-const Spinner = styled.span<{ isLoading: boolean }>`
-  position: absolute;
-  display: ${(props) => (props.isLoading ? 'block' : 'none')};
-  z-index: 5;
-  width: 48px;
-  height: 48px;
-  animation: spin 1s linear infinite;
-  &::after,
-  &::before {
-    content: '';
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    border-radius: 50%;
-    background: ${(props) => props.theme.sejongCrimsonRed};
-    animation: spin 1s linear infinite;
-    transform-origin: 0px 100%;
-  }
-  &::before {
-    transform-origin: 0 50%;
-    background: ${(props) => props.theme.sejongGray};
-  }
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
 `;
 
 const SignUpContainer = styled.div`
