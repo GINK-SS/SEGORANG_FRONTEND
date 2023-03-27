@@ -7,9 +7,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 function BoardListFooter() {
+  const history = useHistory();
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState('titleContent');
   const selectOptions = [
@@ -70,7 +72,10 @@ function BoardListFooter() {
             <PageNumber
               key={number}
               isCurrent={currentPage === number}
-              onClick={() => setCurrentPage(number)}
+              onClick={() => {
+                setCurrentPage(number);
+                history.push(`?page=${number}`);
+              }}
             >
               {number}
             </PageNumber>

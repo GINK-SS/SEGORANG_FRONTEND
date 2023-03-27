@@ -1,17 +1,12 @@
 import { rest, RestRequest } from 'msw';
 import { BASE_URL } from '../../api/common';
-import { Post } from '../../types/board';
 import { getBulletinBoardData, getHotBoardData } from '../mockData';
 
-interface PostList {
-  [key: string]: {
-    data: Post[];
-  };
-}
+const getPostList = (boardTitle: string, page: number) => {
+  if (boardTitle === 'hot') return getHotBoardData(page);
+  if (boardTitle === 'bulletin') return getBulletinBoardData(page);
 
-const postList: PostList = {
-  hot: { data: getHotBoardData() },
-  bulletin: { data: getBulletinBoardData() },
+  return [];
 };
 
 export const boardHandlers = [
@@ -20,14 +15,9 @@ export const boardHandlers = [
     `${BASE_URL}/api/board/:boardTitle`,
     (req: RestRequest<{}, { boardTitle: string }>, res, ctx) => {
       const { boardTitle } = req.params;
+      const page = req.url.searchParams.get('page');
 
-      return res(
-        ctx.json(
-          postList[boardTitle]
-            ? { result: { data: postList[boardTitle].data } }
-            : { result: { data: [] } }
-        )
-      );
+      return res(ctx.json({ result: { data: getPostList(boardTitle, Number(page)) } }));
     }
   ),
 ];

@@ -17,6 +17,12 @@ export interface Post {
   postId: string;
 }
 
+export interface FetchPostListParams {
+  boardTitle: string;
+  page: number;
+  accessToken: string;
+}
+
 export interface PostListResponse {
   result: {
     data: Post[];

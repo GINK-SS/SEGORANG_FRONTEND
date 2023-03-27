@@ -1,6 +1,6 @@
-export const getHotBoardData = () => {
+export const getHotBoardData = (page: number) => {
   const hotBoardData = [];
-  for (let i = 200; i >= 1; i -= 1) {
+  for (let i = 200 - (page - 1) * 20, j = 0; j < 20; i -= 1, j += 1) {
     let data = {
       boardTitle: 'bulletin',
       postCategory: '자유',
@@ -18,9 +18,9 @@ export const getHotBoardData = () => {
   return hotBoardData;
 };
 
-export const getBulletinBoardData = () => {
+export const getBulletinBoardData = (page: number) => {
   const bulletinBoardData = [];
-  for (let i = 200; i >= 1; i -= 1) {
+  for (let i = 200 - (page - 1) * 20, j = 0; j < 20; i -= 1, j += 1) {
     let data = {
       boardTitle: 'bulletin',
       likeNum: i * 2,

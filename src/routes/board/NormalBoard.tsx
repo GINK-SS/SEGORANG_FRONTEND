@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../atoms';
 import BoardHeader from '../../components/container/board/BoardHeader';
@@ -12,18 +12,25 @@ import { fetchPostList } from '../../api/board';
 function NormalBoard() {
   const [postList, setPostList] = useState<Post[]>([]);
   const { boardTitle }: BoardURLParams = useParams();
+  const { search } = useLocation();
   const userInfo = useRecoilValue(userInfoState);
 
   const getPostList = async () => {
+    const page = search ? search.slice(6) : '1';
     const {
       result: { data },
-    } = await fetchPostList(boardTitle, userInfo.accessToken);
+    } = await fetchPostList({
+      boardTitle,
+      page: Number(page),
+      accessToken: userInfo.accessToken,
+    });
+
     setPostList(data);
   };
 
   useEffect(() => {
     getPostList();
-  }, [boardTitle]);
+  }, [boardTitle, search]);
 
   return (
     <>
