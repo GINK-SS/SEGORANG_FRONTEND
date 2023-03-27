@@ -1,8 +1,7 @@
 import { rest, RestRequest } from 'msw';
+import { BASE_URL } from '../../api/common';
 import { Post } from '../../types/board';
-import { getBulletinBoardData, getHotBoardData, getPostData } from '../mockData';
-
-const BASE_URL = `http://scof.link:7000`;
+import { getBulletinBoardData, getHotBoardData } from '../mockData';
 
 interface PostList {
   [key: string]: {
@@ -29,15 +28,6 @@ export const boardHandlers = [
             : { result: { data: [] } }
         )
       );
-    }
-  ),
-  // 게시물 상세 내용 가져오기
-  rest.get(
-    `${BASE_URL}/api/board/:boardTitle/:postId`,
-    (req: RestRequest<{}, { boardTitle: string; postId: string }>, res, ctx) => {
-      const { boardTitle, postId } = req.params;
-
-      return res(ctx.json(getPostData({ boardTitle, postId })));
     }
   ),
 ];
