@@ -1,14 +1,8 @@
-import {
-  faCaretLeft,
-  faCaretRight,
-  faMagnifyingGlass,
-  faPen,
-  faX,
-} from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faPen, faX } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import BoardPageList from '../../items/BoardPageList';
 
 interface BoardListFooterProps {
   page: number;
@@ -16,7 +10,6 @@ interface BoardListFooterProps {
 }
 
 function BoardListFooter({ page, lastPage }: BoardListFooterProps) {
-  const history = useHistory();
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState('titleContent');
   const selectOptions = [
@@ -28,7 +21,6 @@ function BoardListFooter({ page, lastPage }: BoardListFooterProps) {
     { id: 1, name: '제목', value: 'title' },
     { id: 2, name: '작성자', value: 'writer' },
   ];
-  const [pageNumbers, setPageNumbers] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
   return (
     <Container>
@@ -66,36 +58,7 @@ function BoardListFooter({ page, lastPage }: BoardListFooterProps) {
           <WriteText>쓰기</WriteText>
         </WriteBtn>
       </UpperBox>
-      <PageContainer>
-        <PageIcon>
-          <FontAwesomeIcon icon={faCaretLeft} />
-        </PageIcon>
-        {pageNumbers.map((number, index) => {
-          if (index === 10) return;
-          return (
-            <PageNumber
-              key={number}
-              isCurrent={page === number}
-              onClick={() => {
-                history.push(`?page=${number}`);
-              }}
-            >
-              {number}
-            </PageNumber>
-          );
-        })}
-        ..
-        <PageNumber
-          key={pageNumbers[10]}
-          isCurrent={page === pageNumbers[10]}
-          onClick={() => console.log('마지막')}
-        >
-          {pageNumbers[10]}
-        </PageNumber>
-        <PageIcon>
-          <FontAwesomeIcon icon={faCaretRight} />
-        </PageIcon>
-      </PageContainer>
+      <BoardPageList page={page} lastPage={lastPage} />
     </Container>
   );
 }
@@ -201,34 +164,4 @@ const WriteBtn = styled.button`
 
 const WriteText = styled.p`
   margin-left: 10px;
-`;
-
-const PageContainer = styled.div`
-  display: flex;
-  margin: 40px auto;
-  justify-content: center;
-  align-items: center;
-`;
-
-const PageIcon = styled.div`
-  margin: 0 15px;
-  padding: 5px;
-  transform: scale(2);
-  cursor: pointer;
-
-  &:hover {
-    color: ${(props) => props.theme.sejongCrimsonRed};
-  }
-`;
-
-const PageNumber = styled.span<{ isCurrent: boolean }>`
-  margin: 0 15px;
-  padding: 5px;
-  font-size: 20px;
-  color: ${(props) => (props.isCurrent ? props.theme.accentColor : '#000')};
-  cursor: pointer;
-
-  &:hover {
-    color: ${(props) => props.theme.sejongCrimsonRed};
-  }
 `;
