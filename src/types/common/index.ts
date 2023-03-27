@@ -1,3 +1,11 @@
+export interface UserInfo {
+  accessToken: string;
+  userId: string;
+  userName: string;
+  userNickname: string;
+  userMajor: string;
+}
+
 export interface UserInfoResponse {
   msg: string;
   result: {
