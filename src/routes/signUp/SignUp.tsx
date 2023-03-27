@@ -1,4 +1,3 @@
-import ProgressBar from '@ramonak/react-progress-bar';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -6,6 +5,7 @@ import styled from 'styled-components';
 import { fetchDuplicateId, fetchDuplicateNickname, fetchSignUp } from '../../api/signUp';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import BackgroundPointContainer from '../../components/signUp/BackgroundPointContainer';
+import Header from '../../components/signUp/Header';
 import { SignUpFormData, SJAuthState } from '../../types/signUp';
 
 function SignUp() {
@@ -160,16 +160,7 @@ function SignUp() {
         ) : (
           <>
             <SignUpWrapper>
-              <SignUpTop>
-                <SignUpTitle>회원가입</SignUpTitle>
-                <ProgressBar
-                  completed={100}
-                  customLabel=" "
-                  height="5px"
-                  bgColor="rgba(195, 0, 47)"
-                  borderRadius="10px"
-                />
-              </SignUpTop>
+              <Header progressAmount={100} />
               <SignUpForm onSubmit={handleSubmit(onValid)}>
                 <SignUpInputWrapper>
                   <SignUpInputName>학번</SignUpInputName>
@@ -391,21 +382,6 @@ const SignUpWrapper = styled.div`
     border-radius: 0px;
     margin: 0;
     padding: 30px;
-  }
-`;
-
-const SignUpTop = styled.div`
-  text-align: center;
-  margin: 0 -60px;
-`;
-
-const SignUpTitle = styled.h1`
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-
-  @media screen and (max-width: 768px) {
-    font-size: 1rem;
   }
 `;
 

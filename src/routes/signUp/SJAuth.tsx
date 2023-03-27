@@ -1,4 +1,3 @@
-import ProgressBar from '@ramonak/react-progress-bar';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
@@ -6,6 +5,7 @@ import styled from 'styled-components';
 import { fetchSJAuth } from '../../api/signUp';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import BackgroundPointContainer from '../../components/signUp/BackgroundPointContainer';
+import Header from '../../components/signUp/Header';
 import { SJAuthFormData } from '../../types/signUp';
 
 function SJAuth() {
@@ -60,16 +60,7 @@ function SJAuth() {
       <LoadingSpinner isLoading={isLoading} />
       <SignUpContainer>
         <SignUpWrapper>
-          <SignUpTop>
-            <SignUpTitle>회원가입</SignUpTitle>
-            <ProgressBar
-              completed={50}
-              customLabel=" "
-              height="5px"
-              bgColor="rgba(195, 0, 47)"
-              borderRadius="10px"
-            />
-          </SignUpTop>
+          <Header progressAmount={50} />
           <SignUpDesc>세종대 구성원 인증을 위해</SignUpDesc>
           <SignUpDesc>
             <SignUpDescAccent>세종대학교 포털 아이디와 비밀번호</SignUpDescAccent>를
