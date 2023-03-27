@@ -3,10 +3,10 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { fetchUserInfo } from '../api/common';
-import { fetchLogin } from '../api/login';
-import { userInfoState } from '../atoms';
-import { LoginFormData } from '../types/login';
+import { fetchUserInfo } from '../../api/common';
+import { fetchLogin } from '../../api/login';
+import { userInfoState } from '../../atoms';
+import { LoginFormData } from '../../types/login';
 
 function Login() {
   const {

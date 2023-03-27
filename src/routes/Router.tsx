@@ -5,7 +5,7 @@ import { fetchUserInfo } from '../api/common';
 import { userInfoState } from '../atoms';
 import NormalBoard from './board/NormalBoard';
 import Post from './board/Post';
-import Login from './Login';
+import Login from './login/Login';
 import Main from './main/Main';
 import SignUp from './signUp/SignUp';
 import SJAuth from './signUp/SJAuth';
