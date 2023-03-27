@@ -2,8 +2,9 @@ import ProgressBar from '@ramonak/react-progress-bar';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { fetchSJAuth } from '../../api/signUp';
+import BackgroundPointContainer from '../../components/signUp/BackgroundPointContainer';
 import { SJAuthFormData } from '../../types/signUp';
 
 function SJAuth() {
@@ -17,8 +18,6 @@ function SJAuth() {
     getValues,
   } = useForm<SJAuthFormData>({ mode: 'onChange' });
   const history = useHistory();
-  const [eggGINKSS, setEggGINKSS] = useState(0);
-  const [eggSCOF, setEggSCOF] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const submitSJAuthInput = async () => {
@@ -114,31 +113,13 @@ function SJAuth() {
             </SignUpBtn>
           </SignUpForm>
         </SignUpWrapper>
-        <SignUpBackPoint>
-          <span onClick={() => setEggSCOF((prev) => prev + 1)}>S</span>
-          <span onClick={() => setEggGINKSS((prev) => prev + 1)}>G</span>R
-        </SignUpBackPoint>
-        <SignUpBackPoint>☻</SignUpBackPoint>
-        <SignUpBackPoint egg={eggGINKSS >= 2}>GINK-SS</SignUpBackPoint>
-        <SignUpBackPoint egg={eggSCOF >= 2}>SCOF</SignUpBackPoint>
-        <SignUpBackPoint>❁</SignUpBackPoint>
-        <SignUpBackPoint>SEJONG COMMUNITY</SignUpBackPoint>
-        <SignUpBackPoint>✧</SignUpBackPoint>
+        <BackgroundPointContainer />
       </SignUpContainer>
     </SignUpBackground>
   );
 }
 
 export default SJAuth;
-
-const animation = keyframes`
-  0% {
-    transform:rotate(0deg);
-  }
-  100%{
-    transform:rotate(360deg);
-  }
-`;
 
 const SignUpBackground = styled.div`
   display: flex;
@@ -311,62 +292,5 @@ const SignUpBtn = styled.button<{ isActive: boolean }>`
     bottom: 50px;
     right: 50px;
     left: 50px;
-  }
-`;
-
-const SignUpBackPoint = styled.span<{ egg?: boolean }>`
-  position: absolute;
-  z-index: 1;
-  font-weight: 700;
-  font-size: 250px;
-  color: ${(props) => props.theme.sejongCrimsonRed};
-  opacity: 3%;
-  cursor: default;
-  &:nth-child(2) {
-    font-size: 350px;
-    letter-spacing: 5px;
-    bottom: -204px;
-    right: -200px;
-  }
-  &:nth-child(3) {
-    top: -104px;
-    left: -57px;
-    transform: rotate(-40deg);
-  }
-  &:nth-child(4) {
-    display: ${(props) => (props.egg ? 'block' : 'none')};
-    font-size: 60px;
-    top: 200px;
-    right: -110px;
-    opacity: 50%;
-    transform: rotate(90deg);
-  }
-  &:nth-child(5) {
-    display: ${(props) => (props.egg ? 'block' : 'none')};
-    font-size: 60px;
-    left: -70px;
-    bottom: 250px;
-    transform: rotate(270deg);
-    opacity: 50%;
-  }
-  &:nth-child(6) {
-    font-size: 400px;
-    left: -150px;
-    bottom: -150px;
-    animation: ${animation} 500s linear infinite;
-  }
-  &:nth-child(7) {
-    font-size: 60px;
-    right: 30px;
-    top: -20px;
-  }
-  &:nth-child(8) {
-    font-size: 400px;
-    top: -50px;
-    right: -250px;
-  }
-
-  @media screen and (max-width: 768px) {
-    display: none;
   }
 `;
