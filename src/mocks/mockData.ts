@@ -1,6 +1,6 @@
 export const getHotBoardData = (page: number) => {
   const hotBoardData = [];
-  for (let i = 200 - (page - 1) * 20, j = 0; j < 20; i -= 1, j += 1) {
+  for (let i = 300 - (page - 1) * 20, j = 0; j < 20; i -= 1, j += 1) {
     let data = {
       boardTitle: 'bulletin',
       postCategory: '자유',
@@ -15,12 +15,12 @@ export const getHotBoardData = (page: number) => {
     hotBoardData.push(data);
   }
 
-  return hotBoardData;
+  return { data: hotBoardData, lastPage: 15 };
 };
 
 export const getBulletinBoardData = (page: number) => {
   const bulletinBoardData = [];
-  for (let i = 200 - (page - 1) * 20, j = 0; j < 20; i -= 1, j += 1) {
+  for (let i = 260 - (page - 1) * 20, j = 0; j < 20; i -= 1, j += 1) {
     let data = {
       boardTitle: 'bulletin',
       likeNum: i * 2,
@@ -34,7 +34,7 @@ export const getBulletinBoardData = (page: number) => {
     bulletinBoardData.push(data);
   }
 
-  return bulletinBoardData;
+  return { data: bulletinBoardData, lastPage: 13 };
 };
 
 interface GetPostProps {

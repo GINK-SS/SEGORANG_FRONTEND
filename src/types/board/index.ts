@@ -26,6 +26,7 @@ export interface FetchPostListParams {
 export interface PostListResponse {
   result: {
     data: Post[];
+    lastPage: number;
   };
 }
 

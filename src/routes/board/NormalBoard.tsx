@@ -11,14 +11,15 @@ import { fetchPostList } from '../../api/board';
 
 function NormalBoard() {
   const [postList, setPostList] = useState<Post[]>([]);
+  const [lastPage, setLastPage] = useState(0);
   const { boardTitle }: BoardURLParams = useParams();
   const { search } = useLocation();
   const userInfo = useRecoilValue(userInfoState);
+  const page = search ? search.slice(6) : '1';
 
   const getPostList = async () => {
-    const page = search ? search.slice(6) : '1';
     const {
-      result: { data },
+      result: { data, lastPage },
     } = await fetchPostList({
       boardTitle,
       page: Number(page),
@@ -26,6 +27,7 @@ function NormalBoard() {
     });
 
     setPostList(data);
+    setLastPage(lastPage);
   };
 
   useEffect(() => {
@@ -37,7 +39,7 @@ function NormalBoard() {
       <BoardHeader />
       <NavContainer />
       <PostList postList={postList} />
-      <BoardListFooter />
+      <BoardListFooter page={Number(page)} lastPage={lastPage} />
     </>
   );
 }

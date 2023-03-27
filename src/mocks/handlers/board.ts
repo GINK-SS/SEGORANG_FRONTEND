@@ -6,7 +6,7 @@ const getPostList = (boardTitle: string, page: number) => {
   if (boardTitle === 'hot') return getHotBoardData(page);
   if (boardTitle === 'bulletin') return getBulletinBoardData(page);
 
-  return [];
+  return { data: [], lastPage: 0 };
 };
 
 export const boardHandlers = [
@@ -17,7 +17,14 @@ export const boardHandlers = [
       const { boardTitle } = req.params;
       const page = req.url.searchParams.get('page');
 
-      return res(ctx.json({ result: { data: getPostList(boardTitle, Number(page)) } }));
+      return res(
+        ctx.json({
+          result: {
+            data: getPostList(boardTitle, Number(page)).data,
+            lastPage: getPostList(boardTitle, Number(page)).lastPage,
+          },
+        })
+      );
     }
   ),
 ];

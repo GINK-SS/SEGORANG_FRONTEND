@@ -10,7 +10,12 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-function BoardListFooter() {
+interface BoardListFooterProps {
+  page: number;
+  lastPage: number;
+}
+
+function BoardListFooter({ page, lastPage }: BoardListFooterProps) {
   const history = useHistory();
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState('titleContent');
@@ -23,8 +28,7 @@ function BoardListFooter() {
     { id: 1, name: '제목', value: 'title' },
     { id: 2, name: '작성자', value: 'writer' },
   ];
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 639];
+  const [pageNumbers, setPageNumbers] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
   return (
     <Container>
@@ -71,9 +75,8 @@ function BoardListFooter() {
           return (
             <PageNumber
               key={number}
-              isCurrent={currentPage === number}
+              isCurrent={page === number}
               onClick={() => {
-                setCurrentPage(number);
                 history.push(`?page=${number}`);
               }}
             >
@@ -84,8 +87,8 @@ function BoardListFooter() {
         ..
         <PageNumber
           key={pageNumbers[10]}
-          isCurrent={currentPage === pageNumbers[10]}
-          onClick={() => setCurrentPage(pageNumbers[10])}
+          isCurrent={page === pageNumbers[10]}
+          onClick={() => console.log('마지막')}
         >
           {pageNumbers[10]}
         </PageNumber>
