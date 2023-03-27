@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-interface IMainBestItemProps {
+interface MainBestItemProps {
   title: string;
   index: number;
 }
@@ -34,7 +34,7 @@ const BestItem = styled.li`
   }
 `;
 
-function MainBestItem({ title, index }: IMainBestItemProps) {
+function MainBestItem({ title, index }: MainBestItemProps) {
   return (
     <BestItem>
       <span>{index + 1}</span>

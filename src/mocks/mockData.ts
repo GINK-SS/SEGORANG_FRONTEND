@@ -37,12 +37,12 @@ export const getBulletinBoardData = () => {
   return bulletinBoardData;
 };
 
-interface IGetPostProps {
+interface GetPostProps {
   boardTitle: string;
   postId: string;
 }
 
-export const getPostData = ({ boardTitle, postId }: IGetPostProps) => {
+export const getPostData = ({ boardTitle, postId }: GetPostProps) => {
   return {
     // To Do
     // boardTitle에 맞춰 한국어로 바꿔야함

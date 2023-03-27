@@ -1,37 +1,16 @@
 import { rest, RestRequest } from 'msw';
+import { Post } from '../../types/board';
 import { getBulletinBoardData, getHotBoardData, getPostData } from '../mockData';
 
 const BASE_URL = `http://scof.link:7000`;
 
-type IBoardItems = {
+interface PostList {
   [key: string]: {
-    data: {
-      boardTitle: string;
-      postCategory?: string;
-      likeNum: number;
-      postTitle: string;
-      commentNum: number;
-      writer: string;
-      viewNum: number;
-      date: string;
-      postId: string;
-    }[];
-  };
-};
-
-interface IPost {
-  result: {
-    boardTitle: string;
-    postTitle: string;
-    writer: string;
-    date: string;
-    viewNum: number;
-    likeNum: number;
-    postContent: string[];
+    data: Post[];
   };
 }
 
-const boardItems: IBoardItems = {
+const postList: PostList = {
   hot: { data: getHotBoardData() },
   bulletin: { data: getBulletinBoardData() },
 };
@@ -45,14 +24,14 @@ export const boardHandlers = [
 
       return res(
         ctx.json(
-          boardItems[boardTitle]
-            ? { result: boardItems[boardTitle].data }
-            : { result: [] }
+          postList[boardTitle]
+            ? { result: { data: postList[boardTitle].data } }
+            : { result: { data: [] } }
         )
       );
     }
   ),
-  // 게시판 글 상세 내용 가져오기
+  // 게시물 상세 내용 가져오기
   rest.get(
     `${BASE_URL}/api/board/:boardTitle/:postId`,
     (req: RestRequest<{}, { boardTitle: string; postId: string }>, res, ctx) => {

@@ -1,12 +1,5 @@
 import styled from 'styled-components';
 
-interface IMainBoardItemProps {
-  category: string;
-  title: string;
-  commentNum: number;
-  likeNum: number;
-}
-
 const BoardItem = styled.li`
   display: flex;
   justify-content: space-between;
@@ -42,7 +35,14 @@ const BoardItemLike = styled.span`
   color: ${(props) => props.theme.accentColor};
 `;
 
-function MainBoardItem({ category, title, commentNum, likeNum }: IMainBoardItemProps) {
+interface MainBoardItemProps {
+  category: string;
+  title: string;
+  commentNum: number;
+  likeNum: number;
+}
+
+function MainBoardItem({ category, title, commentNum, likeNum }: MainBoardItemProps) {
   return (
     <BoardItem>
       <BoardItemCTCWrapper>

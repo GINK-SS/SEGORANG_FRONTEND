@@ -3,8 +3,9 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { fetchLogin, getUserInfo } from '../api';
+import { fetchLogin, fetchUserInfo } from '../api';
 import { userInfoState } from '../atoms';
+import { LoginFormData } from '../types/login';
 
 const Container = styled.div`
   display: flex;
@@ -129,29 +130,6 @@ const SignUpWrapper = styled.div`
   }
 `;
 
-interface ILoginForm {
-  userId: string;
-  userPw: string;
-}
-
-interface ILoginResponse {
-  msg: string;
-  description?: string;
-  result?: {
-    access_token: string;
-  };
-}
-
-interface IGetUserInfo {
-  msg: string;
-  result: {
-    id: string;
-    name: string;
-    nickname: string;
-    major: string;
-  };
-}
-
 function Login() {
   const {
     register,
@@ -161,7 +139,7 @@ function Login() {
     setValue,
     getValues,
     setError,
-  } = useForm<ILoginForm>({ reValidateMode: 'onSubmit' });
+  } = useForm<LoginFormData>({ reValidateMode: 'onSubmit' });
   const [isSaveId, setIsSaveId] = useState(false);
   const [isSaveLogin, setIsSaveLogin] = useState(false);
   const setUserInfo = useSetRecoilState(userInfoState);
@@ -177,7 +155,7 @@ function Login() {
 
   const submitLoginInput = async () => {
     try {
-      const { msg, result }: ILoginResponse = await fetchLogin({
+      const { msg, result } = await fetchLogin({
         userId: getValues('userId'),
         userPw: getValues('userPw'),
       });
@@ -195,7 +173,7 @@ function Login() {
 
         const {
           result: { id, name, nickname, major },
-        }: IGetUserInfo = await getUserInfo(result?.access_token as string);
+        } = await fetchUserInfo(result?.access_token as string);
 
         setUserInfo((prev) => {
           return {

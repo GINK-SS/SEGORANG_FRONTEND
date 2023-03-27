@@ -1,33 +1,21 @@
-interface ISJAuthFormData {
-  studentId: string;
-  studentPw: string;
-}
-
-interface ISignUpFormData {
-  studentId: string;
-  userId: string;
-  userPw: string;
-  userName: string;
-  userMajor: string;
-  userNickname: string;
-  isSejongAuth: boolean;
-}
-
-interface ILoginFormData {
-  userId: string;
-  userPw: string;
-}
-
-interface IGetPostData {
-  boardTitle: string;
-  postId: string;
-  accessToken: string;
-}
+import { PostListResponse } from './types/board';
+import { UserInfoResponse } from './types/common';
+import { FetchLoginParams, LoginResponse } from './types/login';
+import { FetchPostInfoParams, PostInfoResponse } from './types/post';
+import {
+  DuplicateResponse,
+  FetchSignUpParams,
+  SignUpResponse,
+  SJAuthResponse,
+} from './types/signUp';
 
 const BASE_URL = `http://scof.link:7000`;
 
-export const fetchSJAuth = ({ studentId, studentPw }: ISJAuthFormData) => {
-  return fetch(`${BASE_URL}/api/auth/sejong`, {
+export const fetchSJAuth = async (
+  studentId: string,
+  studentPw: string
+): Promise<SJAuthResponse> => {
+  const response = await fetch(`${BASE_URL}/api/auth/sejong`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -37,9 +25,11 @@ export const fetchSJAuth = ({ studentId, studentPw }: ISJAuthFormData) => {
       sj_pw: studentPw,
     }),
   });
+
+  return await response.json();
 };
 
-export const fetchSignUp = ({
+export const fetchSignUp = async ({
   studentId,
   userId,
   userPw,
@@ -47,8 +37,8 @@ export const fetchSignUp = ({
   userMajor,
   userNickname,
   isSejongAuth,
-}: ISignUpFormData) => {
-  return fetch(`${BASE_URL}/api/auth/signup`, {
+}: FetchSignUpParams): Promise<SignUpResponse> => {
+  const response = await fetch(`${BASE_URL}/api/auth/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -62,11 +52,13 @@ export const fetchSignUp = ({
       nickname: userNickname,
       sejong_auth: isSejongAuth,
     }),
-  }).then((res) => res.json());
+  });
+
+  return await response.json();
 };
 
-export const fetchDuplicateId = (userId: string) => {
-  return fetch(`${BASE_URL}/api/auth/id`, {
+export const fetchDuplicateId = async (userId: string): Promise<DuplicateResponse> => {
+  const response = await fetch(`${BASE_URL}/api/auth/id`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -74,11 +66,15 @@ export const fetchDuplicateId = (userId: string) => {
     body: JSON.stringify({
       id: userId,
     }),
-  }).then((res) => res.json());
+  });
+
+  return await response.json();
 };
 
-export const fetchDuplicateNickname = (userNickname: string) => {
-  return fetch(`${BASE_URL}/api/auth/nickname`, {
+export const fetchDuplicateNickname = async (
+  userNickname: string
+): Promise<DuplicateResponse> => {
+  const response = await fetch(`${BASE_URL}/api/auth/nickname`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -86,10 +82,15 @@ export const fetchDuplicateNickname = (userNickname: string) => {
     body: JSON.stringify({
       nickname: userNickname,
     }),
-  }).then((res) => res.json());
+  });
+
+  return await response.json();
 };
 
-export const fetchLogin = async ({ userId, userPw }: ILoginFormData) => {
+export const fetchLogin = async ({
+  userId,
+  userPw,
+}: FetchLoginParams): Promise<LoginResponse> => {
   const response = await fetch(`${BASE_URL}/api/auth/signin`, {
     method: 'POST',
     headers: {
@@ -104,7 +105,7 @@ export const fetchLogin = async ({ userId, userPw }: ILoginFormData) => {
   return await response.json();
 };
 
-export const getUserInfo = async (accessToken: string) => {
+export const fetchUserInfo = async (accessToken: string): Promise<UserInfoResponse> => {
   const response = await fetch(`${BASE_URL}/api/v1/user`, {
     method: 'GET',
     headers: {
@@ -117,7 +118,10 @@ export const getUserInfo = async (accessToken: string) => {
 };
 
 // MOCK
-export const getBoardList = async (boardTitle: string, accessToken: string) => {
+export const fetchPostList = async (
+  boardTitle: string,
+  accessToken: string
+): Promise<PostListResponse> => {
   const response = await fetch(`${BASE_URL}/api/board/${boardTitle}`, {
     method: 'GET',
     headers: {
@@ -129,7 +133,11 @@ export const getBoardList = async (boardTitle: string, accessToken: string) => {
   return await response.json();
 };
 
-export const getPost = async ({ boardTitle, postId, accessToken }: IGetPostData) => {
+export const fetchPostInfo = async ({
+  boardTitle,
+  postId,
+  accessToken,
+}: FetchPostInfoParams): Promise<PostInfoResponse> => {
   const response = await fetch(`${BASE_URL}/api/board/${boardTitle}/${postId}`, {
     method: 'GET',
     headers: {

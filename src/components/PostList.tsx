@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Post } from '../types/board';
 
 const BoardContainer = styled.div`
   max-width: 1300px;
@@ -108,25 +109,13 @@ const NoItem = styled.div`
 
 const NoItemText = styled.p``;
 
-interface IBoardItemProps {
-  boardTitle: string;
-  postCategory?: string;
-  likeNum: number;
-  postTitle: string;
-  commentNum: number;
-  writer: string;
-  viewNum: number;
-  date: string;
-  postId: string;
+interface PostListProps {
+  postList: Post[];
 }
 
-interface IBoardItemListProps {
-  boardItem: IBoardItemProps[];
-}
-
-function BoardItemList({ boardItem }: IBoardItemListProps) {
+function PostList({ postList }: PostListProps) {
   const hasCategory =
-    boardItem.length !== 0 ? (boardItem[0]?.postCategory ? true : false) : false;
+    postList.length !== 0 ? (postList[0]?.postCategory ? true : false) : false;
 
   return (
     <BoardContainer>
@@ -139,20 +128,20 @@ function BoardItemList({ boardItem }: IBoardItemListProps) {
           <ViewNum>조회</ViewNum>
           <Date>날짜</Date>
         </BoardItem>
-        {boardItem.length !== 0 ? (
-          boardItem.map((item, index) => (
+        {postList.length !== 0 ? (
+          postList.map((post, index) => (
             <BoardItem key={index}>
-              <Category hasCategory={hasCategory}>{item.postCategory}</Category>
-              <LikeNum>{item.likeNum}</LikeNum>
-              <Link to={`${item.boardTitle}/${item.postId}`}>
+              <Category hasCategory={hasCategory}>{post.postCategory}</Category>
+              <LikeNum>{post.likeNum}</LikeNum>
+              <Link to={`${post.boardTitle}/${post.postId}`}>
                 <Title>
-                  {item.postTitle}
-                  <CommentNum>{`[${item.commentNum}]`}</CommentNum>
+                  {post.postTitle}
+                  <CommentNum>{`[${post.commentNum}]`}</CommentNum>
                 </Title>
               </Link>
-              <Writer>{item.writer}</Writer>
-              <ViewNum>{item.viewNum}</ViewNum>
-              <Date>{item.date}</Date>
+              <Writer>{post.writer}</Writer>
+              <ViewNum>{post.viewNum}</ViewNum>
+              <Date>{post.date}</Date>
             </BoardItem>
           ))
         ) : (
@@ -165,4 +154,4 @@ function BoardItemList({ boardItem }: IBoardItemListProps) {
   );
 }
 
-export default BoardItemList;
+export default PostList;

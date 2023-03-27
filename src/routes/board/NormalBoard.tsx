@@ -1,48 +1,35 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { getBoardList } from '../../api';
+import { fetchPostList } from '../../api';
 import { userInfoState } from '../../atoms';
 import BoardHeader from '../../components/BoardHeader';
-import BoardItemList from '../../components/BoardItemList';
+import PostList from '../../components/PostList';
 import BoardListFooter from '../../components/BoardListFooter';
 import NavContainer from '../../components/NavContainer';
-
-interface IParams {
-  boardTitle: string;
-}
-
-interface IBoardItem {
-  boardTitle: string;
-  category?: string;
-  likeNum: number;
-  postTitle: string;
-  commentNum: number;
-  writer: string;
-  viewNum: number;
-  date: string;
-  postId: string;
-}
+import { BoardURLParams, Post } from '../../types/board';
 
 function NormalBoard() {
-  const [boardItems, setBoardItems] = useState<IBoardItem[]>([]);
-  const { boardTitle }: IParams = useParams();
+  const [postList, setPostList] = useState<Post[]>([]);
+  const { boardTitle }: BoardURLParams = useParams();
   const userInfo = useRecoilValue(userInfoState);
 
-  const getBoardListAndSet = async () => {
-    const { result } = await getBoardList(boardTitle, userInfo.accessToken);
-    setBoardItems(result);
+  const getPostList = async () => {
+    const {
+      result: { data },
+    } = await fetchPostList(boardTitle, userInfo.accessToken);
+    setPostList(data);
   };
 
   useEffect(() => {
-    getBoardListAndSet();
+    getPostList();
   }, [boardTitle]);
 
   return (
     <>
       <BoardHeader />
       <NavContainer />
-      <BoardItemList boardItem={boardItems} />
+      <PostList postList={postList} />
       <BoardListFooter />
     </>
   );

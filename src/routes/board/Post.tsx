@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { getPost } from '../../api';
+import { fetchPostInfo } from '../../api';
 import { userInfoState } from '../../atoms';
 import BoardHeader from '../../components/BoardHeader';
 import NavContainer from '../../components/NavContainer';
+import { PostInfoResponse, PostURLParams } from '../../types/post';
 
 const Container = styled.div`
   max-width: 1300px;
@@ -72,24 +73,9 @@ const ContentWrapper = styled.div`
 
 const ContentText = styled.p``;
 
-interface IPostParams {
-  boardTitle: string;
-  postId: string;
-}
-
-interface IPostInfo {
-  boardTitle: string;
-  postTitle: string;
-  writer: string;
-  date: string;
-  viewNum: number;
-  likeNum: number;
-  content: string[];
-}
-
 function Post() {
   const userInfo = useRecoilValue(userInfoState);
-  const [postInfo, setPostInfo] = useState<IPostInfo>({
+  const [postInfo, setPostInfo] = useState<PostInfoResponse>({
     boardTitle: '',
     postTitle: '',
     writer: '',
@@ -98,10 +84,10 @@ function Post() {
     likeNum: 0,
     content: [],
   });
-  const { boardTitle, postId }: IPostParams = useParams();
+  const { boardTitle, postId }: PostURLParams = useParams();
 
   const getPostInfo = async () => {
-    const response = await getPost({
+    const response = await fetchPostInfo({
       boardTitle,
       postId,
       accessToken: userInfo.accessToken,

@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { fetchSJAuth } from '../../api';
+import { SJAuthFormData } from '../../types/signUp';
 
 const animation = keyframes`
   0% {
@@ -245,28 +246,6 @@ const SignUpBackPoint = styled.span<{ egg?: boolean }>`
   }
 `;
 
-interface ISJAuthFormData {
-  studentId: string;
-  studentPw: string;
-}
-
-interface ISJAuthResponse {
-  result?: {
-    AuthResponse: [
-      boolean,
-      boolean,
-      number,
-      string,
-      { major: string; name: string },
-      string
-    ];
-    in_db: boolean;
-  };
-  msg: string;
-  process_time: number;
-  description?: string;
-}
-
 function SJAuth() {
   const {
     register,
@@ -276,7 +255,7 @@ function SJAuth() {
     clearErrors,
     watch,
     getValues,
-  } = useForm<ISJAuthFormData>({ mode: 'onChange' });
+  } = useForm<SJAuthFormData>({ mode: 'onChange' });
   const history = useHistory();
   const [eggGINKSS, setEggGINKSS] = useState(0);
   const [eggSCOF, setEggSCOF] = useState(0);
@@ -287,10 +266,7 @@ function SJAuth() {
       setIsLoading(true);
       const studentId = getValues('studentId');
       const studentPw = getValues('studentPw');
-      const { result, msg }: ISJAuthResponse = await (
-        await fetchSJAuth({ studentId, studentPw })
-      ).json();
-
+      const { result, msg } = await fetchSJAuth(studentId, studentPw);
       if (msg !== 'success') {
         setError('studentId', { message: '학번이나 비밀번호를 잘못 입력하였습니다' });
         setIsLoading(false);

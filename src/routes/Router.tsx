@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { getUserInfo } from '../api';
+import { fetchUserInfo } from '../api';
 import { userInfoState } from '../atoms';
 import NormalBoard from './board/NormalBoard';
 import Post from './board/Post';
@@ -9,16 +9,6 @@ import Login from './Login';
 import Main from './main/Main';
 import SignUp from './signUp/SignUp';
 import SJAuth from './signUp/SJAuth';
-
-interface IGetUserInfo {
-  msg: string;
-  result: {
-    id: string;
-    name: string;
-    nickname: string;
-    major: string;
-  };
-}
 
 function Router() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
@@ -34,7 +24,7 @@ function Router() {
   const initUserInfo = async (accessToken: string) => {
     const {
       result: { id, name, nickname, major },
-    }: IGetUserInfo = await getUserInfo(accessToken);
+    } = await fetchUserInfo(accessToken);
 
     setUserInfo((prev) => {
       return {

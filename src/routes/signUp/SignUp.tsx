@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { fetchDuplicateId, fetchDuplicateNickname, fetchSignUp } from '../../api';
+import { SignUpFormData, SJAuthState } from '../../types/signUp';
 
 const animation = keyframes`
   0% {
@@ -376,30 +377,6 @@ const SignUpCompleteBtn = styled.button`
   }
 `;
 
-interface IInputData {
-  userId: string;
-  userPw: string;
-  userPw2: string;
-  userNickname: string;
-}
-
-interface ISJAuthState {
-  studentId: string;
-  userName: string;
-  userMajor: string;
-}
-
-interface ICheckDuplicate {
-  process_time: number;
-  msg: string;
-  result: { in_db: boolean };
-}
-
-interface ISignUpResponse {
-  msg: string;
-  description?: string;
-}
-
 function SignUp() {
   const {
     register,
@@ -409,7 +386,7 @@ function SignUp() {
     getValues,
     setError,
     clearErrors,
-  } = useForm<IInputData>({ mode: 'onChange' });
+  } = useForm<SignUpFormData>({ mode: 'onChange' });
   const CHECK_REG = {
     ID_REG: /^[a-zA-Z0-9_]*$/,
     PW_REG1: /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[`~!@#$%^&()\-_+=]).*$/,
@@ -420,8 +397,8 @@ function SignUp() {
   };
   const { ID_REG, PW_REG1, PW_REG2, NICK_REG1, NICK_REG2, NICK_REG3 } = CHECK_REG;
   const history = useHistory();
-  const location = useLocation<ISJAuthState>();
-  const [sjAuthState] = useState<ISJAuthState>(
+  const location = useLocation<SJAuthState>();
+  const [sjAuthState] = useState<SJAuthState>(
     location.state ?? {
       studentId: '',
       userName: '',
@@ -452,7 +429,7 @@ function SignUp() {
     try {
       const {
         result: { in_db },
-      }: ICheckDuplicate = await fetchDuplicateId(getValues('userId'));
+      } = await fetchDuplicateId(getValues('userId'));
 
       if (in_db) {
         setIsDuplicateId(true);
@@ -470,7 +447,7 @@ function SignUp() {
     try {
       const {
         result: { in_db },
-      }: ICheckDuplicate = await fetchDuplicateNickname(getValues('userNickname'));
+      } = await fetchDuplicateNickname(getValues('userNickname'));
 
       if (in_db) {
         setIsDuplicateNickname(true);
@@ -501,7 +478,7 @@ function SignUp() {
         return;
       }
 
-      const { msg, description }: ISignUpResponse = await fetchSignUp({
+      const { msg, description } = await fetchSignUp({
         studentId,
         userId,
         userPw,

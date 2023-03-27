@@ -2,6 +2,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { MainBoardPost } from '../types/board';
 import MainBoardItem from './MainBoardItem';
 
 const BoardsContainer = styled.div`
@@ -36,30 +37,23 @@ const BoardItemWrapper = styled.ul`
   background-color: rgba(0, 0, 0, 0.01);
 `;
 
-interface IBoardData {
-  category: string;
-  title: string;
-  commentNum: number;
-  likeNum: number;
-}
-
-interface IMainBoardProps {
+interface MainBoardProps {
   leftBoard: {
     leftTitle: string;
     leftId: string;
-    leftData: IBoardData[];
+    leftData: MainBoardPost[];
   };
   rightBoard: {
     rightTitle: string;
     rightId: string;
-    rightData: IBoardData[];
+    rightData: MainBoardPost[];
   };
 }
 
 function MainBoard({
   leftBoard: { leftTitle, leftId, leftData },
   rightBoard: { rightTitle, rightId, rightData },
-}: IMainBoardProps) {
+}: MainBoardProps) {
   const history = useHistory();
 
   return (
