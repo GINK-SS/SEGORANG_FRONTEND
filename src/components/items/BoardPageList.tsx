@@ -15,10 +15,11 @@ const BoardPageList = ({ boardTitle, page, lastPage }: BoardPageListProps) => {
   const [pageNumbers, setPageNumbers] = useState<number[]>([]);
 
   useEffect(() => {
-    if (page === 1)
-      setPageNumbers(
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].filter((value) => value <= lastPage)
-      );
+    setPageNumbers(
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        .map((value) => value + Math.floor((page - 1) / 10) * 10)
+        .filter((value) => value <= lastPage)
+    );
   }, [page, lastPage, boardTitle]);
 
   return (
@@ -27,37 +28,14 @@ const BoardPageList = ({ boardTitle, page, lastPage }: BoardPageListProps) => {
         hasData={lastPage > 0}
         isActive={pageNumbers[0] - 10 > 0}
         onClick={() => {
-          if (pageNumbers[0] - 10 > 0) {
-            setPageNumbers((prev) => {
-              let firstPage = prev[0] - 10;
-              let newPageNumbers = [firstPage];
-
-              for (let i = 1; i < 10; i += 1) {
-                newPageNumbers.push(firstPage + i);
-              }
-
-              return newPageNumbers;
-            });
-            history.push(`?page=${pageNumbers[0] - 1}`);
-          }
+          if (pageNumbers[0] - 10 > 0) history.push(`?page=${pageNumbers[0] - 1}`);
         }}
       >
         <FontAwesomeIcon icon={faCaretLeft} />
       </IconBox>
       <Number
         isActive={pageNumbers[0] !== 1 && lastPage > 0}
-        onClick={() => {
-          setPageNumbers(() => {
-            let newPageNumbers = [];
-            for (let i = 1; i <= 10; i += 1) {
-              if (i > lastPage) break;
-              newPageNumbers.push(i);
-            }
-
-            return newPageNumbers;
-          });
-          history.push(`?page=${1}`);
-        }}
+        onClick={() => history.push(`?page=${1}`)}
       >
         1
       </Number>
@@ -67,9 +45,7 @@ const BoardPageList = ({ boardTitle, page, lastPage }: BoardPageListProps) => {
           key={index}
           isActive={true}
           isCurrent={page === number}
-          onClick={() => {
-            history.push(`?page=${number}`);
-          }}
+          onClick={() => history.push(`?page=${number}`)}
         >
           {number}
         </Number>
@@ -81,20 +57,7 @@ const BoardPageList = ({ boardTitle, page, lastPage }: BoardPageListProps) => {
       </Separator>
       <Number
         isActive={pageNumbers[pageNumbers.length - 1] !== lastPage && lastPage > 0}
-        onClick={() => {
-          setPageNumbers(() => {
-            let firstPage = Math.floor(lastPage / 10) * 10 + 1;
-            let newPageNumbers = [firstPage];
-
-            for (let i = 1; i < 10; i += 1) {
-              if (firstPage + i > lastPage) break;
-              newPageNumbers.push(firstPage + i);
-            }
-
-            return newPageNumbers;
-          });
-          history.push(`?page=${lastPage}`);
-        }}
+        onClick={() => history.push(`?page=${lastPage}`)}
       >
         {lastPage}
       </Number>
@@ -102,17 +65,8 @@ const BoardPageList = ({ boardTitle, page, lastPage }: BoardPageListProps) => {
         hasData={lastPage > 0}
         isActive={pageNumbers[0] + 10 <= lastPage}
         onClick={() => {
-          if (pageNumbers[0] + 10 <= lastPage) {
-            setPageNumbers((prev) =>
-              prev
-                .filter((value) => {
-                  if (value + 10 <= lastPage) return true;
-                  return false;
-                })
-                .map((value) => value + 10)
-            );
+          if (pageNumbers[0] + 10 <= lastPage)
             history.push(`?page=${pageNumbers[0] + 10}`);
-          }
         }}
       >
         <FontAwesomeIcon icon={faCaretRight} />
