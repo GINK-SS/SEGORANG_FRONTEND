@@ -39,7 +39,7 @@ function NormalBoard() {
       <BoardHeader />
       <NavContainer />
       <PostList postList={postList} />
-      <BoardListFooter page={Number(page)} lastPage={lastPage} />
+      <BoardListFooter boardTitle={boardTitle} page={Number(page)} lastPage={lastPage} />
     </>
   );
 }

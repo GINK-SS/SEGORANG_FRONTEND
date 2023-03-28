@@ -5,11 +5,12 @@ import styled from 'styled-components';
 import BoardPageList from '../../items/BoardPageList';
 
 interface BoardListFooterProps {
+  boardTitle: string;
   page: number;
   lastPage: number;
 }
 
-function BoardListFooter({ page, lastPage }: BoardListFooterProps) {
+function BoardListFooter({ boardTitle, page, lastPage }: BoardListFooterProps) {
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState('titleContent');
   const selectOptions = [
@@ -58,7 +59,7 @@ function BoardListFooter({ page, lastPage }: BoardListFooterProps) {
           <WriteText>쓰기</WriteText>
         </WriteBtn>
       </UpperBox>
-      <BoardPageList page={page} lastPage={lastPage} />
+      <BoardPageList boardTitle={boardTitle} page={page} lastPage={lastPage} />
     </Container>
   );
 }
