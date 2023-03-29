@@ -12,13 +12,14 @@ import { PostInfoResponse, PostURLParams } from '../../types/post';
 function Post() {
   const userInfo = useRecoilValue(userInfoState);
   const [postInfo, setPostInfo] = useState<PostInfoResponse>({
-    boardTitle: '',
-    postTitle: '',
+    board_title: '',
+    post_title: '',
     writer: '',
-    date: '',
-    viewNum: 0,
-    likeNum: 0,
     content: [],
+    view_num: 0,
+    like_num: 0,
+    created_at: '',
+    updated_at: '',
   });
   const { boardTitle, postId }: PostURLParams = useParams();
 
@@ -42,16 +43,16 @@ function Post() {
       <NavContainer />
       <Container>
         <TopWrapper>
-          <PostBoardTitle boardTitle={postInfo.boardTitle} />
-          <PostTitle>{postInfo.postTitle}</PostTitle>
+          <PostBoardTitle boardTitle={postInfo.board_title} />
+          <PostTitle>{postInfo.post_title}</PostTitle>
           <PostTopWrapper>
             <PostTopLeft>
               <Writer>{postInfo.writer}</Writer>
-              <Date>{postInfo.date}</Date>
+              <Date>{postInfo.created_at}</Date>
             </PostTopLeft>
             <PostTopRight>
-              <ViewNum>{`조회: ${postInfo.viewNum}`}</ViewNum>
-              <LikeNum>{`추천: ${postInfo.likeNum}`}</LikeNum>
+              <ViewNum>{`조회: ${postInfo.view_num}`}</ViewNum>
+              <LikeNum>{`추천: ${postInfo.like_num}`}</LikeNum>
             </PostTopRight>
           </PostTopWrapper>
         </TopWrapper>

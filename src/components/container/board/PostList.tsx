@@ -7,14 +7,13 @@ interface PostListProps {
 }
 
 function PostList({ postList }: PostListProps) {
-  const hasCategory =
-    postList.length !== 0 ? (postList[0]?.postCategory ? true : false) : false;
+  const hasType = postList.length !== 0 ? (postList[0].type ? true : false) : false;
 
   return (
     <BoardContainer>
       <BoardItemWrapper>
         <BoardItem>
-          <Category hasCategory={hasCategory}>분류</Category>
+          <Type hasType={hasType}>분류</Type>
           <LikeNum>추천</LikeNum>
           <Title>제목</Title>
           <Writer>작성자</Writer>
@@ -24,17 +23,17 @@ function PostList({ postList }: PostListProps) {
         {postList.length !== 0 ? (
           postList.map((post, index) => (
             <BoardItem key={index}>
-              <Category hasCategory={hasCategory}>{post.postCategory}</Category>
-              <LikeNum>{post.likeNum}</LikeNum>
-              <Link to={`${post.boardTitle}/${post.postId}`}>
+              <Type hasType={hasType}>{post.type}</Type>
+              <LikeNum>{post.like_num}</LikeNum>
+              <Link to={`${post.board_title}/${post.post_id}`}>
                 <Title>
-                  {post.postTitle}
-                  <CommentNum>{`[${post.commentNum}]`}</CommentNum>
+                  {post.post_title}
+                  <CommentNum>{`[${post.comment_num}]`}</CommentNum>
                 </Title>
               </Link>
               <Writer>{post.writer}</Writer>
-              <ViewNum>{post.viewNum}</ViewNum>
-              <Date>{post.date}</Date>
+              <ViewNum>{post.view_num}</ViewNum>
+              <Date>{post.created_at}</Date>
             </BoardItem>
           ))
         ) : (
@@ -105,11 +104,11 @@ const BoardItem = styled.li`
   }
 `;
 
-const Category = styled.span<{ hasCategory: boolean }>`
+const Type = styled.span<{ hasType: boolean }>`
   width: 90px;
   border-right: 1px solid rgba(0, 0, 0, 0.3);
   text-align: center;
-  display: ${(props) => (props.hasCategory ? 'block' : 'none')};
+  display: ${(props) => (props.hasType ? 'block' : 'none')};
 `;
 
 const LikeNum = styled.span`

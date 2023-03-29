@@ -5,13 +5,16 @@ export interface FetchPostInfoParams {
 }
 
 export interface PostInfoResponse {
-  boardTitle: string;
-  postTitle: string;
+  board_title: string;
+  post_title: string;
   writer: string;
-  date: string;
-  viewNum: number;
-  likeNum: number;
   content: string[];
+  type?: string;
+  images?: string;
+  view_num: number;
+  like_num: number;
+  updated_at: string;
+  created_at: string;
 }
 
 export interface PostURLParams {

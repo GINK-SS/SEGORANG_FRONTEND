@@ -23,6 +23,7 @@ function NormalBoard() {
     } = await fetchPostList({
       boardTitle,
       page: Number(page),
+      limit: 20,
       accessToken: userInfo.accessToken,
     });
 
