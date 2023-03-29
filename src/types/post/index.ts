@@ -1,5 +1,4 @@
 export interface FetchPostInfoParams {
-  boardTitle: string;
   postId: string;
   accessToken: string;
 }

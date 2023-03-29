@@ -25,7 +25,6 @@ function Post() {
 
   const getPostInfo = async () => {
     const response = await fetchPostInfo({
-      boardTitle,
       postId,
       accessToken: userInfo.accessToken,
     });

@@ -1,55 +1,62 @@
-export const getHotBoardData = (page: number) => {
+export const getHotBoardData = (page: number, limit: number) => {
   const hotBoardData = [];
-  for (let i = 300 - (page - 1) * 20, j = 0; j < 20; i -= 1, j += 1) {
+  const dataAmount = 300;
+  const lastPage = Math.ceil(dataAmount / limit);
+  if (page > lastPage) return { data: [], lastPage };
+
+  for (let i = dataAmount - (page - 1) * limit, j = 0; j < limit; i -= 1, j += 1) {
     let data = {
-      boardTitle: 'bulletin',
-      postCategory: '자유',
-      likeNum: i * 2,
-      postTitle: `자유 게시판 게시물 ${i}`,
-      commentNum: i * 3,
+      post_id: i,
+      board_title: 'hot',
+      post_title: `자유 게시판 게시물 ${i}`,
       writer: `임시유저${i}`,
-      viewNum: i * 10,
-      date: '23.03.26',
-      postId: String(i),
+      type: '자유',
+      like_num: i * 2,
+      view_num: i * 10,
+      comment_num: i * 3,
+      created_at: '23.03.26',
+      updated_at: '23.03.29',
     };
     hotBoardData.push(data);
   }
 
-  return { data: hotBoardData, lastPage: 15 };
+  return { data: hotBoardData, lastPage };
 };
 
-export const getBulletinBoardData = (page: number) => {
+export const getBulletinBoardData = (page: number, limit: number) => {
   const bulletinBoardData = [];
-  for (let i = 260 - (page - 1) * 20, j = 0; j < 20; i -= 1, j += 1) {
+  const dataAmount = 300;
+  const lastPage = Math.ceil(dataAmount / limit);
+
+  if (page > lastPage) return { data: [], lastPage };
+
+  for (let i = dataAmount - (page - 1) * limit, j = 0; j < limit; i -= 1, j += 1) {
     let data = {
-      boardTitle: 'bulletin',
-      likeNum: i * 2,
-      postTitle: `자유 게시판 게시물 ${i}`,
-      commentNum: i * 3,
+      post_id: i,
+      board_title: 'bulletin',
+      post_title: `자유 게시판 게시물 ${i}`,
       writer: `임시유저${i}`,
-      viewNum: i * 10,
-      date: '23.03.26',
-      postId: String(i),
+      like_num: i * 2,
+      view_num: i * 10,
+      comment_num: i * 3,
+      created_at: '23.03.26',
+      updated_at: '23.03.29',
     };
     bulletinBoardData.push(data);
   }
 
-  return { data: bulletinBoardData, lastPage: 13 };
+  return { data: bulletinBoardData, lastPage };
 };
 
 interface GetPostProps {
-  boardTitle: string;
   postId: string;
 }
 
-export const getPostData = ({ boardTitle, postId }: GetPostProps) => {
+export const getPostData = ({ postId }: GetPostProps) => {
   return {
-    boardTitle,
-    postTitle: `자유 게시판 게시물 ${postId}`,
+    board_title: 'bulletin',
+    post_title: `자유 게시판 게시물 ${postId}`,
     writer: `임시유저${postId}`,
-    date: '23.03.26',
-    viewNum: Number(postId) * 10,
-    likeNum: Number(postId) * 2,
     content: [
       '임시 데이터',
       '\n',
@@ -57,5 +64,9 @@ export const getPostData = ({ boardTitle, postId }: GetPostProps) => {
       '\n',
       '에러없이 잘 작동했으면 좋겠습니다.',
     ],
+    view_num: Number(postId) * 10,
+    like_num: Number(postId) * 2,
+    created_at: '23.03.26',
+    updated_at: '23.03.29',
   };
 };
