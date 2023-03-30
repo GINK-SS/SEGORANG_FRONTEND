@@ -44,7 +44,7 @@ function Board() {
       <NavContainer />
       {status === 'create' ? (
         <>
-          <CreatePost />
+          <CreatePost boardTitle={boardTitle} />
         </>
       ) : (
         <>
