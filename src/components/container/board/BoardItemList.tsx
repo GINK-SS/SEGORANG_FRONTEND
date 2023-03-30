@@ -1,28 +1,29 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Post } from '../../../types/board';
+import { BoardItemInfo } from '../../../types/board';
 
-interface PostListProps {
-  postList: Post[];
+interface BoardItemListProps {
+  boardItemList: BoardItemInfo[];
 }
 
-function PostList({ postList }: PostListProps) {
-  const hasType = postList.length !== 0 ? (postList[0].type ? true : false) : false;
+function BoardItemList({ boardItemList }: BoardItemListProps) {
+  const hasType =
+    boardItemList.length !== 0 ? (boardItemList[0].type ? true : false) : false;
 
   return (
     <BoardContainer>
       <BoardItemWrapper>
-        <BoardItem>
+        <Item>
           <Type hasType={hasType}>분류</Type>
           <LikeNum>추천</LikeNum>
           <Title>제목</Title>
           <Writer>작성자</Writer>
           <ViewNum>조회</ViewNum>
           <Date>날짜</Date>
-        </BoardItem>
-        {postList.length !== 0 ? (
-          postList.map((post, index) => (
-            <BoardItem key={index}>
+        </Item>
+        {boardItemList.length !== 0 ? (
+          boardItemList.map((post, index) => (
+            <Item key={index}>
               <Type hasType={hasType}>{post.type}</Type>
               <LikeNum>{post.like_num}</LikeNum>
               <Link to={`${post.board_title}/${post.post_id}`}>
@@ -34,7 +35,7 @@ function PostList({ postList }: PostListProps) {
               <Writer>{post.writer}</Writer>
               <ViewNum>{post.view_num}</ViewNum>
               <Date>{post.created_at}</Date>
-            </BoardItem>
+            </Item>
           ))
         ) : (
           <NoItem>
@@ -46,7 +47,7 @@ function PostList({ postList }: PostListProps) {
   );
 }
 
-export default PostList;
+export default BoardItemList;
 
 const BoardContainer = styled.div`
   max-width: 1300px;
@@ -56,7 +57,7 @@ const BoardContainer = styled.div`
 
 const BoardItemWrapper = styled.ol``;
 
-const BoardItem = styled.li`
+const Item = styled.li`
   display: flex;
   align-items: center;
 

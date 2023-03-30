@@ -6,7 +6,7 @@ import { fetchPostInfo } from '../../api/post';
 import { userInfoState } from '../../atoms';
 import BoardHeader from '../../components/container/board/BoardHeader';
 import NavContainer from '../../components/container/board/NavContainer';
-import PostBoardTitle from '../../components/items/PostBoardTitle';
+import PostInfoBoardTitle from '../../components/items/PostInfoBoardTitle';
 import { PostInfoResponse, PostURLParams } from '../../types/post';
 
 function Post() {
@@ -42,7 +42,7 @@ function Post() {
       <NavContainer />
       <Container>
         <TopWrapper>
-          <PostBoardTitle boardTitle={postInfo.board_title} />
+          <PostInfoBoardTitle boardTitle={postInfo.board_title} />
           <PostTitle>{postInfo.post_title}</PostTitle>
           <PostTopWrapper>
             <PostTopLeft>

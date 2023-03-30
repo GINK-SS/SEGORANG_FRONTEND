@@ -2,7 +2,7 @@ import { rest, RestRequest } from 'msw';
 import { BASE_URL } from '../../api/common';
 import { getBulletinBoardData, getHotBoardData } from '../mockData';
 
-const getPostList = (boardTitle: string, page: number, limit: number) => {
+const getBoardItemList = (boardTitle: string, page: number, limit: number) => {
   if (boardTitle === 'hot') return getHotBoardData(page, limit);
   if (boardTitle === 'bulletin') return getBulletinBoardData(page, limit);
 
@@ -21,8 +21,8 @@ export const boardHandlers = [
       return res(
         ctx.json({
           result: {
-            data: getPostList(boardTitle, Number(page), Number(limit)).data,
-            lastPage: getPostList(boardTitle, Number(page), Number(limit)).lastPage,
+            data: getBoardItemList(boardTitle, Number(page), Number(limit)).data,
+            lastPage: getBoardItemList(boardTitle, Number(page), Number(limit)).lastPage,
           },
         })
       );

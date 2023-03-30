@@ -2,19 +2,19 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { MainBoardPost } from '../../../types/board';
+import { MainBoardItemInfo } from '../../../types/board';
 import MainBoardItem from '../../items/MainBoardItem';
 
 interface MainBoardProps {
   leftBoard: {
     leftTitle: string;
     leftId: string;
-    leftData: MainBoardPost[];
+    leftData: MainBoardItemInfo[];
   };
   rightBoard: {
     rightTitle: string;
     rightId: string;
-    rightData: MainBoardPost[];
+    rightData: MainBoardItemInfo[];
   };
 }
 

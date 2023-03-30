@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { BoardTitleList } from '../../types/post';
 
-interface PostBoardTitleProps {
+interface PostInfoBoardTitleProps {
   boardTitle: string;
 }
 
-const PostBoardTitle = ({ boardTitle }: PostBoardTitleProps) => {
+const PostInfoBoardTitle = ({ boardTitle }: PostInfoBoardTitleProps) => {
   const titleList: BoardTitleList = {
     hot: 'HOT 게시판',
     bulletin: '자유 게시판',
@@ -27,7 +27,7 @@ const PostBoardTitle = ({ boardTitle }: PostBoardTitleProps) => {
   return <BoardTitle>{titleList[boardTitle]}</BoardTitle>;
 };
 
-export default PostBoardTitle;
+export default PostInfoBoardTitle;
 
 const BoardTitle = styled.p`
   font-size: 16px;

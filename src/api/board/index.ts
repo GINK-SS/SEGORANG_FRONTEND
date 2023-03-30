@@ -1,12 +1,12 @@
-import { FetchPostListParams, PostListResponse } from '../../types/board';
+import { FetchBoardItemListParams, BoardItemListResponse } from '../../types/board';
 import { BASE_URL } from '../common';
 
-export const fetchPostList = async ({
+export const fetchBoardItemList = async ({
   boardTitle,
   page,
   limit,
   accessToken,
-}: FetchPostListParams): Promise<PostListResponse> => {
+}: FetchBoardItemListParams): Promise<BoardItemListResponse> => {
   const response = await fetch(
     `${BASE_URL}/api/v1/board/${boardTitle}?page=${page}&limit=${limit}`,
     {

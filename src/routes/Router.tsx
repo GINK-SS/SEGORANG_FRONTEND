@@ -3,7 +3,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { fetchUserInfo } from '../api/common';
 import { userInfoState } from '../atoms';
-import NormalBoard from './board/NormalBoard';
+import Board from './board/Board';
 import Post from './board/Post';
 import Login from './login/Login';
 import Main from './main/Main';
@@ -57,7 +57,7 @@ function Router() {
           exact
           path={'/board/:boardTitle'}
           component={() =>
-            userInfo.accessToken ? <NormalBoard /> : <Redirect to={'/login'} />
+            userInfo.accessToken ? <Board /> : <Redirect to={'/login'} />
           }
         />
         <Route

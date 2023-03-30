@@ -4,13 +4,13 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import BoardPageList from '../../items/BoardPageList';
 
-interface BoardListFooterProps {
+interface BoardItemListFooterProps {
   boardTitle: string;
   page: number;
   lastPage: number;
 }
 
-function BoardListFooter({ boardTitle, page, lastPage }: BoardListFooterProps) {
+function BoardItemListFooter({ boardTitle, page, lastPage }: BoardItemListFooterProps) {
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState('titleContent');
   const selectOptions = [
@@ -64,7 +64,7 @@ function BoardListFooter({ boardTitle, page, lastPage }: BoardListFooterProps) {
   );
 }
 
-export default BoardListFooter;
+export default BoardItemListFooter;
 
 const Container = styled.div`
   max-width: 1300px;

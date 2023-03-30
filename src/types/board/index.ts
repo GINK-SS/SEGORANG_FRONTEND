@@ -1,11 +1,11 @@
-export interface MainBoardPost {
+export interface MainBoardItemInfo {
   category: string;
   title: string;
   commentNum: number;
   likeNum: number;
 }
 
-export interface Post {
+export interface BoardItemInfo {
   post_id: number;
   board_title: string;
   post_title: string;
@@ -19,16 +19,16 @@ export interface Post {
   updated_at: string;
 }
 
-export interface FetchPostListParams {
+export interface FetchBoardItemListParams {
   boardTitle: string;
   page: number;
   limit: number;
   accessToken: string;
 }
 
-export interface PostListResponse {
+export interface BoardItemListResponse {
   result: {
-    data: Post[];
+    data: BoardItemInfo[];
     lastPage: number;
   };
 }
