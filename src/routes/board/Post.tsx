@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { fetchPostInfo } from '../../api/post';
@@ -21,7 +21,11 @@ function Post() {
     created_at: '',
     updated_at: '',
   });
-  const { boardTitle, postId }: PostURLParams = useParams();
+  const { postId }: PostURLParams = useParams();
+  const { search } = useLocation();
+  const searchParams = new URLSearchParams(search);
+  let boardTitle = searchParams.get('boardTitle');
+  let boardPage = searchParams.get('boardPage') ?? '1';
 
   const getPostInfo = async () => {
     const response = await fetchPostInfo({
@@ -34,7 +38,9 @@ function Post() {
 
   useEffect(() => {
     getPostInfo();
-  }, [boardTitle, postId]);
+
+    if (!boardTitle) boardTitle = postInfo.board_title;
+  }, [postId]);
 
   return (
     <>

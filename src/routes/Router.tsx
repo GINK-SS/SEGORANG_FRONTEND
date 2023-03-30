@@ -62,7 +62,7 @@ function Router() {
         />
         <Route
           exact
-          path={'/board/:boardTitle/:postId'}
+          path={'/post/:postId'}
           component={() => (userInfo.accessToken ? <Post /> : <Redirect to={'/login'} />)}
         />
         <Route

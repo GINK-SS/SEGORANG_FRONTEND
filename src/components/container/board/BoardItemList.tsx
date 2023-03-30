@@ -4,9 +4,10 @@ import { BoardItemInfo } from '../../../types/board';
 
 interface BoardItemListProps {
   boardItemList: BoardItemInfo[];
+  page: number;
 }
 
-function BoardItemList({ boardItemList }: BoardItemListProps) {
+function BoardItemList({ boardItemList, page }: BoardItemListProps) {
   const hasType =
     boardItemList.length !== 0 ? (boardItemList[0].type ? true : false) : false;
 
@@ -26,7 +27,9 @@ function BoardItemList({ boardItemList }: BoardItemListProps) {
             <Item key={index}>
               <Type hasType={hasType}>{post.type}</Type>
               <LikeNum>{post.like_num}</LikeNum>
-              <Link to={`${post.board_title}/${post.post_id}`}>
+              <Link
+                to={`/post/${post.post_id}?boardTitle=${post.board_title}?boardPage=${page}`}
+              >
                 <Title>
                   {post.post_title}
                   <CommentNum>{`[${post.comment_num}]`}</CommentNum>

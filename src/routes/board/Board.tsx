@@ -40,7 +40,7 @@ function Board() {
     <>
       <BoardHeader />
       <NavContainer />
-      <BoardItemList boardItemList={boardItemList} />
+      <BoardItemList boardItemList={boardItemList} page={Number(page)} />
       <BoardItemListFooter
         boardTitle={boardTitle}
         page={Number(page)}
