@@ -8,6 +8,7 @@ import BoardItemListFooter from '../../components/container/board/BoardItemListF
 import NavContainer from '../../components/container/board/NavContainer';
 import { BoardURLParams, BoardItemInfo } from '../../types/board';
 import { fetchBoardItemList } from '../../api/board';
+import CreatePost from '../../components/container/board/CreatePost';
 
 function Board() {
   const [boardItemList, setBoardItemList] = useState<BoardItemInfo[]>([]);
@@ -17,6 +18,7 @@ function Board() {
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search);
   const page = searchParams.get('page') ?? '1';
+  const status = searchParams.get('status');
 
   const getBoardItemList = async () => {
     const {
@@ -33,19 +35,27 @@ function Board() {
   };
 
   useEffect(() => {
-    getBoardItemList();
+    if (status !== 'create') getBoardItemList();
   }, [boardTitle, page]);
 
   return (
     <>
       <BoardHeader />
       <NavContainer />
-      <BoardItemList boardItemList={boardItemList} page={Number(page)} />
-      <BoardItemListFooter
-        boardTitle={boardTitle}
-        page={Number(page)}
-        lastPage={lastPage}
-      />
+      {status === 'create' ? (
+        <>
+          <CreatePost />
+        </>
+      ) : (
+        <>
+          <BoardItemList boardItemList={boardItemList} page={Number(page)} />
+          <BoardItemListFooter
+            boardTitle={boardTitle}
+            page={Number(page)}
+            lastPage={lastPage}
+          />
+        </>
+      )}
     </>
   );
 }

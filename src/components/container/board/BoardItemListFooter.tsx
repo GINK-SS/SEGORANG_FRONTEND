@@ -1,6 +1,7 @@
 import { faMagnifyingGlass, faPen, faX } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import BoardPageList from '../../items/BoardPageList';
 
@@ -11,6 +12,7 @@ interface BoardItemListFooterProps {
 }
 
 function BoardItemListFooter({ boardTitle, page, lastPage }: BoardItemListFooterProps) {
+  const history = useHistory();
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState('titleContent');
   const selectOptions = [
@@ -54,7 +56,7 @@ function BoardItemListFooter({ boardTitle, page, lastPage }: BoardItemListFooter
             <FontAwesomeIcon icon={faMagnifyingGlass} color="rgba(0,0,0,0.5)" />
           </SearchInput__Button>
         </SearchWrapper>
-        <WriteBtn>
+        <WriteBtn onClick={() => history.push('?status=create')}>
           <FontAwesomeIcon icon={faPen} />
           <WriteText>쓰기</WriteText>
         </WriteBtn>
