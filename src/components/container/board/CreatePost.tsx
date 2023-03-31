@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { BoardTitleList } from '../../../types/post';
 import CreatePostHeader from '../../items/CreatePostHeader';
 import CreatePostTextBox from '../../items/CreatePostTextBox';
+import { EditorState, convertToRaw } from 'draft-js';
+import { useState } from 'react';
+import draftToHtml from 'draftjs-to-html';
 
 interface CreatePostProps {
   boardTitle: string;
@@ -25,12 +28,24 @@ const CreatePost = ({ boardTitle }: CreatePostProps) => {
     notice: '공지사항',
     inquiry: '운영자 문의',
   };
+  const [title, setTitle] = useState(EditorState.createEmpty());
+  const [content, setContent] = useState(EditorState.createEmpty());
+  const titleToHtml = draftToHtml(convertToRaw(title.getCurrentContent()));
+  const contentToHtml = draftToHtml(convertToRaw(content.getCurrentContent()));
+
+  const onRegister = () => {
+  };
 
   return (
     <ContainerBackground>
       <Container>
-        <CreatePostHeader boardTitle={titleList[boardTitle]} />
-        <CreatePostTextBox />
+        <CreatePostHeader boardTitle={titleList[boardTitle]} onRegister={onRegister} />
+        <CreatePostTextBox
+          title={title}
+          setTitle={setTitle}
+          content={content}
+          setContent={setContent}
+        />
       </Container>
     </ContainerBackground>
   );

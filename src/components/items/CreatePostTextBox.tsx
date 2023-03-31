@@ -1,16 +1,21 @@
-import { EditorState, convertToRaw } from 'draft-js';
-import { useState } from 'react';
+import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import draftToHtml from 'draftjs-to-html';
 import styled from 'styled-components';
 
-const CreatePostTextBox = () => {
-  const [title, setTitle] = useState(EditorState.createEmpty());
-  const [content, setContent] = useState(EditorState.createEmpty());
-  const titleToHtml = draftToHtml(convertToRaw(title.getCurrentContent()));
-  const contentToHtml = draftToHtml(convertToRaw(content.getCurrentContent()));
+interface CreatePostTextBoxProps {
+  title: EditorState;
+  setTitle: React.Dispatch<React.SetStateAction<EditorState>>;
+  content: EditorState;
+  setContent: React.Dispatch<React.SetStateAction<EditorState>>;
+}
 
+const CreatePostTextBox = ({
+  title,
+  setTitle,
+  content,
+  setContent,
+}: CreatePostTextBoxProps) => {
   return (
     <Container>
       <Title>

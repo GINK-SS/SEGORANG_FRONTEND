@@ -3,9 +3,10 @@ import styled from 'styled-components';
 
 interface CreatePostHeaderProps {
   boardTitle: string;
+  onRegister: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-const CreatePostHeader = ({ boardTitle }: CreatePostHeaderProps) => {
+const CreatePostHeader = ({ boardTitle, onRegister }: CreatePostHeaderProps) => {
   const history = useHistory();
 
   return (
@@ -13,7 +14,7 @@ const CreatePostHeader = ({ boardTitle }: CreatePostHeaderProps) => {
       <div>
         <Title>{`글쓰기 - ${boardTitle}`}</Title>
       </div>
-      <RegisterBtn onClick={() => {}}>등록</RegisterBtn>
+      <RegisterBtn onClick={onRegister}>등록</RegisterBtn>
     </Container>
   );
 };
