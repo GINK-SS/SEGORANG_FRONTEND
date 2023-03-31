@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { BoardTitleList } from '../../../types/post';
 import CreatePostHeader from '../../items/CreatePostHeader';
+import CreatePostTextBox from '../../items/CreatePostTextBox';
 
 interface CreatePostProps {
   boardTitle: string;
@@ -26,8 +27,28 @@ const CreatePost = ({ boardTitle }: CreatePostProps) => {
   };
 
   return (
+    <ContainerBackground>
+      <Container>
         <CreatePostHeader boardTitle={titleList[boardTitle]} />
+        <CreatePostTextBox />
+      </Container>
+    </ContainerBackground>
   );
 };
 
 export default CreatePost;
+
+const ContainerBackground = styled.div`
+  margin-top: 10px;
+  width: 100%;
+  min-height: calc(100vh - 405px);
+  background-color: #fcfcfc;
+`;
+
+const Container = styled.div`
+  position: relative;
+  min-height: calc(100vh - 405px);
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 25px;
+`;
