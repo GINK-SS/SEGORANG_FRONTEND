@@ -8,6 +8,8 @@ import styled from 'styled-components';
 const CreatePostTextBox = () => {
   const [title, setTitle] = useState(EditorState.createEmpty());
   const [content, setContent] = useState(EditorState.createEmpty());
+  const titleToHtml = draftToHtml(convertToRaw(title.getCurrentContent()));
+  const contentToHtml = draftToHtml(convertToRaw(content.getCurrentContent()));
 
   return (
     <Container>
@@ -33,15 +35,12 @@ const CreatePostTextBox = () => {
           editorClassName="editor-class"
           toolbarClassName="toolbar-class"
           toolbar={{
-            options: ['inline', 'fontSize', 'textAlign', 'colorPicker', 'emoji'],
+            options: ['inline', 'fontSize', 'emoji'],
             inline: {
               options: ['bold', 'italic', 'underline', 'strikethrough'],
             },
-            fontSize: {
-              inDropdown: false,
-            },
           }}
-          placeholder="내용 (이미지는 추후 구현)"
+          placeholder="내용을 입력해보세요"
           localization={{ locate: 'ko' }}
           editorState={content}
           onEditorStateChange={setContent}
@@ -84,9 +83,7 @@ const Content = styled.div`
     background-color: #fcfcfc;
 
     .rdw-inline-wrapper,
-    .rdw-fontsize-wrapper,
-    .rdw-text-align-wrapper,
-    .rdw-colorpicker-wrapper {
+    .rdw-fontsize-wrapper {
       margin-right: 30px;
     }
   }
