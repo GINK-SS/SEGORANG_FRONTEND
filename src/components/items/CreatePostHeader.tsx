@@ -21,13 +21,17 @@ const CreatePostHeader = ({ boardTitle }: CreatePostHeaderProps) => {
 export default CreatePostHeader;
 
 const Container = styled.div`
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
   max-width: 1300px;
   margin-bottom: 15px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
   padding: 15px 0px 10px;
+  background-color: #fcfcfc;
 `;
 
 const Title = styled.p`

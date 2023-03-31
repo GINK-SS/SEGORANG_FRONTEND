@@ -17,7 +17,7 @@ const CreatePostTextBox = () => {
           toolbar={{
             options: [],
             inline: { options: [] },
-            fontSize: { options: [40] },
+            fontSize: { options: [] },
             textAlign: { options: [] },
           }}
           placeholder="제목"
@@ -54,7 +54,8 @@ const CreatePostTextBox = () => {
 export default CreatePostTextBox;
 
 const Container = styled.div`
-  min-height: calc(100vh - 395px);
+  position: relative;
+  min-height: calc(100vh - 405px);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: 0;
   background-color: #fff;
@@ -76,7 +77,11 @@ const Content = styled.div`
     cursor: text;
   }
   .toolbar-class {
+    z-index: 2;
+    position: sticky;
+    top: 67px;
     justify-content: center;
+    background-color: #fcfcfc;
 
     .rdw-inline-wrapper,
     .rdw-fontsize-wrapper,
