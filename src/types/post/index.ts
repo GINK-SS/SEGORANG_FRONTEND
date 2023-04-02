@@ -7,7 +7,7 @@ export interface PostInfoResponse {
   board_title: string;
   post_title: string;
   writer: string;
-  content: string[];
+  content: string;
   type?: string;
   images?: string;
   view_num: number;

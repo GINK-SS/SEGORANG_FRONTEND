@@ -57,13 +57,8 @@ export const getPostData = ({ postId }: GetPostProps) => {
     board_title: 'bulletin',
     post_title: `자유 게시판 게시물 ${postId}`,
     writer: `임시유저${postId}`,
-    content: [
-      '임시 데이터',
-      '\n',
-      '임시입니다.',
-      '\n',
-      '에러없이 잘 작동했으면 좋겠습니다.',
-    ],
+    content:
+      '<p><strong>안녕하세요</strong></p><p><ins>임시입니다</ins></p><p><span style="font-size: 30px;"><del>임시라고 합니다</del></span></p>',
     view_num: Number(postId) * 10,
     like_num: Number(postId) * 2,
     created_at: '23.03.26',

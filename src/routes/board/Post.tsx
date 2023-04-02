@@ -15,7 +15,7 @@ function Post() {
     board_title: '',
     post_title: '',
     writer: '',
-    content: [],
+    content: '',
     view_num: 0,
     like_num: 0,
     created_at: '',
@@ -62,9 +62,7 @@ function Post() {
           </PostTopWrapper>
         </TopWrapper>
         <ContentWrapper>
-          {postInfo.content.map((sentence, index) => (
-            <ContentText key={index}>{sentence}</ContentText>
-          ))}
+          <ContentText dangerouslySetInnerHTML={{ __html: postInfo.content }} />
         </ContentWrapper>
       </Container>
     </>

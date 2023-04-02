@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 interface CreatePostHeaderProps {
   boardTitle: string;
-  onRegister: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  onRegister: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const CreatePostHeader = ({ boardTitle, onRegister }: CreatePostHeaderProps) => {
