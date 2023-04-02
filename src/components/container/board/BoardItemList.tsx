@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BoardItemInfo } from '../../../types/board';
+import BoardItem from '../../items/BoardItem';
 
 interface BoardItemListProps {
   boardItemList: BoardItemInfo[];
@@ -24,21 +25,7 @@ function BoardItemList({ boardItemList, page }: BoardItemListProps) {
         </Item>
         {boardItemList.length !== 0 ? (
           boardItemList.map((post, index) => (
-            <Item key={index}>
-              <Type hasType={hasType}>{post.category}</Type>
-              <LikeNum>{post.like_num}</LikeNum>
-              <Link
-                to={`/post/${post.post_id}?boardTitle=${post.board_title}&boardPage=${page}`}
-              >
-                <Title>
-                  {post.post_title}
-                  <CommentNum>{`[${post.comment_num}]`}</CommentNum>
-                </Title>
-              </Link>
-              <Writer>{post.writer}</Writer>
-              <ViewNum>{post.view_num}</ViewNum>
-              <Date>{post.created_at}</Date>
-            </Item>
+            <BoardItem key={index} hasType={hasType} post={post} page={page} />
           ))
         ) : (
           <NoItem>
@@ -63,48 +50,14 @@ const BoardItemWrapper = styled.ol``;
 const Item = styled.li`
   display: flex;
   align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3);
 
-  &:first-child {
-    padding-bottom: 10px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
-
-    span {
-      text-align: center;
-      border-right: 0;
-      font-weight: 600;
-      color: ${(props) => props.theme.sejongGray};
-
-      &:nth-child(3) {
-        padding: 0;
-      }
-
-      &:nth-child(4) {
-        text-align: end;
-      }
-    }
-  }
-
-  &:not(:first-child) {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-
-    &:hover {
-      background-color: #f2f2f2;
-    }
-
-    span,
-    a {
-      padding-top: 15px;
-      padding-bottom: 15px;
-    }
-
-    a {
-      flex: 1;
-      color: #000;
-      cursor: pointer;
-      &:hover {
-        color: ${(props) => props.theme.sejongCrimsonRed};
-      }
-    }
+  span {
+    text-align: center;
+    border-right: 0;
+    font-weight: 600;
+    color: ${(props) => props.theme.sejongGray};
   }
 `;
 
@@ -123,12 +76,6 @@ const LikeNum = styled.span`
 
 const Title = styled.span`
   flex: 1;
-  padding-left: 10px;
-`;
-
-const CommentNum = styled.span`
-  margin-left: 5px;
-  color: ${(props) => props.theme.accentColor};
 `;
 
 const Writer = styled.span`
