@@ -1,20 +1,13 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-
-interface IUserInfo {
-  accessToken: string;
-  userId: string;
-  userName: string;
-  userNickname: string;
-  userMajor: string;
-}
+import { UserInfo } from '../types/common';
 
 const { persistAtom } = recoilPersist({
   storage: sessionStorage,
 });
 
-export const userInfoState = atom<IUserInfo>({
+export const userInfoState = atom<UserInfo>({
   key: 'userInfo',
-  default: {} as IUserInfo,
+  default: {} as UserInfo,
   effects_UNSTABLE: [persistAtom],
 });
