@@ -1,4 +1,5 @@
 import { EditorState } from 'draft-js';
+import { useRef } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import styled from 'styled-components';
@@ -16,11 +17,21 @@ const CreatePostTextBox = ({
   content,
   setContent,
 }: CreatePostTextBoxProps) => {
+  const titleRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleResizeTitleHeight = () => {
+    if (titleRef.current) {
+      titleRef.current.style.height = 'auto';
+      titleRef.current.style.height = titleRef.current.scrollHeight + 'px';
+    }
+  };
+
   return (
     <Container>
       <Title
         ref={titleRef}
         value={title}
+        onInput={handleResizeTitleHeight}
         onChange={({ target: { value } }) => setTitle(value)}
         placeholder="제목"
         spellCheck={false}
@@ -64,7 +75,6 @@ const Container = styled.div`
 
 const Title = styled.textarea`
   width: calc(100% - 120px);
-  height: 100%;
   margin: 60px;
   resize: none;
   font-family: 'Noto Sans KR', sans-serif;
