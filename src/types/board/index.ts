@@ -10,8 +10,8 @@ export interface BoardItemInfo {
   board_title: string;
   post_title: string;
   writer: string;
-  type?: string;
-  image?: string;
+  category?: string | null;
+  image?: string | null;
   like_num: number;
   view_num: number;
   comment_num: number;

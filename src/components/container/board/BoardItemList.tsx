@@ -9,7 +9,7 @@ interface BoardItemListProps {
 
 function BoardItemList({ boardItemList, page }: BoardItemListProps) {
   const hasType =
-    boardItemList.length !== 0 ? (boardItemList[0].type ? true : false) : false;
+    boardItemList.length !== 0 ? (boardItemList[0].category ? true : false) : false;
 
   return (
     <BoardContainer>
@@ -25,7 +25,7 @@ function BoardItemList({ boardItemList, page }: BoardItemListProps) {
         {boardItemList.length !== 0 ? (
           boardItemList.map((post, index) => (
             <Item key={index}>
-              <Type hasType={hasType}>{post.type}</Type>
+              <Type hasType={hasType}>{post.category}</Type>
               <LikeNum>{post.like_num}</LikeNum>
               <Link
                 to={`/post/${post.post_id}?boardTitle=${post.board_title}?boardPage=${page}`}

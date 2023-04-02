@@ -8,8 +8,8 @@ export interface PostInfoResponse {
   post_title: string;
   writer: string;
   content: string;
-  type?: string;
-  images?: string;
+  category?: string | null;
+  images?: string | null;
   view_num: number;
   like_num: number;
   updated_at: string;
