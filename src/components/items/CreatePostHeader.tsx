@@ -1,20 +1,31 @@
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 interface CreatePostHeaderProps {
+  isLoading: boolean;
+  isEmpty: boolean;
   boardTitle: string;
   onRegister: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const CreatePostHeader = ({ boardTitle, onRegister }: CreatePostHeaderProps) => {
-  const history = useHistory();
-
+const CreatePostHeader = ({
+  isLoading,
+  isEmpty,
+  boardTitle,
+  onRegister,
+}: CreatePostHeaderProps) => {
   return (
     <Container>
       <div>
         <Title>{`글쓰기 - ${boardTitle}`}</Title>
       </div>
-      <RegisterBtn onClick={onRegister}>등록</RegisterBtn>
+      <RegisterBtn
+        isActive={!isLoading && !isEmpty}
+        onClick={onRegister}
+        disabled={isLoading || isEmpty}
+      >
+        <LoadingSpinner isLoading={isLoading} /> 등록
+      </RegisterBtn>
     </Container>
   );
 };
@@ -40,7 +51,8 @@ const Title = styled.p`
   font-weight: 500;
 `;
 
-const RegisterBtn = styled.button`
+const RegisterBtn = styled.button<{ isActive: boolean }>`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,5 +64,5 @@ const RegisterBtn = styled.button`
   font-weight: 500;
   background-color: ${({ theme }) => theme.sejongCrimsonRed};
   color: #fff;
-  cursor: pointer;
+  cursor: ${({ isActive }) => (isActive ? 'pointer' : 'default')};
 `;

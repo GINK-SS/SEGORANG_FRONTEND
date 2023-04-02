@@ -34,11 +34,13 @@ const CreatePost = ({ boardTitle }: CreatePostProps) => {
   };
   const [title, setTitle] = useState('');
   const [content, setContent] = useState(EditorState.createEmpty());
+  const [isLoading, setIsLoading] = useState(false);
   const contentToHtml = draftToHtml(convertToRaw(content.getCurrentContent()));
   const { accessToken } = useRecoilValue(userInfoState);
   const history = useHistory();
 
   const onRegister = async () => {
+    setIsLoading(true);
     const { msg, post_id } = await fetchCreatePost({
       postTitle: title,
       boardTitle,
@@ -49,12 +51,19 @@ const CreatePost = ({ boardTitle }: CreatePostProps) => {
     if (msg === 'created') {
       history.push(`/post/${post_id}?boardTitle=${boardTitle}`);
     }
+
+    setIsLoading(false);
   };
 
   return (
     <ContainerBackground>
       <Container>
-        <CreatePostHeader boardTitle={titleList[boardTitle]} onRegister={onRegister} />
+        <CreatePostHeader
+          isLoading={isLoading}
+          isEmpty={!title || contentToHtml === '<p></p>\n'}
+          boardTitle={titleList[boardTitle]}
+          onRegister={onRegister}
+        />
         <CreatePostTextBox
           title={title}
           setTitle={setTitle}
