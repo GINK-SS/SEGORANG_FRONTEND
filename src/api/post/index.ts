@@ -5,7 +5,7 @@ export const fetchPostInfo = async ({
   postId,
   accessToken,
 }: FetchPostInfoParams): Promise<PostInfoResponse> => {
-  const response = await fetch(`${BASE_URL}/api/v1/board?post_id=${postId}`, {
+  const response = await fetch(`${BASE_URL}/api/v1/post/${postId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

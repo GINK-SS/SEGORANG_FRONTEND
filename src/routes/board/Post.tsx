@@ -7,11 +7,11 @@ import { userInfoState } from '../../atoms';
 import BoardHeader from '../../components/container/board/BoardHeader';
 import NavContainer from '../../components/container/board/NavContainer';
 import PostInfoBoardTitle from '../../components/items/PostInfoBoardTitle';
-import { PostInfoResponse, PostURLParams } from '../../types/post';
+import { PostInfo, PostURLParams } from '../../types/post';
 
 function Post() {
   const userInfo = useRecoilValue(userInfoState);
-  const [postInfo, setPostInfo] = useState<PostInfoResponse>({
+  const [postInfo, setPostInfo] = useState<PostInfo>({
     board_title: '',
     post_title: '',
     writer: '',
@@ -28,12 +28,24 @@ function Post() {
   let boardPage = searchParams.get('boardPage') ?? '1';
 
   const getPostInfo = async () => {
-    const response = await fetchPostInfo({
+    const { msg, result } = await fetchPostInfo({
       postId,
       accessToken: userInfo.accessToken,
     });
 
-    setPostInfo(response);
+    if (msg === 'success') setPostInfo(result);
+    else if (msg === 'fail') {
+      setPostInfo({
+        board_title: '',
+        post_title: '',
+        writer: '',
+        content: '',
+        view_num: 0,
+        like_num: 0,
+        created_at: '',
+        updated_at: '',
+      });
+    }
   };
 
   useEffect(() => {
