@@ -27,13 +27,13 @@ function NavContainer() {
         </Wrapper>
         <Wrapper>
           <Item isCurrentBoard={boardTitle === 'lecture-evaluation'}>
-            <Link to={'/board/lecture-evaluation'}>강의 평가</Link>
+            <Link to={'/board/lecture_evaluation'}>강의 평가</Link>
           </Item>
           <Item isCurrentBoard={boardTitle === 'sejong-news'}>
-            <Link to={'/board/sejong-news'}>세종 뉴스</Link>
+            <Link to={'/board/sejong_news'}>세종 뉴스</Link>
           </Item>
           <Item isCurrentBoard={boardTitle === 'sejong-council'}>
-            <Link to={'/board/sejong-council'}>세종 학생회</Link>
+            <Link to={'/board/sejong_council'}>세종 학생회</Link>
           </Item>
         </Wrapper>
         <Wrapper>
