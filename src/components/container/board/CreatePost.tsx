@@ -28,9 +28,8 @@ const CreatePost = ({ boardTitle }: CreatePostProps) => {
     notice: '공지사항',
     inquiry: '운영자 문의',
   };
-  const [title, setTitle] = useState(EditorState.createEmpty());
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState(EditorState.createEmpty());
-  const titleToHtml = draftToHtml(convertToRaw(title.getCurrentContent()));
   const contentToHtml = draftToHtml(convertToRaw(content.getCurrentContent()));
 
   const onRegister = () => {
