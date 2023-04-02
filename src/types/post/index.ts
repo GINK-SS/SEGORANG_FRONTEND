@@ -30,3 +30,18 @@ export interface PostURLParams {
 export interface BoardTitleList {
   [key: string]: string;
 }
+
+export interface FetchCreatePostParams {
+  postTitle: string;
+  boardTitle: string;
+  category?: string | null;
+  content: string;
+  images?: string | null;
+  accessToken: string;
+}
+
+export interface CreatePostResponse {
+  msg: string;
+  description?: string;
+  post_id?: number;
+}

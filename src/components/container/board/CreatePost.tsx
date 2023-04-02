@@ -5,6 +5,10 @@ import CreatePostTextBox from '../../items/CreatePostTextBox';
 import { EditorState, convertToRaw } from 'draft-js';
 import { useState } from 'react';
 import draftToHtml from 'draftjs-to-html';
+import { fetchCreatePost } from '../../../api/post';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../../../atoms';
+import { useHistory } from 'react-router-dom';
 
 interface CreatePostProps {
   boardTitle: string;
@@ -31,8 +35,20 @@ const CreatePost = ({ boardTitle }: CreatePostProps) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState(EditorState.createEmpty());
   const contentToHtml = draftToHtml(convertToRaw(content.getCurrentContent()));
+  const { accessToken } = useRecoilValue(userInfoState);
+  const history = useHistory();
 
-  const onRegister = () => {
+  const onRegister = async () => {
+    const { msg, post_id } = await fetchCreatePost({
+      postTitle: title,
+      boardTitle,
+      content: contentToHtml,
+      accessToken,
+    });
+
+    if (msg === 'created') {
+      history.push(`/post/${post_id}?boardTitle=${boardTitle}`);
+    }
   };
 
   return (
