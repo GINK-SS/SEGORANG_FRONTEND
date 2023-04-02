@@ -28,7 +28,7 @@ function BoardItemList({ boardItemList, page }: BoardItemListProps) {
               <Type hasType={hasType}>{post.category}</Type>
               <LikeNum>{post.like_num}</LikeNum>
               <Link
-                to={`/post/${post.post_id}?boardTitle=${post.board_title}?boardPage=${page}`}
+                to={`/post/${post.post_id}?boardTitle=${post.board_title}&boardPage=${page}`}
               >
                 <Title>
                   {post.post_title}
