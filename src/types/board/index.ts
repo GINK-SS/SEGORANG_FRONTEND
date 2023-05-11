@@ -7,7 +7,6 @@ export interface MainBoardItemInfo {
 
 export interface BoardItemInfo {
   post_id: number;
-  board_title: string;
   post_title: string;
   writer: string;
   category?: string | null;
@@ -29,7 +28,7 @@ export interface FetchBoardItemListParams {
 export interface BoardItemListResponse {
   result: {
     data: BoardItemInfo[];
-    lastPage: number;
+    last_page: number;
   };
 }
 

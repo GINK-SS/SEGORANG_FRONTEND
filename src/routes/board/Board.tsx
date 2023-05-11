@@ -22,7 +22,7 @@ function Board() {
 
   const getBoardItemList = async () => {
     const {
-      result: { data, lastPage },
+      result: { data, last_page },
     } = await fetchBoardItemList({
       boardTitle,
       page: Number(page),
@@ -31,7 +31,7 @@ function Board() {
     });
 
     setBoardItemList(data);
-    setLastPage(lastPage);
+    setLastPage(last_page);
   };
 
   useEffect(() => {
@@ -48,7 +48,11 @@ function Board() {
         </>
       ) : (
         <>
-          <BoardItemList boardItemList={boardItemList} page={Number(page)} />
+          <BoardItemList
+            boardItemList={boardItemList}
+            boardTitle={boardTitle}
+            page={Number(page)}
+          />
           <BoardItemListFooter
             boardTitle={boardTitle}
             page={Number(page)}

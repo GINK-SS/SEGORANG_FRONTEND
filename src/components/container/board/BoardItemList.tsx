@@ -1,14 +1,14 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BoardItemInfo } from '../../../types/board';
 import BoardItem from '../../items/BoardItem';
 
 interface BoardItemListProps {
   boardItemList: BoardItemInfo[];
+  boardTitle: string;
   page: number;
 }
 
-function BoardItemList({ boardItemList, page }: BoardItemListProps) {
+function BoardItemList({ boardItemList, boardTitle, page }: BoardItemListProps) {
   const hasType =
     boardItemList.length !== 0 ? (boardItemList[0].category ? true : false) : false;
 
@@ -25,7 +25,13 @@ function BoardItemList({ boardItemList, page }: BoardItemListProps) {
         </Item>
         {boardItemList.length !== 0 ? (
           boardItemList.map((post, index) => (
-            <BoardItem key={index} hasType={hasType} post={post} page={page} />
+            <BoardItem
+              key={index}
+              hasType={hasType}
+              boardTitle={boardTitle}
+              post={post}
+              page={page}
+            />
           ))
         ) : (
           <NoItem>

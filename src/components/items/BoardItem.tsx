@@ -4,16 +4,17 @@ import { BoardItemInfo } from '../../types/board';
 
 interface BoardItemProps {
   hasType: boolean;
+  boardTitle: string;
   post: BoardItemInfo;
   page: number;
 }
 
-const BoardItem = ({ hasType, post, page }: BoardItemProps) => {
+const BoardItem = ({ hasType, boardTitle, post, page }: BoardItemProps) => {
   return (
     <Item>
       <Type hasType={hasType}>{post.category}</Type>
       <LikeNum>{post.like_num}</LikeNum>
-      <Link to={`/post/${post.post_id}?boardTitle=${post.board_title}&boardPage=${page}`}>
+      <Link to={`/post/${post.post_id}?boardTitle=${boardTitle}&boardPage=${page}`}>
         <Title>
           {post.post_title}
           <CommentNum>{`[${post.comment_num}]`}</CommentNum>
