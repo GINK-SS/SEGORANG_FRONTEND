@@ -3,6 +3,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { fetchUserInfo } from '../api/common';
 import { userInfoState } from '../atoms';
+import Header from '../container/common/Header';
 import Board from './board/Board';
 import Post from './board/Post';
 import Login from './login/Login';
@@ -40,6 +41,8 @@ function Router() {
 
   return (
     <BrowserRouter>
+      {userInfo.accessToken ? <Header /> : null}
+
       <Switch>
         <Route
           path={'/login'}
