@@ -3,6 +3,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { fetchUserInfo } from '../api/common';
 import { userInfoState } from '../atoms';
+import BoardNav from '../container/common/BoardNav';
 import Header from '../container/common/Header';
 import Board from './board/Board';
 import Post from './board/Post';
@@ -41,7 +42,12 @@ function Router() {
 
   return (
     <BrowserRouter>
-      {userInfo.accessToken ? <Header /> : null}
+      {userInfo.accessToken ? (
+        <>
+          <Header />
+          <BoardNav />
+        </>
+      ) : null}
 
       <Switch>
         <Route

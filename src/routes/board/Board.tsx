@@ -2,18 +2,17 @@ import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../atoms';
-import BoardHeader from '../../components/container/board/BoardHeader';
 import BoardItemList from '../../components/container/board/BoardItemList';
 import BoardItemListFooter from '../../components/container/board/BoardItemListFooter';
-import NavContainer from '../../components/container/board/NavContainer';
-import { BoardURLParams, BoardItemInfo } from '../../types/board';
+import { BoardItemInfo } from '../../types/board';
 import { fetchBoardItemList } from '../../api/board';
 import CreatePost from '../../components/container/board/CreatePost';
+import { UrlParams } from '../../types/common';
 
 function Board() {
   const [boardItemList, setBoardItemList] = useState<BoardItemInfo[]>([]);
   const [lastPage, setLastPage] = useState(0);
-  const { boardTitle }: BoardURLParams = useParams();
+  const { boardTitle }: UrlParams = useParams();
   const userInfo = useRecoilValue(userInfoState);
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search);
@@ -40,8 +39,6 @@ function Board() {
 
   return (
     <>
-      <BoardHeader />
-      <NavContainer />
       {status === 'create' ? (
         <>
           <CreatePost boardTitle={boardTitle} />

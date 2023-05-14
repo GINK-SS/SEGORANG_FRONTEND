@@ -15,3 +15,7 @@ export interface UserInfoResponse {
     major: string;
   };
 }
+
+export interface UrlParams {
+  boardTitle: string;
+}

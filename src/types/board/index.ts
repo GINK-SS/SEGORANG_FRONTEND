@@ -31,7 +31,3 @@ export interface BoardItemListResponse {
     last_page: number;
   };
 }
-
-export interface BoardURLParams {
-  boardTitle: string;
-}
