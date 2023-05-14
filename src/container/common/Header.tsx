@@ -3,7 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { userInfoState } from '../../atoms';
 import Logo from '../../components/header/Logo';
-import NavLink from '../../components/header/NavLink';
+import UserLink from '../../components/header/UserLink';
 import Search from '../../components/header/Search';
 import Wrapper from '../../components/header/Wrapper';
 
@@ -39,7 +39,7 @@ const Header = () => {
           onSubmit={onSubmit}
         />
       ) : (
-        <NavLink userNickname={userInfo.userNickname} onLogout={onLogout} />
+        <UserLink userNickname={userInfo.userNickname} onLogout={onLogout} />
       )}
     </Wrapper>
   );

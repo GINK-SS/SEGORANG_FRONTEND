@@ -1,30 +1,31 @@
 import styled from 'styled-components';
 
-interface NavLinkProps {
+interface UserLinkProps {
   userNickname: string;
   onLogout: () => void;
 }
 
-const NavLink = ({ userNickname, onLogout }: NavLinkProps) => {
+const UserLink = ({ userNickname, onLogout }: UserLinkProps) => {
   return (
     <Container>
       <UserNickname>{`${userNickname} :-)`}</UserNickname>
-      <OptionWrapper>
-        <Option>
-          <OptionTitle>북마크</OptionTitle>
-        </Option>
-        <Option>
-          <OptionTitle>마이페이지</OptionTitle>
-        </Option>
-        <Option onClick={onLogout}>
-          <OptionTitle>로그아웃</OptionTitle>
-        </Option>
-      </OptionWrapper>
+
+      <LinkWrapper>
+        <LinkItem>
+          <LinkTitle>북마크</LinkTitle>
+        </LinkItem>
+        <LinkItem>
+          <LinkTitle>마이페이지</LinkTitle>
+        </LinkItem>
+        <LinkItem onClick={onLogout}>
+          <LinkTitle>로그아웃</LinkTitle>
+        </LinkItem>
+      </LinkWrapper>
     </Container>
   );
 };
 
-export default NavLink;
+export default UserLink;
 
 const Container = styled.div`
   display: flex;
@@ -39,12 +40,12 @@ const UserNickname = styled.span`
   color: ${(props) => props.theme.sejongCrimsonRed};
 `;
 
-const OptionWrapper = styled.div`
+const LinkWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
 
-const Option = styled.nav`
+const LinkItem = styled.nav`
   &:not(:first-child)::before {
     content: '|';
     margin: 0 30px;
@@ -52,7 +53,7 @@ const Option = styled.nav`
   }
 `;
 
-const OptionTitle = styled.span`
+const LinkTitle = styled.span`
   font-size: 16px;
   font-weight: 500;
   color: #333;
