@@ -3,10 +3,10 @@ import { useRecoilValue } from 'recoil';
 import { fetchBoardItemList } from '../../api/board';
 import { userInfoState } from '../../atoms';
 import Banner from '../../components/main/content/Banner';
-import Board from '../../components/main/content/Board';
 import BoardWrapper from '../../components/main/content/BoardWrapper';
 import { data } from '../../lib/data';
 import { MainBoardItem } from '../../types/board';
+import Board from './Board';
 
 const Content = () => {
   const [boardItemList, setBoardItemList] = useState<MainBoardItem>(
@@ -44,13 +44,11 @@ const Content = () => {
     if (index % 2 !== 0)
       return (
         <BoardWrapper key={index}>
-          <Board
-            boardTitle={data.boardTitleToKR[boardTitle]}
-            boardItems={boardItemList[boardTitle]}
-          />
+          <Board boardTitle={boardTitle} boardItems={boardItemList[boardTitle]} />
+
           {index + 1 < data.mainBoardList.length && (
             <Board
-              boardTitle={data.boardTitleToKR[data.mainBoardList[index + 1]]}
+              boardTitle={data.mainBoardList[index + 1]}
               boardItems={boardItemList[data.mainBoardList[index + 1]]}
             />
           )}
@@ -64,11 +62,7 @@ const Content = () => {
     <>
       <Banner img="images/banner.png" />
 
-      <Board
-        isFull
-        boardTitle={data.boardTitleToKR['hot']}
-        boardItems={boardItemList['hot']}
-      />
+      <Board isFull boardTitle="hot" boardItems={boardItemList['hot']} />
 
       {anotherBoardList}
     </>

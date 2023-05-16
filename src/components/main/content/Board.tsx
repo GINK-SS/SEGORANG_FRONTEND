@@ -1,32 +1,24 @@
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ReactNode } from 'react';
 import styled from 'styled-components';
-import { MainBoardItemInfo } from '../../../types/board';
-import BoardItem from './BoardItem';
 
 interface BoardProps {
+  onClick: () => void;
   isFull?: boolean;
   boardTitle: string;
-  boardItems: MainBoardItemInfo[];
+  children: ReactNode;
 }
 
-const Board = ({ isFull = false, boardTitle, boardItems }: BoardProps) => {
+const Board = ({ onClick, isFull = false, boardTitle, children }: BoardProps) => {
   return (
     <Container isFull={isFull}>
-      <Header>
+      <Header onClick={onClick}>
         <BoardTitle>{boardTitle}</BoardTitle>
         <FontAwesomeIcon icon={faChevronRight} color="rgba(0,0,0,0.5)" />
       </Header>
 
-      {boardItems.map((value, index) => (
-        <BoardItem
-          key={index}
-          category={value.category}
-          title={value.post_title}
-          commentNum={value.comment_num}
-          likeNum={value.like_num}
-        />
-      ))}
+      {children}
     </Container>
   );
 };

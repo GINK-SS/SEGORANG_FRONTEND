@@ -5,14 +5,17 @@ interface BoardItemProps {
   title: string;
   commentNum: number;
   likeNum: number;
+  onClick: () => void;
 }
 
-const BoardItem = ({ category, title, commentNum, likeNum }: BoardItemProps) => {
+const BoardItem = ({ category, title, commentNum, likeNum, onClick }: BoardItemProps) => {
   return (
     <Wrapper>
       <div>
         {category && <Category>{category}</Category>}
-        <Title>{title.length > 20 ? `${title.slice(0, 21)}…` : title}</Title>
+        <Title onClick={onClick}>
+          {title.length > 20 ? `${title.slice(0, 21)}…` : title}
+        </Title>
         <CommentNum>[{commentNum}]</CommentNum>
       </div>
 
@@ -28,6 +31,7 @@ const Wrapper = styled.li`
   justify-content: space-between;
   align-items: center;
   padding: 12px 15px;
+  background-color: rgba(0, 0, 0, 0.01);
 
   &:hover {
     background-color: #f2f2f2;

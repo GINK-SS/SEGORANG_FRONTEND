@@ -1,5 +1,6 @@
 export interface MainBoardItemInfo {
   category?: string;
+  post_id: number;
   post_title: string;
   comment_num: number;
   like_num: number;
