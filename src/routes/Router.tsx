@@ -5,10 +5,10 @@ import { fetchUserInfo } from '../api/common';
 import { userInfoState } from '../atoms';
 import BoardNav from '../container/common/BoardNav';
 import Header from '../container/common/Header';
+import MainPage from '../pages/MainPage';
 import Board from './board/Board';
 import Post from './board/Post';
 import Login from './login/Login';
-import Main from './main/Main';
 import SignUp from './signUp/SignUp';
 import SJAuth from './signUp/SJAuth';
 
@@ -77,7 +77,9 @@ function Router() {
         <Route
           exact
           path={'/'}
-          component={() => (userInfo.accessToken ? <Main /> : <Redirect to={'/login'} />)}
+          component={() =>
+            userInfo.accessToken ? <MainPage /> : <Redirect to={'/login'} />
+          }
         />
       </Switch>
     </BrowserRouter>

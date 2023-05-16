@@ -19,3 +19,7 @@ export interface UserInfoResponse {
 export interface UrlParams {
   boardTitle: string;
 }
+
+export interface BoardTitleToKR {
+  [key: string]: string;
+}

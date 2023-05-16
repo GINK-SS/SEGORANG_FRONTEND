@@ -1,16 +1,20 @@
 export interface MainBoardItemInfo {
-  category: string;
-  title: string;
-  commentNum: number;
-  likeNum: number;
+  category?: string;
+  post_title: string;
+  comment_num: number;
+  like_num: number;
+}
+
+export interface MainBoardItem {
+  [key: string]: MainBoardItemInfo[];
 }
 
 export interface BoardItemInfo {
   post_id: number;
   post_title: string;
   writer: string;
-  category?: string | null;
-  image?: string | null;
+  category?: string;
+  image?: string;
   like_num: number;
   view_num: number;
   comment_num: number;

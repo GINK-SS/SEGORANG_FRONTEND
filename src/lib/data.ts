@@ -1,3 +1,5 @@
+import { BoardTitleToKR } from '../types/common';
+
 const navList = [
   [
     { title: 'HOT 게시판', link: 'hot' },
@@ -24,6 +26,61 @@ const navList = [
   ],
 ];
 
+const boardTitle = [
+  'hot',
+  'free',
+  'anonymous',
+  'student',
+  'graduate',
+  'lecture',
+  'news',
+  'council',
+  'club',
+  'study',
+  'market',
+  'job',
+  'travel',
+  'notice',
+  'inquiry',
+];
+
+const mainBoardList = [
+  'hot',
+  'free',
+  'anonymous',
+  'student',
+  'graduate',
+  'lecture',
+  'news',
+  'council',
+  'club',
+  'study',
+  'market',
+  'job',
+  'travel',
+];
+
+const boardTitleToKR: BoardTitleToKR = {
+  hot: 'HOT 게시판',
+  free: '자유 게시판',
+  anonymous: '익명 게시판',
+  student: '재학생 게시판',
+  graduate: '졸업생 게시판',
+  lecture: '강의 평가',
+  news: '세종 뉴스',
+  council: '세종 학생회',
+  club: '동아리',
+  study: '스터디',
+  market: '장터',
+  job: '알바 · 과외',
+  travel: '여행',
+  notice: '공지사항',
+  inquiry: '운영자 문의',
+};
+
 export const data = {
   navList,
+  boardTitle,
+  mainBoardList,
+  boardTitleToKR,
 };
