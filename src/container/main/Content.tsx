@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { fetchBoardItemList } from '../../api/board';
+import { fetchYoutubeItemList } from '../../api/main';
 import { userInfoState } from '../../atoms';
 import Banner from '../../components/main/content/Banner';
 import BoardWrapper from '../../components/main/content/BoardWrapper';
 import { data } from '../../lib/data';
 import { MainBoardItem } from '../../types/board';
+import { YoutubeItemInfo } from '../../types/main';
 import Board from './Board';
 
 const Content = () => {
@@ -15,6 +17,7 @@ const Content = () => {
       return acc;
     }, {})
   );
+  const [youtubeItemList, setYoutubeItemList] = useState<YoutubeItemInfo[]>();
   const { accessToken } = useRecoilValue(userInfoState);
 
   useEffect(() => {
@@ -36,7 +39,14 @@ const Content = () => {
       });
     };
 
+    const getYoutubeItemList = async () => {
+      const { msg, result } = await fetchYoutubeItemList({ accessToken });
+
+      if (msg === 'success') setYoutubeItemList(result);
+    };
+
     getBoardItemList();
+    getYoutubeItemList();
   }, [accessToken]);
 
   const anotherBoardList = data.mainBoardList.map((boardTitle, index) => {
@@ -63,6 +73,13 @@ const Content = () => {
       <Banner img="images/banner.png" />
 
       <Board isFull boardTitle="hot" boardItems={boardItemList['hot']} />
+
+      <Board
+        isFull
+        link={'https://www.youtube.com/@channelsejongUCC/featured'}
+        boardTitle="세종대학교 유튜브"
+        boardPhotoItems={youtubeItemList}
+      />
 
       {anotherBoardList}
     </>

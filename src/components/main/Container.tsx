@@ -22,7 +22,7 @@ const ContainerBox = styled.div`
   }
 
   > div:last-child {
-    width: 350px;
+    min-width: 350px;
     margin-left: 30px;
   }
 `;
