@@ -16,3 +16,9 @@ export interface YoutubeItemListResponse {
     title: string;
   }[];
 }
+
+export interface TopItem {
+  title: string;
+  postId: number;
+  boardTitle: string;
+}

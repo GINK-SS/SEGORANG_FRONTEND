@@ -1,20 +1,21 @@
 import styled from 'styled-components';
 
-interface MainBestItemProps {
+interface WeeklyTopItemProps {
   title: string;
   index: number;
+  onPost: React.MouseEventHandler<HTMLSpanElement>;
 }
 
-function MainBestItem({ title, index }: MainBestItemProps) {
+function WeeklyTopItem({ title, index, onPost }: WeeklyTopItemProps) {
   return (
     <BestItem>
       <span>{index + 1}</span>
-      <span>{title.length > 16 ? `${title.slice(0, 17)}	…` : title}</span>
+      <span onClick={onPost}>{title.length > 16 ? `${title.slice(0, 17)}…` : title}</span>
     </BestItem>
   );
 }
 
-export default MainBestItem;
+export default WeeklyTopItem;
 
 const BestItem = styled.li`
   display: flex;
@@ -32,14 +33,14 @@ const BestItem = styled.li`
       font-size: 25px;
       font-weight: 600;
       font-style: italic;
-      color: ${(props) => props.theme.accentColor};
+      color: ${({ theme }) => theme.accentColor};
     }
 
     &:last-child {
       cursor: pointer;
 
       &:hover {
-        color: ${(props) => props.theme.sejongCrimsonRed};
+        color: ${({ theme }) => theme.sejongCrimsonRed};
       }
     }
   }

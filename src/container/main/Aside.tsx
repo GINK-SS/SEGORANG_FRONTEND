@@ -8,6 +8,7 @@ import ShortCut from '../../components/main/aside/ShortCut';
 import User from '../../components/main/aside/User';
 import WrapperBox from '../../components/main/aside/WrapperBox';
 import { data } from '../../lib/data';
+import WeeklyTop from './WeeklyTop';
 
 const Aside = () => {
   const [notice, setNotice] = useState({ title: '', postId: 0 });
@@ -58,6 +59,10 @@ const Aside = () => {
 
       <WrapperBox title="링크 바로가기">
         <ShortCut linkList={data.shortcut} />
+      </WrapperBox>
+
+      <WrapperBox title="주간 랭킹 TOP 5">
+        <WeeklyTop />
       </WrapperBox>
     </>
   );
