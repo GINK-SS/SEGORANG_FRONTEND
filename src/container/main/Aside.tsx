@@ -4,7 +4,10 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { fetchBoardItemList } from '../../api/board';
 import { userInfoState } from '../../atoms';
 import Notice from '../../components/main/aside/Notice';
+import ShortCut from '../../components/main/aside/ShortCut';
 import User from '../../components/main/aside/User';
+import WrapperBox from '../../components/main/aside/WrapperBox';
+import { data } from '../../lib/data';
 
 const Aside = () => {
   const [notice, setNotice] = useState({ title: '', postId: 0 });
@@ -52,6 +55,10 @@ const Aside = () => {
       />
 
       <Notice content={notice.title} onClick={() => onNotice(notice.postId)} />
+
+      <WrapperBox title="링크 바로가기">
+        <ShortCut linkList={data.shortcut} />
+      </WrapperBox>
     </>
   );
 };

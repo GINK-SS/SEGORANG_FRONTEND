@@ -78,9 +78,17 @@ const boardTitleToKR: BoardTitleToKR = {
   inquiry: '운영자 문의',
 };
 
+const shortcut = [
+  { title: '세종대학교', link: 'http://sejong.ac.kr' },
+  { title: '세종대 포털', link: 'https://portal.sejong.ac.kr' },
+  { title: '대양휴머니티칼리지', link: 'http://classic.sejong.ac.kr' },
+  { title: '학사정보시스템', link: 'https://sjpt.sejong.ac.kr' },
+];
+
 export const data = {
   navList,
   boardTitle,
   mainBoardList,
   boardTitleToKR,
+  shortcut,
 };
