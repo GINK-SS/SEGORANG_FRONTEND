@@ -5,8 +5,8 @@ import { fetchUserInfo } from '../api/common';
 import { userInfoState } from '../atoms';
 import BoardNav from '../container/common/BoardNav';
 import Header from '../container/common/Header';
+import BoardPage from '../pages/BoardPage';
 import MainPage from '../pages/MainPage';
-import Board from './board/Board';
 import Post from './board/Post';
 import Login from './login/Login';
 import SignUp from './signUp/SignUp';
@@ -66,7 +66,7 @@ function Router() {
           exact
           path={'/board/:boardTitle'}
           component={() =>
-            userInfo.accessToken ? <Board /> : <Redirect to={'/login'} />
+            userInfo.accessToken ? <BoardPage /> : <Redirect to={'/login'} />
           }
         />
         <Route
