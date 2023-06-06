@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { fetchBoardItemList } from '../api/board';
 import { userInfoState } from '../atoms';
 import Board from '../container/board/Board';
+import BoardFooter from '../container/board/BoardFooter';
 import { BoardItemInfo } from '../types/board';
 import { UrlParams } from '../types/common';
 
@@ -36,7 +37,10 @@ const BoardPage = () => {
   }, [accessToken, boardTitle, page, status]);
 
   return (
+    <>
       <Board boardItemList={boardItemList} boardTitle={boardTitle} page={Number(page)} />
+      <BoardFooter boardTitle={boardTitle} page={Number(page)} lastPage={lastPage} />
+    </>
   );
 };
 
