@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import FooterFlexBox from '../../components/board/FooterFlexBox';
 import PageList from '../../components/board/PageList';
+import Search from '../../components/board/Search';
 
 interface BoardFooterProps {
   boardTitle: string;
@@ -10,8 +12,25 @@ interface BoardFooterProps {
 
 const BoardFooter = ({ boardTitle, page, lastPage }: BoardFooterProps) => {
   const history = useHistory();
+  const [search, setSearch] = useState('');
+  const [selected, setSelected] = useState('titleContent');
   const [pageList, setPageList] = useState<number[]>([]);
 
+  // 검색
+  const onSelected = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelected(e.target.value);
+  };
+  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+  const onDelete = () => {
+    setSearch('');
+  };
+  const onSubmit = () => {
+    console.log(`${selected} 으로 ${search} 검색`);
+  };
+
+  // 페이지 리스트
   const onFirstPage = () => {
     history.push(`?page=${1}`);
     window.scrollTo(0, 0);
@@ -47,6 +66,17 @@ const BoardFooter = ({ boardTitle, page, lastPage }: BoardFooterProps) => {
 
   return (
     <>
+      <FooterFlexBox>
+        <Search
+          selected={selected}
+          search={search}
+          onSelected={(e) => onSelected(e)}
+          onSearch={(e) => onSearch(e)}
+          onDelete={onDelete}
+          onSubmit={onSubmit}
+        />
+      </FooterFlexBox>
+
       <PageList
         pageList={pageList}
         page={page}

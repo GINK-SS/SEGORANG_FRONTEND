@@ -85,10 +85,21 @@ const shortcut = [
   { title: '학사정보시스템', link: 'https://sjpt.sejong.ac.kr' },
 ];
 
+const boardSearchOptions = [
+  {
+    id: 0,
+    name: '제목+내용',
+    value: 'titleContent',
+  },
+  { id: 1, name: '제목', value: 'title' },
+  { id: 2, name: '작성자', value: 'writer' },
+];
+
 export const data = {
   navList,
   boardTitle,
   mainBoardList,
   boardTitleToKR,
   shortcut,
+  boardSearchOptions,
 };
