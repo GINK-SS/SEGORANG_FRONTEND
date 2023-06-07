@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import FooterFlexBox from '../../components/board/FooterFlexBox';
 import PageList from '../../components/board/PageList';
 import Search from '../../components/board/Search';
+import WriteBtn from '../../components/board/WriteBtn';
 
 interface BoardFooterProps {
   boardTitle: string;
@@ -29,6 +30,9 @@ const BoardFooter = ({ boardTitle, page, lastPage }: BoardFooterProps) => {
   const onSubmit = () => {
     console.log(`${selected} 으로 ${search} 검색`);
   };
+
+  // 쓰기 버튼
+  const onWrite = () => history.push('?status=create');
 
   // 페이지 리스트
   const onFirstPage = () => {
@@ -75,6 +79,8 @@ const BoardFooter = ({ boardTitle, page, lastPage }: BoardFooterProps) => {
           onDelete={onDelete}
           onSubmit={onSubmit}
         />
+
+        <WriteBtn onClick={onWrite} />
       </FooterFlexBox>
 
       <PageList
