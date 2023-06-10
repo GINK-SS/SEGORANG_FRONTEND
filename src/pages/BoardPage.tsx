@@ -5,6 +5,7 @@ import { fetchBoardItemList } from '../api/board';
 import { userInfoState } from '../atoms';
 import Board from '../container/board/Board';
 import BoardFooter from '../container/board/BoardFooter';
+import Update from '../container/post/Update';
 import { BoardItemInfo } from '../types/board';
 import { UrlParams } from '../types/common';
 
@@ -36,7 +37,9 @@ const BoardPage = () => {
     if (status !== 'create') getBoardItemList();
   }, [accessToken, boardTitle, page, status]);
 
-  return (
+  return status === 'create' ? (
+    <Update boardTitle={boardTitle} status={'create'} />
+  ) : (
     <>
       <Board boardItemList={boardItemList} boardTitle={boardTitle} page={Number(page)} />
       <BoardFooter boardTitle={boardTitle} page={Number(page)} lastPage={lastPage} />
