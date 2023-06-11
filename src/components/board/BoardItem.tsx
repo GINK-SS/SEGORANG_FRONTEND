@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BoardItemInfo } from '../../types/board';
+import changeDate from '../../utils/changeDate';
 
 interface BoardItemProps {
   hasCategory: boolean;
@@ -22,7 +23,7 @@ const BoardItem = ({ hasCategory, boardTitle, post, page }: BoardItemProps) => {
       </Link>
       <Writer>{post.writer}</Writer>
       <ViewNum>{post.view_num}</ViewNum>
-      <Date>{post.created_at}</Date>
+      <Date>{changeDate(post.created_at)}</Date>
     </Item>
   );
 };
