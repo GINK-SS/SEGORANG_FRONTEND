@@ -1,10 +1,11 @@
 import { convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { fetchCreatePost } from '../../api/post';
 import { userInfoState } from '../../atoms';
+import LoadingMessage from '../../components/common/LoadingMessage';
 import UpdateContent from '../../components/post/UpdateContent';
 import UpdateHeader from '../../components/post/UpdateHeader';
 import UpdateWrapper from '../../components/post/UpdateWrapper';
@@ -23,6 +24,15 @@ const Update = ({ boardTitle, status }: UpdateProps) => {
   const contentToHtml = draftToHtml(convertToRaw(content.getCurrentContent()));
   const { accessToken } = useRecoilValue(userInfoState);
   const history = useHistory();
+
+  useEffect(() => {
+    if (isLoading) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isLoading]);
 
   const handleResizeTitleHeight = () => {
     if (titleRef.current) {
@@ -54,6 +64,7 @@ const Update = ({ boardTitle, status }: UpdateProps) => {
 
   return (
     <UpdateWrapper>
+      <LoadingMessage isLoading={isLoading} message="등록 중입니다." />
       <UpdateHeader
         status={status}
         isLoading={isLoading}
