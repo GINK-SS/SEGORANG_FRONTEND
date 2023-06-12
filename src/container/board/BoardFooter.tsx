@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import FooterFlexBox from '../../components/board/FooterFlexBox';
 import PageList from '../../components/board/PageList';
 import Search from '../../components/board/Search';
-import WriteBtn from '../../components/board/WriteBtn';
+import Button from '../../components/common/Button';
 
 interface BoardFooterProps {
   page: number;
@@ -79,7 +79,7 @@ const BoardFooter = ({ page, lastPage }: BoardFooterProps) => {
           onSubmit={onSubmit}
         />
 
-        <WriteBtn onClick={onWrite} />
+        <Button onClick={onWrite} icon={'faPen'} text="쓰기" />
       </FooterFlexBox>
 
       <PageList
