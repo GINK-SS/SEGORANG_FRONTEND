@@ -52,7 +52,7 @@ const Update = ({ boardTitle, status }: UpdateProps) => {
     });
 
     if (msg === 'success') {
-      history.replace(`/post/${result}?boardTitle=${boardTitle}`);
+      history.replace(`/post/${result}`);
     }
 
     setIsLoading(false);

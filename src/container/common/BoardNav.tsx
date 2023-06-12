@@ -5,9 +5,7 @@ import Wrapper from '../../components/nav/Wrapper';
 import { data } from '../../lib/data';
 
 const BoardNav = () => {
-  const { pathname, search } = useLocation();
-  const searchParams = new URLSearchParams(search);
-  const searchBoardTitle = searchParams.get('boardTitle');
+  const { pathname } = useLocation();
 
   const navList = data.navList.map((wrapper, index) => (
     <Wrapper key={index}>
@@ -16,9 +14,7 @@ const BoardNav = () => {
           key={index}
           title={nav.title}
           link={`/board/${nav.link}`}
-          isCurrent={
-            pathname.includes(`/board/${nav.link}`) || searchBoardTitle === nav.link
-          }
+          isCurrent={pathname.includes(`/board/${nav.link}`)}
         />
       ))}
     </Wrapper>

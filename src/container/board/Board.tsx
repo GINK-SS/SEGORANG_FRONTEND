@@ -5,20 +5,19 @@ import { BoardItemInfo } from '../../types/board';
 
 interface BoardProps {
   boardItemList: BoardItemInfo[] | undefined;
-  boardTitle: string;
   page: number;
 }
 
-const Board = ({ boardItemList, boardTitle, page }: BoardProps) => {
+const Board = ({ boardItemList, page }: BoardProps) => {
   const hasCategory = boardItemList?.length ? !!boardItemList[0]?.category : false;
 
   const boardItemListComponents = boardItemList?.map((boardItem, index) => (
     <BoardItem
       key={index}
       hasCategory={!!boardItem.category}
-      boardTitle={boardTitle}
       post={boardItem}
       page={page}
+      link={`/post/${boardItem.post_id}?boardPage=${page}`}
     />
   ));
 

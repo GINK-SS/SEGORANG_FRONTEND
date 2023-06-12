@@ -6,12 +6,11 @@ import Search from '../../components/board/Search';
 import WriteBtn from '../../components/board/WriteBtn';
 
 interface BoardFooterProps {
-  boardTitle: string;
   page: number;
   lastPage: number;
 }
 
-const BoardFooter = ({ boardTitle, page, lastPage }: BoardFooterProps) => {
+const BoardFooter = ({ page, lastPage }: BoardFooterProps) => {
   const history = useHistory();
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState('titleContent');
@@ -66,7 +65,7 @@ const BoardFooter = ({ boardTitle, page, lastPage }: BoardFooterProps) => {
         .map((value) => value + Math.floor((page - 1) / 10) * 10)
         .filter((value) => value <= lastPage)
     );
-  }, [boardTitle, page, lastPage]);
+  }, [page, lastPage]);
 
   return (
     <>

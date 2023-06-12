@@ -41,8 +41,8 @@ const BoardPage = () => {
     <Update boardTitle={boardTitle} status={'create'} />
   ) : (
     <>
-      <Board boardItemList={boardItemList} boardTitle={boardTitle} page={Number(page)} />
-      <BoardFooter boardTitle={boardTitle} page={Number(page)} lastPage={lastPage} />
+      <Board boardItemList={boardItemList} page={Number(page)} />
+      <BoardFooter page={Number(page)} lastPage={lastPage} />
     </>
   );
 };
