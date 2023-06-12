@@ -7,7 +7,7 @@ import BoardNav from '../container/common/BoardNav';
 import Header from '../container/common/Header';
 import BoardPage from '../pages/BoardPage';
 import MainPage from '../pages/MainPage';
-import Post from './board/Post';
+import PostPage from '../pages/PostPage';
 import Login from './login/Login';
 import SignUp from './signUp/SignUp';
 import SJAuth from './signUp/SJAuth';
@@ -72,7 +72,9 @@ function Router() {
         <Route
           exact
           path={'/post/:postId'}
-          component={() => (userInfo.accessToken ? <Post /> : <Redirect to={'/login'} />)}
+          component={() =>
+            userInfo.accessToken ? <PostPage /> : <Redirect to={'/login'} />
+          }
         />
         <Route
           exact
