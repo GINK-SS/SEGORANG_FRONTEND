@@ -1,3 +1,5 @@
+import { ContentState, EditorState } from 'draft-js';
+import htmlToDraft from 'html-to-draftjs';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { fetchPostInfo } from '../../api/post';
@@ -21,6 +23,7 @@ const Post = ({ postId }: PostProps) => {
     created_at: '',
     updated_at: '',
   });
+  const [content, setContent] = useState(EditorState.createEmpty());
   const { accessToken } = useRecoilValue(userInfoState);
 
   useEffect(() => {
@@ -33,13 +36,18 @@ const Post = ({ postId }: PostProps) => {
       if (msg === 'success') setPostInfo(result);
     };
 
+    const { contentBlocks, entityMap } = htmlToDraft(postInfo.content);
+    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+    const editorState = EditorState.createWithContent(contentState);
+
     getPostInfo();
-  }, [accessToken, postId]);
+    setContent(editorState);
+  }, [accessToken, postId, postInfo.content]);
 
   return (
     <>
       <Header postInfo={postInfo} />
-      <Content content={postInfo.content} />
+      <Content content={content} />
     </>
   );
 };
