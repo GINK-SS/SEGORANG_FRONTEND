@@ -9,10 +9,10 @@ const changeDate = (postDate: string) => {
     date.getMonth() === now.getMonth() &&
     date.getFullYear() === now.getFullYear()
   )
-    return date.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
+    return `${date.getHours().toString().padStart(2, '0')}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, '0')}`;
   else
     return `${date.getFullYear().toString().slice(-2)}-${(date.getMonth() + 1)
       .toString()
