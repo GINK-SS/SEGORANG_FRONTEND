@@ -1,53 +1,87 @@
-import { ContentState, EditorState } from 'draft-js';
-import htmlToDraft from 'html-to-draftjs';
-import { useEffect, useState } from 'react';
+import { EditorState } from 'draft-js';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { fetchPostInfo } from '../../api/post';
+import { fetchDeletePost } from '../../api/post';
 import { userInfoState } from '../../atoms';
+import LoadingMessage from '../../components/common/LoadingMessage';
+import ModalMessage from '../../components/common/ModalMessage';
 import Content from '../../components/post/Content';
 import Header from '../../components/post/Header';
+import Options from '../../components/post/Options';
+import Wrapper from '../../components/post/Wrapper';
 import { PostInfo } from '../../types/post';
 
 interface PostProps {
   postId: string;
+  postInfo: PostInfo;
+  content: EditorState;
 }
 
-const Post = ({ postId }: PostProps) => {
-  const [postInfo, setPostInfo] = useState<PostInfo>({
-    board_title: '',
-    post_title: '',
-    writer: '',
-    content: '',
-    view_num: 0,
-    like_num: 0,
-    created_at: '',
-    updated_at: '',
-  });
-  const [content, setContent] = useState(EditorState.createEmpty());
-  const { accessToken } = useRecoilValue(userInfoState);
+const Post = ({ postId, postInfo, content }: PostProps) => {
+  const { userNickname, accessToken } = useRecoilValue(userInfoState);
+  const [clickDelete, setClickDelete] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
 
-  useEffect(() => {
-    const getPostInfo = async () => {
-      const { msg, result } = await fetchPostInfo({
-        postId,
-        accessToken,
-      });
+  const onModify = () => history.push(`/post/${postId}?status=modify`);
 
-      if (msg === 'success') setPostInfo(result);
-    };
+  const onDelete = () => setClickDelete(true);
 
-    const { contentBlocks, entityMap } = htmlToDraft(postInfo.content);
-    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-    const editorState = EditorState.createWithContent(contentState);
+  const onDeleteYes = async () => {
+    setClickDelete(false);
+    setIsLoading(true);
 
-    getPostInfo();
-    setContent(editorState);
-  }, [accessToken, postId, postInfo.content]);
+    const response = await fetchDeletePost({ postId, accessToken });
+
+    if (response) {
+      setIsLoading(false);
+      setIsDelete(true);
+    }
+  };
+
+  const onCancel = () => setClickDelete(false);
+
+  const onDeleteSuccess = () => {
+    setIsDelete(false);
+    history.replace(`/board/${postInfo.board_title}`);
+  };
 
   return (
     <>
-      <Header postInfo={postInfo} />
-      <Content content={content} />
+      {clickDelete ? (
+        <ModalMessage
+          message="글을 삭제하시겠습니까?"
+          onLeft={onDeleteYes}
+          leftText="확인"
+          onRight={onCancel}
+          rightText="취소"
+        />
+      ) : null}
+
+      {isLoading ? (
+        <LoadingMessage message="글을 삭제 중입니다." isLoading={isLoading} />
+      ) : null}
+
+      {isDelete ? (
+        <ModalMessage
+          message="글이 삭제되었습니다."
+          onLeft={onDeleteSuccess}
+          leftText="확인"
+        />
+      ) : null}
+
+      <Wrapper>
+        <Header postInfo={postInfo} />
+        <Content content={content} />
+      </Wrapper>
+
+      <Options
+        isMine={userNickname === postInfo.writer}
+        onModify={onModify}
+        onDelete={onDelete}
+      />
     </>
   );
 };
