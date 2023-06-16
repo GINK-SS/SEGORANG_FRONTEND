@@ -3,7 +3,7 @@ import draftToHtml from 'draftjs-to-html';
 import { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { fetchCreatePost } from '../../api/post';
+import { fetchCreatePost, fetchModifyPost } from '../../api/post';
 import { userInfoState } from '../../atoms';
 import LoadingMessage from '../../components/common/LoadingMessage';
 import UpdateContent from '../../components/post/UpdateContent';
@@ -12,13 +12,24 @@ import UpdateWrapper from '../../components/post/UpdateWrapper';
 import { data } from '../../lib/data';
 
 interface UpdateProps {
-  boardTitle: string;
   status: string;
+  postId?: string;
+  boardTitle: string;
+  postTitle?: string;
+  modContent?: EditorState;
 }
 
-const Update = ({ boardTitle, status }: UpdateProps) => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState(EditorState.createEmpty());
+const Update = ({
+  status,
+  postId = '',
+  boardTitle,
+  postTitle = '',
+  modContent = EditorState.createEmpty(),
+}: UpdateProps) => {
+  const [title, setTitle] = useState(status === 'create' ? '' : postTitle);
+  const [content, setContent] = useState(
+    status === 'create' ? EditorState.createEmpty() : modContent
+  );
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const contentToHtml = draftToHtml(convertToRaw(content.getCurrentContent()));
@@ -44,15 +55,26 @@ const Update = ({ boardTitle, status }: UpdateProps) => {
   const onRegister = async () => {
     setIsLoading(true);
 
-    const { msg, result } = await fetchCreatePost({
-      postTitle: title,
-      boardTitle,
-      content: contentToHtml,
-      accessToken,
-    });
+    if (status === 'create') {
+      const { msg, result } = await fetchCreatePost({
+        postTitle: title,
+        boardTitle,
+        content: contentToHtml,
+        accessToken,
+      });
 
-    if (msg === 'success') {
-      history.replace(`/post/${result}`);
+      if (msg === 'success') {
+        history.replace(`/post/${result}`);
+      }
+    } else {
+      const response = await fetchModifyPost({
+        postId,
+        title,
+        content: contentToHtml,
+        accessToken,
+      });
+
+      console.log(response);
     }
 
     setIsLoading(false);
@@ -64,7 +86,12 @@ const Update = ({ boardTitle, status }: UpdateProps) => {
 
   return (
     <UpdateWrapper>
-      <LoadingMessage isLoading={isLoading} message="등록 중입니다." />
+      <LoadingMessage
+        isLoading={isLoading}
+        message={
+          status === 'create' ? data.loadingMessage.create : data.loadingMessage.modify
+        }
+      />
       <UpdateHeader
         status={status}
         isLoading={isLoading}

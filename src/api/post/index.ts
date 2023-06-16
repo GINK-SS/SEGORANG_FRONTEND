@@ -1,6 +1,8 @@
 import {
   CreatePostResponse,
   FetchCreatePostParams,
+  FetchDeletePostParams,
+  FetchModifyPostParams,
   FetchPostInfoParams,
   PostInfoResponse,
 } from '../../types/post';
@@ -45,4 +47,41 @@ export const fetchCreatePost = async ({
   });
 
   return await response.json();
+};
+
+export const fetchModifyPost = async ({
+  postId,
+  title,
+  category = null,
+  content,
+  images = null,
+  accessToken,
+}: FetchModifyPostParams) => {
+  const response = await fetch(`${BASE_URL}/api/v1/post/${postId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({
+      title,
+      category,
+      content,
+      images,
+    }),
+  });
+
+  return await response.json();
+};
+
+export const fetchDeletePost = async ({ postId, accessToken }: FetchDeletePostParams) => {
+  const response = await fetch(`${BASE_URL}/api/v1/post/${postId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  return response.ok;
 };

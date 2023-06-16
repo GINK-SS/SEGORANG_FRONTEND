@@ -95,6 +95,11 @@ const boardSearchOptions = [
   { id: 2, name: '작성자', value: 'writer' },
 ];
 
+const loadingMessage = {
+  create: '작성하신 글을 등록 중입니다.',
+  modify: '변경된 글을 등록 중입니다.',
+};
+
 export const data = {
   navList,
   boardTitle,
@@ -102,4 +107,5 @@ export const data = {
   boardTitleToKR,
   shortcut,
   boardSearchOptions,
+  loadingMessage,
 };

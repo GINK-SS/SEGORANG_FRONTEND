@@ -42,6 +42,19 @@ export interface FetchCreatePostParams {
 
 export interface CreatePostResponse {
   msg: string;
-  description?: string;
-  post_id?: number;
+  result?: number;
+}
+
+export interface FetchModifyPostParams {
+  postId: string;
+  title: string;
+  category?: string | null;
+  content: string;
+  images?: string | null;
+  accessToken: string;
+}
+
+export interface FetchDeletePostParams {
+  postId: string;
+  accessToken: string;
 }
