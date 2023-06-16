@@ -10,7 +10,7 @@ export const getHotBoardData = (page: number, limit: number) => {
       board_title: 'hot',
       post_title: `자유 게시판 게시물 ${i}`,
       writer: `임시유저${i}`,
-      type: '자유',
+      category: '자유',
       like_num: i * 2,
       view_num: i * 10,
       comment_num: i * 3,

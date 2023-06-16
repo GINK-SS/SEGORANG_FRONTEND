@@ -15,3 +15,11 @@ export interface UserInfoResponse {
     major: string;
   };
 }
+
+export interface UrlParams {
+  boardTitle: string;
+}
+
+export interface BoardTitleToKR {
+  [key: string]: string;
+}

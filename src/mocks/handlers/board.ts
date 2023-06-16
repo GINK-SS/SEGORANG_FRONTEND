@@ -22,7 +22,7 @@ export const boardHandlers = [
         ctx.json({
           result: {
             data: getBoardItemList(boardTitle, Number(page), Number(limit)).data,
-            lastPage: getBoardItemList(boardTitle, Number(page), Number(limit)).lastPage,
+            last_page: getBoardItemList(boardTitle, Number(page), Number(limit)).lastPage,
           },
         })
       );

@@ -3,10 +3,12 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { fetchUserInfo } from '../api/common';
 import { userInfoState } from '../atoms';
-import Board from './board/Board';
-import Post from './board/Post';
+import BoardNav from '../container/common/BoardNav';
+import Header from '../container/common/Header';
+import BoardPage from '../pages/BoardPage';
+import MainPage from '../pages/MainPage';
+import PostPage from '../pages/PostPage';
 import Login from './login/Login';
-import Main from './main/Main';
 import SignUp from './signUp/SignUp';
 import SJAuth from './signUp/SJAuth';
 
@@ -40,6 +42,13 @@ function Router() {
 
   return (
     <BrowserRouter>
+      {userInfo.accessToken ? (
+        <>
+          <Header />
+          <BoardNav />
+        </>
+      ) : null}
+
       <Switch>
         <Route
           path={'/login'}
@@ -57,18 +66,22 @@ function Router() {
           exact
           path={'/board/:boardTitle'}
           component={() =>
-            userInfo.accessToken ? <Board /> : <Redirect to={'/login'} />
+            userInfo.accessToken ? <BoardPage /> : <Redirect to={'/login'} />
           }
         />
         <Route
           exact
           path={'/post/:postId'}
-          component={() => (userInfo.accessToken ? <Post /> : <Redirect to={'/login'} />)}
+          component={() =>
+            userInfo.accessToken ? <PostPage /> : <Redirect to={'/login'} />
+          }
         />
         <Route
           exact
           path={'/'}
-          component={() => (userInfo.accessToken ? <Main /> : <Redirect to={'/login'} />)}
+          component={() =>
+            userInfo.accessToken ? <MainPage /> : <Redirect to={'/login'} />
+          }
         />
       </Switch>
     </BrowserRouter>
