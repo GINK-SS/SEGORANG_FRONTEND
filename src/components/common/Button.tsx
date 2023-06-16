@@ -3,13 +3,14 @@ import { faPen, faPaintBrush, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
-interface WriteBtnProps {
+interface ButtonProps {
   onClick: () => void;
-  icon: string;
+  icon?: string;
   text: string;
+  isGray?: boolean;
 }
 
-const WriteBtn = ({ onClick, icon, text }: WriteBtnProps) => {
+const Button = ({ onClick, icon, text, isGray = false }: ButtonProps) => {
   const iconList: { [key: string]: IconProp } = {
     faPen,
     faPaintBrush,
@@ -17,16 +18,16 @@ const WriteBtn = ({ onClick, icon, text }: WriteBtnProps) => {
   };
 
   return (
-    <Button onClick={onClick}>
-      <FontAwesomeIcon icon={iconList[icon]} />
-      <Text>{text}</Text>
-    </Button>
+    <Btn isGray={isGray} onClick={onClick}>
+      {icon ? <FontAwesomeIcon icon={iconList[icon]} /> : null}
+      <Text hasIcon={!!icon}>{text}</Text>
+    </Btn>
   );
 };
 
-export default WriteBtn;
+export default Button;
 
-const Button = styled.button`
+const Btn = styled.button<{ isGray: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,11 +37,20 @@ const Button = styled.button`
   font-size: 15px;
   font-weight: 500;
   color: #fff;
-  background-color: ${(props) => props.theme.sejongCrimsonRed};
-  box-shadow: 0px 5px 10px rgba(195, 0, 47, 0.25);
+  background-color: ${({ theme, isGray }) =>
+    isGray ? theme.sejongGray : theme.sejongCrimsonRed};
+  opacity: 0.8;
+  word-break: keep-all;
+  box-shadow: 0px 2px 5px
+    ${({ isGray }) => (isGray ? 'rgba(0, 0, 0, 0.25)' : 'rgba(195, 0, 47, 0.25)')};
+  transition: 0.2s opacity;
   cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
 `;
 
-const Text = styled.p`
-  margin-left: 10px;
+const Text = styled.p<{ hasIcon: boolean }>`
+  margin-left: ${({ hasIcon }) => (hasIcon ? '10px' : '0px')};
 `;
