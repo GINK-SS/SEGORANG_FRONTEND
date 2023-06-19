@@ -13,7 +13,7 @@ interface SearchProps {
 const Search = ({ placeholder, value, onChange, onDelete, onSubmit }: SearchProps) => {
   return (
     <SearchBox>
-      <Input placeholder={placeholder} value={value} onChange={(e) => onChange(e)} />
+      <Input placeholder={placeholder} value={value} onChange={onChange} />
       <DeleteBtn isEmpty={!value} onClick={onDelete}>
         <FontAwesomeIcon icon={faX} size="2xs" color="rgba(0,0,0,0.5)" />
       </DeleteBtn>

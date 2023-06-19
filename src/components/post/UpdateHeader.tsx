@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import LoadingSpinner from '../common/LoadingSpinner';
 
 interface UpdateHeaderProps {
   status: string;

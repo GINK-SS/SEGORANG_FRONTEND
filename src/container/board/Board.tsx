@@ -16,7 +16,6 @@ const Board = ({ boardItemList, page }: BoardProps) => {
       key={index}
       hasCategory={!!boardItem.category}
       post={boardItem}
-      page={page}
       link={`/post/${boardItem.post_id}?boardPage=${page}`}
     />
   ));
