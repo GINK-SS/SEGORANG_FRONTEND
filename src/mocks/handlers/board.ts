@@ -1,5 +1,5 @@
 import { rest, RestRequest } from 'msw';
-import { BASE_URL } from '../../api/common';
+import { BASE_URI } from '../../api/common';
 import { getBulletinBoardData, getHotBoardData } from '../mockData';
 
 const getBoardItemList = (boardTitle: string, page: number, limit: number) => {
@@ -12,7 +12,7 @@ const getBoardItemList = (boardTitle: string, page: number, limit: number) => {
 export const boardHandlers = [
   // 게시판 글 목록 가져오기
   rest.get(
-    `${BASE_URL}/api/v1/board/:boardTitle`,
+    `${BASE_URI}/api/v1/board/:boardTitle`,
     (req: RestRequest<{}, { boardTitle: string }>, res, ctx) => {
       const { boardTitle } = req.params;
       const page = req.url.searchParams.get('page');

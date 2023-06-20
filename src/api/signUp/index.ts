@@ -4,13 +4,13 @@ import {
   SignUpResponse,
   SJAuthResponse,
 } from '../../types/signUp';
-import { BASE_URL } from '../common';
+import { BASE_URI } from '../common';
 
 export const fetchSJAuth = async (
   studentId: string,
   studentPw: string
 ): Promise<SJAuthResponse> => {
-  const response = await fetch(`${BASE_URL}/api/auth/sejong`, {
+  const response = await fetch(`${BASE_URI}/api/auth/sejong`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ export const fetchSignUp = async ({
   userNickname,
   isSejongAuth,
 }: FetchSignUpParams): Promise<SignUpResponse> => {
-  const response = await fetch(`${BASE_URL}/api/auth/signup`, {
+  const response = await fetch(`${BASE_URI}/api/auth/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export const fetchSignUp = async ({
 };
 
 export const fetchDuplicateId = async (userId: string): Promise<DuplicateResponse> => {
-  const response = await fetch(`${BASE_URL}/api/auth/id`, {
+  const response = await fetch(`${BASE_URI}/api/auth/id`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ export const fetchDuplicateId = async (userId: string): Promise<DuplicateRespons
 export const fetchDuplicateNickname = async (
   userNickname: string
 ): Promise<DuplicateResponse> => {
-  const response = await fetch(`${BASE_URL}/api/auth/nickname`, {
+  const response = await fetch(`${BASE_URI}/api/auth/nickname`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

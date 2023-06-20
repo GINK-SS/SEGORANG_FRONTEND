@@ -1,5 +1,5 @@
 import { FetchBoardItemListParams, BoardItemListResponse } from '../../types/board';
-import { BASE_URL } from '../common';
+import { BASE_URI } from '../common';
 
 export const fetchBoardItemList = async ({
   boardTitle,
@@ -8,7 +8,7 @@ export const fetchBoardItemList = async ({
   accessToken,
 }: FetchBoardItemListParams): Promise<BoardItemListResponse> => {
   const response = await fetch(
-    `${BASE_URL}/api/v1/board/${boardTitle}?page=${page}&limit=${limit}`,
+    `${BASE_URI}/api/v1/board/${boardTitle}?page=${page}&limit=${limit}`,
     {
       method: 'GET',
       headers: {

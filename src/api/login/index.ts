@@ -1,11 +1,11 @@
 import { FetchLoginParams, LoginResponse } from '../../types/login';
-import { BASE_URL } from '../common';
+import { BASE_URI } from '../common';
 
 export const fetchLogin = async ({
   userId,
   userPw,
 }: FetchLoginParams): Promise<LoginResponse> => {
-  const response = await fetch(`${BASE_URL}/api/auth/signin`, {
+  const response = await fetch(`${BASE_URI}/api/auth/signin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

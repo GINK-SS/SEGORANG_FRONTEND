@@ -6,13 +6,13 @@ import {
   FetchPostInfoParams,
   PostInfoResponse,
 } from '../../types/post';
-import { BASE_URL } from '../common';
+import { BASE_URI } from '../common';
 
 export const fetchPostInfo = async ({
   postId,
   accessToken,
 }: FetchPostInfoParams): Promise<PostInfoResponse> => {
-  const response = await fetch(`${BASE_URL}/api/v1/post/${postId}`, {
+  const response = await fetch(`${BASE_URI}/api/v1/post/${postId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ export const fetchCreatePost = async ({
   images = null,
   accessToken,
 }: FetchCreatePostParams): Promise<CreatePostResponse> => {
-  const response = await fetch(`${BASE_URL}/api/v1/post`, {
+  const response = await fetch(`${BASE_URI}/api/v1/post`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export const fetchModifyPost = async ({
   images = null,
   accessToken,
 }: FetchModifyPostParams) => {
-  const response = await fetch(`${BASE_URL}/api/v1/post/${postId}`, {
+  const response = await fetch(`${BASE_URI}/api/v1/post/${postId}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export const fetchModifyPost = async ({
 };
 
 export const fetchDeletePost = async ({ postId, accessToken }: FetchDeletePostParams) => {
-  const response = await fetch(`${BASE_URL}/api/v1/post/${postId}`, {
+  const response = await fetch(`${BASE_URI}/api/v1/post/${postId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
