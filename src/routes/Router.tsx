@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { fetchUserInfo } from '../api/common';
-import { userInfoState } from '../atoms';
+import { notificationState, userInfoState } from '../atoms';
+import Notification from '../container/common/Notification';
 import BoardNav from '../container/common/BoardNav';
 import Header from '../container/common/Header';
 import BoardPage from '../pages/BoardPage';
@@ -14,6 +15,7 @@ import SJAuth from './signUp/SJAuth';
 
 function Router() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [notification, setNotification] = useRecoilState(notificationState);
 
   useEffect(() => {
     const accessToken = localStorage.getItem('sgrUserToken');
@@ -22,6 +24,19 @@ function Router() {
       initUserInfo(accessToken);
     }
   }, []);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    if (notification.visible) {
+      timeout = setTimeout(
+        () => setNotification((prev) => ({ ...prev, visible: false })),
+        3000
+      );
+    }
+
+    return () => clearTimeout(timeout);
+  }, [notification, setNotification]);
 
   const initUserInfo = async (accessToken: string) => {
     const {
@@ -42,6 +57,8 @@ function Router() {
 
   return (
     <BrowserRouter>
+      {notification.visible && <Notification />}
+
       {userInfo.accessToken ? (
         <>
           <Header />

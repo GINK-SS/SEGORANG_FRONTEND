@@ -1,9 +1,9 @@
 import { EditorState } from 'draft-js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { fetchDeletePost } from '../../api/post';
-import { userInfoState } from '../../atoms';
+import { notificationState, userInfoState } from '../../atoms';
 import LoadingMessage from '../../components/common/LoadingMessage';
 import ModalMessage from '../../components/common/ModalMessage';
 import Content from '../../components/post/Content';
@@ -21,9 +21,18 @@ interface PostProps {
 const Post = ({ postId, postInfo, content }: PostProps) => {
   const { userNickname, accessToken } = useRecoilValue(userInfoState);
   const [clickDelete, setClickDelete] = useState(false);
-  const [isDelete, setIsDelete] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const setNotification = useSetRecoilState(notificationState);
   const history = useHistory();
+
+  useEffect(() => {
+    if (clickDelete || isLoading) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [clickDelete, isLoading]);
 
   const onModify = () => history.push(`/post/${postId}?status=modify`);
 
@@ -37,16 +46,12 @@ const Post = ({ postId, postInfo, content }: PostProps) => {
 
     if (response) {
       setIsLoading(false);
-      setIsDelete(true);
+      history.replace(`/board/${postInfo.board_title}`);
+      setNotification({ message: '글이 삭제되었습니다.', visible: true });
     }
   };
 
   const onCancel = () => setClickDelete(false);
-
-  const onDeleteSuccess = () => {
-    setIsDelete(false);
-    history.replace(`/board/${postInfo.board_title}`);
-  };
 
   return (
     <>
@@ -62,14 +67,6 @@ const Post = ({ postId, postInfo, content }: PostProps) => {
 
       {isLoading ? (
         <LoadingMessage message="글을 삭제 중입니다." isLoading={isLoading} />
-      ) : null}
-
-      {isDelete ? (
-        <ModalMessage
-          message="글이 삭제되었습니다."
-          onLeft={onDeleteSuccess}
-          leftText="확인"
-        />
       ) : null}
 
       <Wrapper>

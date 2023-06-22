@@ -11,3 +11,11 @@ export const userInfoState = atom<UserInfo>({
   default: {} as UserInfo,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const notificationState = atom({
+  key: 'notification',
+  default: {
+    visible: false,
+    message: '',
+  },
+});
